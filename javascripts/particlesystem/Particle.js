@@ -1,16 +1,21 @@
 (function() {
 	this.pjs = this.pjs || {};
 
-	pjs.Particle = function(x, y, angle, speed) {
+	pjs.Particle = function() {
 		this.pos = {
-			x: x,
-			y: y
+			x: 0,
+			y: 0
 		};
+		this.setVelocity(0, 0);
+	};
 
-		this.vel = {
-			x: Math.cos(pjs.toRad(angle)) * speed,
-			y: Math.sin(pjs.toRad(angle)) * speed
-		};
+	pjs.Particle.prototype = {
+		setVelocity: function(angle, speed) {
+			this.vel = {
+				x: Math.cos(pjs.toRad(angle)) * speed,
+				y: Math.sin(pjs.toRad(angle)) * speed
+			};
+		}
 	};
 
 })();
