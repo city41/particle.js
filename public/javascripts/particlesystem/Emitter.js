@@ -1,6 +1,13 @@
 (function() {
 	this.pjs = this.pjs || {};
 
+	function normalize(vector) {
+		var length = Math.sqrt(vector.x * vector.x + vector.y * vector.y);
+
+		vector.x /= length;
+		vector.y /= length;
+	}
+
 	pjs.Emitter = function(config) {
 		_.extend(this, config);
 
@@ -110,9 +117,10 @@
 				p.radial.y = 0;
 
 				if ((p.pos.x !== this.pos.x || p.pos.y !== this.pos.y) && (p.radialAccel || p.tangentialAccel)) {
-					var radialP = new Vector(p.rx, p.ry).normalize();
-					p.radial.x = radialP.x;
-					p.radial.y = radialP.y;
+					p.radial.x = p.pos.x - this.pos.x;
+					p.radial.y = p.pos.y - this.pos.y;
+
+					normalize(p.radial);
 				}
 
 				var tangential = _.clone(p.radial);
