@@ -1,5 +1,5 @@
 (function() {
-	function isIntenger(num) {
+	function isInteger(num) {
 		return num === (num | 0);
 	}
 
