@@ -13,7 +13,7 @@
 		setVelocity: function(angle, speed) {
 			this.vel = {
 				x: Math.cos(pjs.toRad(angle)) * speed,
-				y: Math.sin(pjs.toRad(angle)) * speed
+				y: -Math.sin(pjs.toRad(angle)) * speed
 			};
 		}
 	};

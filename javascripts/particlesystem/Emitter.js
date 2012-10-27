@@ -18,6 +18,8 @@
 
 		this.startColorVar = this.startColorVar || [0, 0, 0, 0];
 		this.endColorVar = this.endColorVar || [0, 0, 0, 0];
+		this.posVar = this.posVar || { x: 0, y: 0 };
+		this.gravity = this.gravity || { x: 0, y: 0 };
 	};
 
 	pjs.Emitter.prototype = {
@@ -43,8 +45,8 @@
 		},
 
 		_initParticle: function(particle) {
-			particle.pos.x = this.posVar.x * pjs.random11();
-			particle.pos.y = this.posVar.y * pjs.random11();
+			particle.pos.x = this.pos.x + this.posVar.x * pjs.random11();
+			particle.pos.y = this.pos.y + this.posVar.y * pjs.random11();
 
 			var angle = this.angle + this.angleVar * pjs.random11();
 			var speed = this.speed + this.speedVar * pjs.random11();
@@ -107,7 +109,7 @@
 				p.radial.x = 0;
 				p.radial.y = 0;
 
-				if (p.pos.x !== this.pos.x || p.pos.y !== this.pos.y) {
+				if ((p.pos.x !== this.pos.x || p.pos.y !== this.pos.y) && (p.radialAccel || p.tangentialAccel)) {
 					var radialP = new Vector(p.rx, p.ry).normalize();
 					p.radial.x = radialP.x;
 					p.radial.y = radialP.y;
@@ -136,11 +138,8 @@
 				p.tmp.x = p.vel.x * delta;
 				p.tmp.y = p.vel.y * delta;
 
-				p.rx += p.tmp.x;
-				p.ry += p.tmp.y;
-
-				p.pos.x = p.rx;
-				p.pos.y = p.ry;
+				p.pos.x += p.tmp.x;
+				p.pos.y += p.tmp.y;
 
 				p.life -= delta;
 
@@ -189,6 +188,12 @@
 			}
 		}
 	};
+
+	Object.defineProperty(pjs.Emitter.prototype, 'particles', {
+		get: function() {
+			return this._particlePool;
+		}
+	});
 
 })();
 
