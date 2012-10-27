@@ -1,0 +1,8 @@
+.*
+*.swp
+*.swap
+*.log
+~*
+*~
+.DS_Store
+
