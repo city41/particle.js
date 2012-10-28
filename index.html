@@ -11,10 +11,34 @@
 	<script type="text/javascript" src="javascripts/particlesystem/Particle.js"></script>
 	<script type="text/javascript" src="javascripts/particlesystem/Emitter.js"></script>
 	<script type="text/javascript" src="javascripts/particlesystem/Renderer.js"></script>
+	<script type="text/javascript" src="javascripts/stats.min.js"></script>
 	<script type="text/javascript">
+
+	this.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || window.oRequestAnimationFrame || function(callback) {
+		window.setTimeout(callback, 1 / 60 * 1000);
+	};
+
+		function getStats() {
+			var stats = new Stats();
+			stats.setMode(0); // 0: fps, 1: ms
+	
+			// Align top-left
+			stats.domElement.style.position = 'absolute';
+			stats.domElement.style.right = '0px';
+			stats.domElement.style.top = '0px';
+
+			document.body.appendChild( stats.domElement );
+			return stats;
+		}
+
+		var stats = getStats();
+
 		var lastTimestamp = 0;
-		var particleSystem = new pjs.Emitter({
-			totalParticles: 500,
+		var texture = new Image();
+		texture.src = 'particle.png';
+		var particleSystem;
+		this.ps = particleSystem = new pjs.Emitter({
+			totalParticles: 300,
 			emissionRate: 50,
 			pos: { x: 200, y: 200 },
 			angle: 0,
@@ -29,6 +53,9 @@
 			tangentialAccelVar: 0,
 			radius: 10,
 			radiusVar: 4,
+			startScale: 1,
+			endScale: 0,
+			texture: texture,
 			startColor: [1, 0.5, 0, 0.8],
 			endColor: [0, 0, 0, 0],
 			active: true,
@@ -37,6 +64,7 @@
 
 		var context = document.getElementById('canvas').getContext('2d');
 		function draw(timestamp) {
+			stats.begin();
 			var delta = timestamp - (lastTimestamp || timestamp);
 			lastTimestamp = timestamp;
 
@@ -48,7 +76,8 @@
 
 			pjs.Renderer.render(context, particleSystem.particles);
 			
-			webkitRequestAnimationFrame(draw);
+			stats.end();
+			requestAnimationFrame(draw);
 		}
 
 		draw(new Date().getTime());
