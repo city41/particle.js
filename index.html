@@ -23,9 +23,18 @@
 	<script type="text/javascript" src="javascripts/ui/VectorField.js"></script>
 	<script type="text/javascript" src="javascripts/ui/ColorField.js"></script>
 	<script type="text/javascript" src="javascripts/ui/NumberField.js"></script>
+	<script type="text/javascript" src="javascripts/ui/Parser.js"></script>
 	<script type="text/javascript" src="javascripts/ui/Builder.js"></script>
 
 	<script type="text/javascript">
+	function getUrlParam(name) {
+		name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+		var regexS = "[\\?&]" + name + "=([^&#]*)";
+		var regex = new RegExp(regexS);
+		var results = regex.exec(window.location.href);
+		if (results == null) return "";
+		else return results[1];
+	}
 	
 	Ext.onReady(function() {
 	this.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || window.oRequestAnimationFrame || function(callback) {
@@ -81,7 +90,7 @@
 			requestAnimationFrame(draw);
 		}
 
-		pjs.ui.Builder.build(particleSystem, canvas);
+		pjs.ui.Builder.build(particleSystem, canvas, getUrlParam('ui'));
 
 		draw(new Date().getTime());
 	});
