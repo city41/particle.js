@@ -9,34 +9,72 @@
 	}
 
 	pjs.Emitter = function(config) {
-		_.extend(this, config);
-
-		this._particlePool = [];
-
-		for (var i = 0; i < this.totalParticles; ++i) {
-			this._particlePool.push(new pjs.Particle());
-		}
-
-		this._elapsed = 0;
-		this._emitCounter = 0;
-		this._particleIndex = 0;
-		this._particleCount = 0;
-		this.active = this.active || false;
-
-		this.startColorVar = this.startColorVar || [0, 0, 0, 0];
-		this.endColorVar = this.endColorVar || [0, 0, 0, 0];
-		this.posVar = this.posVar || { x: 0, y: 0 };
-		this.gravity = this.gravity || { x: 0, y: 0 };
+		this.reconfigure(config || {});
 	};
 
 	pjs.Emitter.prototype = {
-		_isFull: function() {
-			return this._particleCount === this.totalParticles;
+		overlay: function(config) {
+			_.extend(this, config);
+			this.reset();
 		},
 
-		_reset: function() {
+		reconfigure: function(config) {
+			this.totalParticles = 0;
+			this.emissionRate = 0;
+
+			this.active = false;
+			this.duration = Infinity;
+			
+			this.pos = { x: 0, y: 0 };
+			this.posVar = { x: 0, y: 0 };
+			
+			this.angle = 0;
+			this.angleVar = 0;
+
+			this.life = 0;
+			this.lifeVar = 0;
+
+			this.radius = 0;
+			this.radiusVar = 0;
+
+			this.texture = null;
+
+			this.startScale = 0;
+			this.startScaleVar = 0;
+			this.endScale = 0;
+			this.endScaleVar = 0;
+
+			this.startColor = [0,0,0,0];
+			this.startColorVar = [0,0,0,0];
+			this.endColor = [0,0,0,0];
+			this.endColorVar = [0,0,0,0];
+
+			this.gravity = { x: 0, y: 0 };
+			this.radialAccel = 0;
+			this.radialAccelVar = 0;
+			this.tangentialAccel = 0;
+			this.tangentialAccelVar = 0;
+
+			_.extend(this, config);
+
+			this.reset();
+		},
+
+		reset: function() {
+			this._particlePool = [];
+			
+			for (var i = 0; i < this.totalParticles; ++i) {
+				this._particlePool.push(new pjs.Particle());
+			}
+
 			this._particleCount = 0;
 			this._particleIndex = 0;
+			this._elapsed = 0;
+			this._emitCounter = 0;
+		},
+
+		_isFull: function() {
+			return this._particleCount === this.totalParticles;
 		},
 
 		_addParticle: function() {
@@ -52,6 +90,8 @@
 		},
 
 		_initParticle: function(particle) {
+			particle.texture = this.texture;
+
 			particle.pos.x = this.pos.x + this.posVar.x * pjs.random11();
 			particle.pos.y = this.pos.y + this.posVar.y * pjs.random11();
 

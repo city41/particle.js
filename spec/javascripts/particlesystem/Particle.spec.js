@@ -17,7 +17,7 @@ describe('Particle', function() {
 			var p = new pjs.Particle();
 
 			var expectedX = Math.cos(pjs.toRad(angle)) * speed;
-			var expectedY = Math.sin(pjs.toRad(angle)) * speed;
+			var expectedY = -Math.sin(pjs.toRad(angle)) * speed;
 
 			p.setVelocity(angle, speed);
 

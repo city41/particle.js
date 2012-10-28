@@ -7,6 +7,7 @@
 			y: 0
 		};
 		this.setVelocity(0, 0);
+		this.life = 0;
 	};
 
 	pjs.Particle.prototype = {
