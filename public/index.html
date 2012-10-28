@@ -2,47 +2,35 @@
 <html lang="en">
 <head>
 	<title>Particle Designer</title>
+	<link rel="stylesheet" href="javascripts/third/ext/ext-4.1.1a/resources/css/ext-all.css" />
 	<style>
 		#canvas {
-			float: left;
 		}
 		#uiRoot {
-			float: left;
 		}
 	</style>
 </head>
 <body>
-	<canvas id="canvas" width="400" height="400"></canvas>
-	<div id="uiRoot"></div>
-
 	<script type="text/javascript" src="javascripts/third/underscore-min.js"></script>
 	<script type="text/javascript" src="javascripts/third/stats.min.js"></script>
-	<script type="text/javascript" src="javascripts/third/uki.js"></script>
 
 	<script type="text/javascript" src="javascripts/particlesystem/util.js"></script>
 	<script type="text/javascript" src="javascripts/particlesystem/Particle.js"></script>
 	<script type="text/javascript" src="javascripts/particlesystem/Emitter.js"></script>
 	<script type="text/javascript" src="javascripts/particlesystem/Renderer.js"></script>
-	<script type="text/javascript">
 
+	<script type="text/javascript" src="javascripts/third/ext/ext-4.1.1a/ext-all.js"></script>
+	<script type="text/javascript" src="javascripts/ui/VectorField.js"></script>
+	<script type="text/javascript" src="javascripts/ui/ColorField.js"></script>
+	<script type="text/javascript" src="javascripts/ui/NumberField.js"></script>
+	<script type="text/javascript" src="javascripts/ui/Builder.js"></script>
+
+	<script type="text/javascript">
+	
+	Ext.onReady(function() {
 	this.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || window.oRequestAnimationFrame || function(callback) {
 		window.setTimeout(callback, 1 / 60 * 1000);
 	};
-
-		function getStats() {
-			var stats = new Stats();
-			stats.setMode(0); // 0: fps, 1: ms
-	
-			// Align top-left
-			stats.domElement.style.position = 'absolute';
-			stats.domElement.style.right = '0px';
-			stats.domElement.style.top = '0px';
-
-			document.body.appendChild( stats.domElement );
-			return stats;
-		}
-
-		var stats = getStats();
 
 		var lastTimestamp = 0;
 		var texture = new Image();
@@ -73,9 +61,12 @@
 			duration: Infinity
 		});
 
-		var context = document.getElementById('canvas').getContext('2d');
+		var canvas = document.createElement('canvas');
+		canvas.width = 400;
+		canvas.height = 400;
+		var context = canvas.getContext('2d');
+
 		function draw(timestamp) {
-			stats.begin();
 			var delta = timestamp - (lastTimestamp || timestamp);
 			lastTimestamp = timestamp;
 
@@ -87,52 +78,13 @@
 
 			pjs.Renderer.render(context, particleSystem.particles);
 			
-			stats.end();
 			requestAnimationFrame(draw);
 		}
 
+		pjs.ui.Builder.build(particleSystem, canvas);
+
 		draw(new Date().getTime());
-
-		function setupUki() {
-			var overlay = [
-				'{', 
-				'"startColor": [1, 0.5, 0.1, 1],',
-				'"posVar": { "x": 20, "y": 0 },',
-				'"startColorVar": [0.2, 0.1, 0, 0.2],',
-				'"endColor" : [0, 0, 0, 0.3],',
-				'"endColorVar": [0, 0.1, 0.05, 0.05],',
-				'"tangentialAccel": 0,',
-				'"radialAccel": 0,',
-				'"angle": 90,',
-				'"angleVar": 15,',
-				'"texture": null',
-				'}'
-			].join('\n');
-
-			uki({ 
-						view: 'Box',
-						rect: '0 0 400 0',
-						childViews: [{ 
-								view: 'MultilineTextField', 
-								rect: '10 10 400 200', 
-								anchor: 'left top right',
-								value: overlay
-						}, { 
-							view: 'Button',
-							id: 'overlayButton',
-							rect: '10 220 100 24',
-							anchor: 'left top right',
-							text: 'Overlay' 
-						}]
-			}).attachTo(document.getElementById('uiRoot'));
-
-			uki('#overlayButton').click(function() {
-				particleSystem.overlay(JSON.parse(uki('MultilineTextField').value()));
-			});
-		}
-
-		setupUki();
-
+	});
 	</script>
 </body>
 </html>
