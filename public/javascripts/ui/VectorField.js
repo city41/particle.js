@@ -3,24 +3,26 @@ Ext.define('pjs.ui.VectorField', {
 	alias: 'widget.pjsvector',
 	layout: 'hbox',
 
+	defaults: {
+		xtype: 'numberfield',
+		labelWidth: 20,
+		labelAlign: 'right',
+		width: 90
+	},
+
 	initComponent: function() {
 		this.items = [{
-			xtype: 'container',
-			html: this.property,
-			width: 100
-		}, {
 			itemId: 'xfield',
-			xtype: 'numberfield',
-			fieldLabel: 'x:',
+			fieldLabel: this.property + ' x:',
+			labelWidth: 100,
+			width: this.defaults.width + 100,
 			value: this._getValue('x'),
 			listeners: {
 				change: this._onChange,
 				scope: this
 			}
-		},
-		{
+		}, {
 			itemId: 'yfield',
-			xtype: 'numberfield',
 			fieldLabel: 'y:',
 			value: this._getValue('y'),
 			listeners: {
