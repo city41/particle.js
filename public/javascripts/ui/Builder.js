@@ -6,7 +6,8 @@ Ext.define('pjs.ui.Builder', {
 			title: 'Position',
 			items: [
 				{ type: 'vector', property: 'pos' },
-				{ type: 'vector', property: 'posVar' }
+				{ type: 'vector', property: 'posVar' },
+				{ type: 'transformfn', property: 'posVarTransformFn' }
 			]
 		},
 		{
@@ -14,6 +15,16 @@ Ext.define('pjs.ui.Builder', {
 			items: [
 				{ type: 'number', property: 'angle' },
 				{ type: 'number', property: 'angleVar' }
+			]
+		},
+		{
+			title: 'Gravity',
+			items: [
+				{ type: 'vector', property: 'gravity' },
+				{ type: 'number', property: 'radialAccel' },
+				{ type: 'number', property: 'radialAccelVar' },
+				{ type: 'number', property: 'tangentialAccel' },
+				{ type: 'number', property: 'tangentialAccelVar' }
 			]
 		}
 	],

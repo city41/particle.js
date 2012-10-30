@@ -27,6 +27,7 @@
 			
 			this.pos = { x: 0, y: 0 };
 			this.posVar = { x: 0, y: 0 };
+			this.posVarTransformFn = null;
 			
 			this.angle = 0;
 			this.angleVar = 0;
@@ -92,8 +93,17 @@
 		_initParticle: function(particle) {
 			particle.texture = this.texture;
 
-			particle.pos.x = this.pos.x + this.posVar.x * pjs.random11();
-			particle.pos.y = this.pos.y + this.posVar.y * pjs.random11();
+			var posVar = {
+				x: this.posVar.x * pjs.random11(),
+				y: this.posVar.y * pjs.random11()
+			};
+
+			if(this.posVarTransformFn) {
+				posVar = this.posVarTransformFn(posVar);
+			}
+
+			particle.pos.x = this.pos.x + posVar.x;
+			particle.pos.y = this.pos.y + posVar.y;
 
 			var angle = this.angle + this.angleVar * pjs.random11();
 			var speed = this.speed + this.speedVar * pjs.random11();
@@ -171,6 +181,7 @@
 				var newy = tangential.x;
 				tangential.x = -tangential.y;
 				tangential.y = newy;
+
 				tangential.x *= p.tangentialAccel;
 				tangential.y *= p.tangentialAccel;
 
