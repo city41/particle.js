@@ -3,48 +3,44 @@ Ext.define('pjs.ui.ColorField', {
 	alias: 'widget.pjscolor',
 	layout: 'hbox',
 
+	defaults: {
+		xtype: 'numberfield',
+		labelWidth: 20,
+		labelAlign: 'right',
+		minValue: 0,
+		maxValue: 255,
+		width: 90
+	},
+
 	initComponent: function() {
 		this.items = [{
-			xtype: 'container',
-			html: this.property,
-			width: 100
-		}, {
 			itemId: 'rfield',
-			xtype: 'numberfield',
-			fieldLabel: 'r:',
+			fieldLabel: this.property + ' r:',
+			labelWidth: 100,
+			width: this.defaults.width + 100,
 			value: this._getValue('r'),
-			minValue: 0,
-			maxValue: 255,
 			listeners: {
 				change: this._onChange,
 				scope: this
 			}
-		},
-		{
+		}, {
 			itemId: 'gfield',
-			xtype: 'numberfield',
 			fieldLabel: 'g:',
 			value: this._getValue('g'),
-			minValue: 0,
-			maxValue: 255,
 			listeners: {
 				change: this._onChange,
 				scope: this
 			}
 		}, {
 			itemId: 'bfield',
-			xtype: 'numberfield',
 			fieldLabel: 'b:',
 			value: this._getValue('b'),
-			minValue: 0,
-			maxValue: 255,
 			listeners: {
 				change: this._onChange,
 				scope: this
 			}
 		}, {
 			itemId: 'afield',
-			xtype: 'numberfield',
 			fieldLabel: 'a:',
 			value: this._getValue('a'),
 			minValue: 0,

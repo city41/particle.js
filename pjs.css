@@ -1,0 +1,56 @@
+.x-panel-header, .x-panel-body {
+	background: none;
+	border: 0px;
+	box-shadow: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+}
+
+.x-panel-header-text-container {
+	height: 30px;
+}
+
+.x-panel-header-text {
+	font-size: 16px;
+	color: black;
+}
+
+.x-panel {
+	border: 2px solid gray;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+
+	padding: 10px;
+
+	background-color: #EEE;
+
+	margin-bottom: 10px;
+}
+
+label {
+	font-weight: bold;
+}
+
+.inner-panel.x-panel {
+	border: none;
+}
+
+.inner-panel .x-panel-header-text-container {
+	height: 20px;
+}
+
+.inner-panel .x-panel-header-text {
+	font-size: 12px;
+	color: black;
+}
+
+.divider {
+	background-color: #CCC !important;
+	height: 1px !important;
+	padding: 0 !important;
+	margin-top: 4px !important;
+	margin-bottom: 15px !important;
+	margin-left: 40px !important;
+	margin-right: 4px !important;
+}

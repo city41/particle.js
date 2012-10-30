@@ -1,14 +1,14 @@
 Ext.define('pjs.ui.TransformFnField', {
-	extend: 'Ext.container.Container',
+	extend: 'Ext.panel.Panel',
 	alias: 'widget.pjstransformfn',
-	layout: 'hbox',
+	layout: 'vbox',
+	collapsible: true,
+	border: false,
+	componentCls: 'inner-panel',
 
 	initComponent: function() {
+		this.title = this.property;
 		this.items = [{
-			xtype: 'container',
-			html: this.property,
-			width: 100
-		}, {
 			itemId: 'fnfield',
 			xtype: 'textarea',
 			width: 300,
