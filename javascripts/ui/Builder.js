@@ -59,7 +59,7 @@ Ext.define('pjs.ui.Builder', {
 			}, {
 				xtype: 'container',
 				itemId: 'rightColumn',
-				width: 400,
+				width: 500,
 				height: canvas.height + 10,
 				autoScroll: true
 			}]
