@@ -226,6 +226,18 @@
 				return;
 			}
 
+			++this.frames;
+			this.fpsElapsed += delta;
+
+			if(this.fpsElapsed > 2 && this.fpsContainer) {
+				var fps = this.frames / this.fpsElapsed;
+				fps = Math.round(fps * 100) / 100;
+				this.fpsContainer.innerHTML = fps + ' fps';
+				this.fpsElapsed = 0;
+				this.frames = 0;
+			}
+
+
 			if (this.emissionRate) {
 				var rate = 1.0 / this.emissionRate;
 				this._emitCounter += delta;
@@ -245,6 +257,12 @@
 				var p = this._particlePool[this._particleIndex];
 				this._updateParticle(p, delta, this._particleIndex);
 			}
+		},
+
+		setFpsContainer: function(el) {
+			this.fpsContainer = el;
+			this.frames = 0;
+			this.fpsElapsed = 0;
 		}
 	};
 
