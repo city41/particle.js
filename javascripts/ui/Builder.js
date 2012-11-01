@@ -10,7 +10,10 @@ Ext.define('pjs.ui.Builder', {
 				{ type: 'transformfn', property: 'posVarTransformFn' },
 				{ type: 'divider' },
 				{ type: 'number', property: 'life' },
-				{ type: 'number', property: 'lifeVar' }
+				{ type: 'number', property: 'lifeVar' },
+				{ type: 'divider' },
+				{ type: 'number', property: 'totalParticles' },
+				{ type: 'number', property: 'emissionRate' }
 			]
 		}, {
 			title: 'Appearance',
@@ -49,10 +52,10 @@ Ext.define('pjs.ui.Builder', {
 			layout: 'hbox',
 			padding: 8,
 			items: [{
-				xtype: 'container',
+				xtype: 'pjscanvaswrapper',
 				itemId: 'leftColumn',
-				width: canvas.width + 10,
-				height: canvas.height + 10
+				canvas: canvas,
+				particleSystem: particleSystem
 			}, {
 				xtype: 'container',
 				itemId: 'rightColumn',
@@ -67,7 +70,7 @@ Ext.define('pjs.ui.Builder', {
 		this.leftColumn = viewport.down('#leftColumn');
 		this.rightColumn = viewport.down('#rightColumn');
 
-		this.leftColumn.getEl().dom.appendChild(canvas);
+		//this.leftColumn.getEl().dom.appendChild(canvas);
 
 		Ext.Array.forEach(uiConfig, function(entry) {
 			this.rightColumn.add(this._buildGroup(particleSystem, entry.title, entry.items));
