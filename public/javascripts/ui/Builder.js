@@ -70,8 +70,6 @@ Ext.define('pjs.ui.Builder', {
 		this.leftColumn = viewport.down('#leftColumn');
 		this.rightColumn = viewport.down('#rightColumn');
 
-		//this.leftColumn.getEl().dom.appendChild(canvas);
-
 		Ext.Array.forEach(uiConfig, function(entry) {
 			this.rightColumn.add(this._buildGroup(particleSystem, entry.title, entry.items));
 		}, this);
