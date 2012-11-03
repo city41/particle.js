@@ -3,6 +3,8 @@ Ext.define('pjs.ui.TransformFnField', {
 	alias: 'widget.pjstransformfn',
 	layout: 'vbox',
 	collapsible: true,
+	collapsed: true,
+	collapseFirst: true,
 	border: false,
 	componentCls: 'inner-panel',
 

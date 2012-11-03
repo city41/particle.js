@@ -109,7 +109,8 @@ Ext.define('pjs.ui.Builder', {
 				type: 'vbox',
 				align: 'stretch'
 			},
-			padding: 6
+			padding: 6,
+			width: 480
 		};
 	},
 

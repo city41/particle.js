@@ -2,7 +2,7 @@ Ext.define('pjs.ui.NumberField', {
 	extend: 'Ext.container.Container',
 	alias: 'widget.pjsnumber',
 	layout: 'hbox',
-	width: 200,
+	width: 100,
 
 	initComponent: function() {
 		this.items = [{
@@ -10,7 +10,7 @@ Ext.define('pjs.ui.NumberField', {
 			xtype: 'numberfield',
 			fieldLabel: this.property,
 			labelAlign: 'right',
-			flex: 1,
+			width: 200,
 			value: this._getValue(),
 			listeners: {
 				change: this._onChange,
