@@ -34,6 +34,14 @@ Ext.define('pjs.ui.Builder', {
 				{ type: 'number', property: 'radiusVar' }
 			]
 		}, {
+			title: 'Texture',
+			items: [
+				{ type: 'texture', property: 'texture' },
+				{ type: 'boolean', property: 'textureEnabled' },
+				{ type: 'boolean', property: 'textureAdditive' },
+				{ type: 'texturereset', property: 'texture' }
+			]
+		}, {
 			title: 'Physics',
 			items: [
 				{ type: 'number', property: 'speed' },

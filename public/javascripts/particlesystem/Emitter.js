@@ -92,6 +92,7 @@
 
 		_initParticle: function(particle) {
 			particle.texture = this.texture;
+			particle.textureEnabled = this.textureEnabled;
 
 			var posVar = {
 				x: this.posVar.x * pjs.random11(),

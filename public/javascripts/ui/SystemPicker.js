@@ -76,8 +76,8 @@
 
 			this.on('select', this._onSelect, this);
 
-			this.setValue(systems[0].name);
-			this.target.reconfigure(systems[0].system);
+			//this.setValue(systems[0].name);
+			//this.target.reconfigure(systems[0].system);
 		},
 
 		_onSelect: function(combo, records) {
