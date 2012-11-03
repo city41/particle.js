@@ -1,18 +1,43 @@
 (function() {
+	var posFuncs = {
+		center: function(size) {
+			return {
+				x: (size.width / 2) | 0,
+				y: (size.height / 2) | 0
+			};
+		},
+		centerBottom: function(size) {
+			return {
+				x: (size.width / 2) | 0,
+				y: (size.height * 2 / 3) | 0
+			};
+		},
+		centerAboveTop: function(size) {
+			return {
+				x: (size.width / 2) | 0,
+				y: -10
+			};
+		}
+	};
+
 	this.pjs = this.pjs || {};
 
 	pjs.defaultTexture = new Image();
 	pjs.defaultTexture.src = 'particle.png';
+
+	pjs.positionPredefinedSystems = function(size) {
+		for(var i = 0; i < pjs.predefinedSystems.length; ++i) {
+			var pos = pjs.predefinedSystems[i].system.pos;
+			pjs.predefinedSystems[i].system.pos = posFuncs[pos](size);
+		}
+	};
 
 	pjs.predefinedSystems = [{
 		name: 'meteor',
 		system: {
 			totalParticles: 150,
 			emissionRate: 150 / 2,
-			pos: {
-				x: 250,
-				y: 250
-			},
+			pos: 'center',
 			gravity: {
 				x: -200,
 				y: -200
@@ -45,10 +70,7 @@
 		system: {
 			totalParticles: 1500,
 			emissionRate: 1500 / 3.5,
-			pos: {
-				x: 175,
-				y: 350
-			},
+			pos: 'centerBottom',
 			angle: 90,
 			angleVar: 20,
 			gravity: {
@@ -79,10 +101,7 @@
 		system: {
 			totalParticles: 250,
 			emissionRate: 250 / 7,
-			pos: {
-				x: 175,
-				y: 350
-			},
+			pos: 'centerBottom',
 			posVar: {
 				x: 40,
 				y: 20
@@ -114,10 +133,7 @@
 		system: {
 			totalParticles: 200,
 			emissionRate: 200 / 4,
-			pos: {
-				x: 175,
-				y: 200
-			},
+			pos: 'center',
 			angle: 90,
 			angleVar: 360,
 			speed: 60,
@@ -145,10 +161,7 @@
 		system: {
 			totalParticles: 700,
 			emissionRate: 10,
-			pos: {
-				x: 175,
-				y: -10
-			},
+			pos: 'centerAboveTop',
 			posVar: {
 				x: 175,
 				y: 0
@@ -183,10 +196,7 @@
 		system: {
 			totalParticles: 500,
 			emissionRate: 500 / 12,
-			pos: {
-				x: 175,
-				y: 200
-			},
+			pos: 'center',
 			angle: 90,
 			angleVar: 0,
 			speed: 150,

@@ -21,6 +21,16 @@
 		return (results && results[1]) || '';
 	}
 
+	function getCanvasSize() {
+		var width = getUrlParam('w');
+		var height = getUrlParam('h');
+
+		return {
+			width: width || 350,
+			height: height || 400
+		};
+	}
+
 	var paused = false;
 	var lastTimestamp = 0;
 
@@ -79,8 +89,14 @@
 		});
 
 		canvas = document.createElement('canvas');
-		canvas.width = 350;
-		canvas.height = 400;
+
+		var canvasSize = getCanvasSize();
+
+		canvas.width = canvasSize.width;
+		canvas.height = canvasSize.height;
+
+		pjs.positionPredefinedSystems(canvasSize);
+
 		context = canvas.getContext('2d');
 
 		pjs.ui.Builder.build(pjs, particleSystem, canvas, getUrlParam('ui'), function() {
