@@ -9,6 +9,8 @@
 		valueField: 'system',
 
 		initComponent: function() {
+			this.systems = pjs.predefinedSystems;
+
 			this.store = Ext.create('Ext.data.Store', {
 				fields: ['name', 'system'],
 				data: this.systems
@@ -24,6 +26,7 @@
 
 		_onSelect: function(combo, records) {
 			this.target.reconfigure(records[0].get('system'));
+			this.fireEvent('systemchange', this, records[0].get('name'));
 		}
 	});
 })();

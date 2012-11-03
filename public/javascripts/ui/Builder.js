@@ -5,12 +5,7 @@ Ext.define('pjs.ui.Builder', {
 		{
 			title: 'Predefined Systems',
 			items: [
-				{ 
-					type: 'systempicker',
-					config: {
-						systems: pjs.predefinedSystems
-					}
-				}
+				{ type: 'systempicker' }
 			]
 		}, {
 			title: 'Basics',
@@ -83,13 +78,27 @@ Ext.define('pjs.ui.Builder', {
 				autoScroll: true
 			}],
 			listeners: {
-				afterrender: function() {
+				afterrender: function(viewport) {
+					var picker = viewport.down('pjssystempicker');
+
+					if(picker) {
+						picker.on('systemchange', this._onSystemChange, this);
+					}
 					Ext.defer(callback, 200);
-				}
+				},
+				scope: this
 			}
 		});
 
-		this._initMouseEvents(controller);
+		this._initFocusEvents(controller);
+	},
+
+	_onSystemChange: function() {
+		var fields = Ext.ComponentQuery.query('pjsfield');
+
+		Ext.Array.forEach(fields, function(field) {
+			field.reload();
+		});
 	},
 
 	_getUIItems: function(target, uiConfig) {
@@ -105,14 +114,12 @@ Ext.define('pjs.ui.Builder', {
 		var items = [];
 
 		Ext.Array.forEach(propertyConfigs, function(config) {
-			var item = {
+			items.push({
 				xtype: 'pjs' + config.type,
 				target: target,
 				property: config.property,
 				padding: 6	
-			};
-			item = Ext.apply(item, config.config || {});
-			items.push(item);
+			});
 		});
 
 		return {
@@ -130,20 +137,33 @@ Ext.define('pjs.ui.Builder', {
 		};
 	},
 
-	_initMouseEvents: function(controller) {
+	_initFocusEvents: function(controller) {
+		function pause() {
+			controller.pause();
+			Ext.getBody().mask('bring mouse back to resume');
+		}
+
+		function resume() {
+			controller.resume();
+			Ext.getBody().unmask();
+		}
+
 		var config = {
 			mouseleave: function() {
-				controller.pause();
+				pause();
 			}
 		};
 
 		// opera is weird here, doesnt like mousein or mouseenter
 		var enterProperty = Ext.isOpera ? 'mouseover' : 'mouseenter';
 		config[enterProperty] = function() {
-			controller.resume();
+			resume();
 		};
 
 		Ext.getBody().on(config);
+
+		window.onblur = pause;
+		window.onfocus = resume;
 	}
 });
 

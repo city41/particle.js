@@ -1,5 +1,5 @@
 Ext.define('pjs.ui.NumberField', {
-	extend: 'Ext.container.Container',
+	extend: 'pjs.ui.FieldBase',
 	alias: 'widget.pjsnumber',
 	layout: 'hbox',
 	width: 100,
@@ -19,6 +19,10 @@ Ext.define('pjs.ui.NumberField', {
 		}];
 
 		this.callParent(arguments);
+	},
+
+	reload: function() {
+		this.down('#numfield').setValue(this._getValue());
 	},
 
 	_getValue: function(property) {

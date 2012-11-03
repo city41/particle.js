@@ -1,5 +1,5 @@
 Ext.define('pjs.ui.ColorField', {
-	extend: 'Ext.container.Container',
+	extend: 'pjs.ui.FieldBase',
 	alias: 'widget.pjscolor',
 	layout: 'hbox',
 
@@ -54,6 +54,15 @@ Ext.define('pjs.ui.ColorField', {
 		this.callParent(arguments);
 	},
 
+	reload: function() {
+		this.reloading = true;
+		this.down('#rfield').setValue(this._getValue('r'));
+		this.down('#gfield').setValue(this._getValue('g'));
+		this.down('#bfield').setValue(this._getValue('b'));
+		this.down('#afield').setValue(this._getValue('a'));
+		this.reloading = false;
+	},
+
 	_getValue: function(property) {
 		var nameIndex = ['r', 'g', 'b', 'a'];
 		var index = nameIndex.indexOf(property);
@@ -63,6 +72,10 @@ Ext.define('pjs.ui.ColorField', {
 	},
 
 	_onChange: function() {
+		if(this.reloading) {
+			return;
+		}
+
 		var r = this.down('#rfield').getValue();
 		var g = this.down('#gfield').getValue();
 		var b = this.down('#bfield').getValue();

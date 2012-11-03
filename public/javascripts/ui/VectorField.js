@@ -1,5 +1,5 @@
 Ext.define('pjs.ui.VectorField', {
-	extend: 'Ext.container.Container',
+	extend: 'pjs.ui.FieldBase',
 	alias: 'widget.pjsvector',
 	layout: 'hbox',
 
@@ -34,11 +34,22 @@ Ext.define('pjs.ui.VectorField', {
 		this.callParent(arguments);
 	},
 
+	reload: function() {
+		this.reloading = true;
+		this.down('#xfield').setValue(this._getValue('x'));
+		this.down('#yfield').setValue(this._getValue('y'));
+		this.reloading = false;
+	},
+
 	_getValue: function(property) {
 		return this.target[this.property][property];
 	},
 
 	_onChange: function() {
+		if(this.reloading) {
+			return;
+		}
+
 		var x = this.down('#xfield').getValue();
 		var y = this.down('#yfield').getValue();
 
