@@ -1,6 +1,7 @@
 Ext.define('pjs.ui.Builder', {
 	singleton: true,
 
+	// TODO: just make this a ui string
 	uiConfig: [
 		{
 			title: 'Basics',
@@ -47,32 +48,38 @@ Ext.define('pjs.ui.Builder', {
 		}
 	],
 
-	build: function(particleSystem, canvas, uiString) {
-		var viewport = Ext.create('Ext.container.Viewport', {
+	build: function(controller, particleSystem, canvas, uiString, callback) {
+		var uiConfig = (uiString && pjs.ui.Parser.parse(uiString)) || this.uiConfig;
+
+		Ext.create('Ext.container.Viewport', {
 			layout: 'hbox',
 			padding: 8,
 			items: [{
 				xtype: 'pjscanvaswrapper',
-				itemId: 'leftColumn',
 				canvas: canvas,
 				particleSystem: particleSystem
 			}, {
 				xtype: 'container',
-				itemId: 'rightColumn',
+				items: this._getUIItems(particleSystem, uiConfig),
 				width: 500,
 				height: canvas.height + 10,
 				autoScroll: true
-			}]
+			}],
+			listeners: {
+				afterrender: callback
+			}
 		});
 
-		var uiConfig = (uiString && pjs.ui.Parser.parse(uiString)) || this.uiConfig;
+		this._initMouseEvents(controller);
+	},
 
-		this.leftColumn = viewport.down('#leftColumn');
-		this.rightColumn = viewport.down('#rightColumn');
-
+	_getUIItems: function(target, uiConfig) {
+		var items = [];
 		Ext.Array.forEach(uiConfig, function(entry) {
-			this.rightColumn.add(this._buildGroup(particleSystem, entry.title, entry.items));
+			items.push(this._buildGroup(target, entry.title, entry.items));
 		}, this);
+
+		return items;
 	},
 
 	_buildGroup: function(target, title, propertyConfigs) {
@@ -87,7 +94,8 @@ Ext.define('pjs.ui.Builder', {
 			});
 		});
 
-		return Ext.create('Ext.panel.Panel', {
+		return {
+			xtype: 'panel',
 			title: title,
 			items: items,
 			border: false,
@@ -97,6 +105,17 @@ Ext.define('pjs.ui.Builder', {
 				align: 'stretch'
 			},
 			padding: 6
+		};
+	},
+
+	_initMouseEvents: function(controller) {
+		Ext.getBody().on({
+			mouseenter: function() {
+				controller.resume();
+			},
+			mouseleave: function() {
+				controller.pause();
+			}
 		});
 	}
 });
