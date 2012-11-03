@@ -23,8 +23,10 @@
 
 	var paused = false;
 	var lastTimestamp = 0;
-	var texture = new Image();
-	texture.src = 'particle.png';
+
+	pjs.defaultTexture = new Image();
+	pjs.defaultTexture.src = 'particle.png';
+
 	var particleSystem;
 	var canvas;
 	var context;
@@ -70,7 +72,7 @@
 			radiusVar: 4,
 			startScale: 1,
 			endScale: 0,
-			texture: texture,
+			texture: pjs.defaultTexture,
 			textureEnabled: true,
 			startColor: [1, 0.5, 0, 0.8],
 			endColor: [0, 0, 0, 0],

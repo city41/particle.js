@@ -1,19 +1,14 @@
 Ext.define('pjs.ui.TextureLoader', {
 	singleton: true,
+	cache: {},
 
-	load: function(target, property, image) {
-		if(Ext.isString(image)) {
-			this._loadViaString(target, property, image);
+	load: function(target, property, file) {
+		if(this.cache[file.name]) {
+			this._overlay(target, property, this.cache[file.name]);
+			console.log('got it from the cache!');
 		} else {
-			this._loadViaFile(target, property, image);
+			this._loadViaFile(target, property, file);
 		}
-	},
-
-	_loadViaString: function(target, property, imageSrc) {
-		var image = new Image();
-		image.src = imageSrc;
-
-		this._overlay(target, property, image);
 	},
 
 	_overlay: function(target, property, result) {
@@ -35,6 +30,7 @@ Ext.define('pjs.ui.TextureLoader', {
 			var image = new Image();
 			image.src = result.target.result;
 
+			me.cache[file.name] = image;
 			me._overlay(target, property, image);
 		};
 

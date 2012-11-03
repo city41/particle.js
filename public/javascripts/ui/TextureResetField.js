@@ -16,7 +16,10 @@ Ext.define('pjs.ui.TextureResetField', {
 	},
 
 	_resetTexture: function() {
-		pjs.ui.TextureLoader.load(this.target, this.property, 'particle.png');
+		var config = {};
+		config[this.property] = pjs.defaultTexture;
+
+		this.target.overlay(config);
 	}
 });
 	
