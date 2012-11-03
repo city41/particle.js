@@ -28,7 +28,7 @@
 			duration: Infinity
 		}
 	}, {
-		name: 'red flame',
+		name: 'orange flame',
 		system: {
 			totalParticles: 300,
 			emissionRate: 50,
@@ -75,10 +75,13 @@
 			this.callParent(arguments);
 
 			this.on('select', this._onSelect, this);
+
+			this.setValue(systems[0].name);
+			this.target.reconfigure(systems[0].system);
 		},
 
 		_onSelect: function(combo, records) {
-			this.target.overlay(records[0].get('system'));
+			this.target.reconfigure(records[0].get('system'));
 		}
 	});
 })();
