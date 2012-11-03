@@ -39,6 +39,8 @@
 			this.radiusVar = 0;
 
 			this.texture = null;
+			this.textureEnabled = false;
+			this.textureAdditive = false;
 
 			this.startScale = 0;
 			this.startScaleVar = 0;
@@ -93,6 +95,7 @@
 		_initParticle: function(particle) {
 			particle.texture = this.texture;
 			particle.textureEnabled = this.textureEnabled;
+			particle.textureAdditive = this.textureAdditive;
 
 			var posVar = {
 				x: this.posVar.x * pjs.random11(),
