@@ -4,6 +4,11 @@ Ext.define('pjs.ui.Builder', {
 	// TODO: just make this a ui string
 	uiConfig: [
 		{
+			title: 'Predefined Systems',
+			items: [
+				{ type: 'systempicker' }
+			]
+		}, {
 			title: 'Basics',
 			items: [
 				{ type: 'vector', property: 'pos' },
