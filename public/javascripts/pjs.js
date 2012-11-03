@@ -53,18 +53,18 @@
 			totalParticles: 300,
 			emissionRate: 50,
 			pos: {
-				x: 200,
-				y: 200
+				x: 175,
+				y: 350
 			},
-			angle: 0,
-			angleVar: 360,
-			speed: 20,
+			angle: 90,
+			angleVar: 20,
+			speed: 25,
 			speedVar: 10,
 			life: 7,
 			lifeVar: 4,
-			radialAccel: - 20,
+			radialAccel: 0,
 			radialAccelVar: 0,
-			tangentialAccel: 15,
+			tangentialAccel: 0,
 			tangentialAccelVar: 0,
 			radius: 10,
 			radiusVar: 4,
@@ -92,9 +92,11 @@
 	};
 
 	pjs.resume = function() {
-		paused = false;
-		lastTimestamp = 0;
-		draw(new Date().getTime());
+		if(paused) {
+			paused = false;
+			lastTimestamp = 0;
+			draw(new Date().getTime());
+		}
 	}
 })();
 
