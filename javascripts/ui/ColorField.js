@@ -9,7 +9,7 @@ Ext.define('pjs.ui.ColorField', {
 		labelAlign: 'right',
 		minValue: 0,
 		maxValue: 255,
-		width: 90
+		width: 85
 	},
 
 	initComponent: function() {

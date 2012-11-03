@@ -28,6 +28,10 @@
 	margin-bottom: 10px;
 }
 
+.x-tool img {
+	background-image: url(tool-sprites.png);
+}
+
 label {
 	font-weight: bold;
 }
