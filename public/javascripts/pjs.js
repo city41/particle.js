@@ -85,7 +85,6 @@
 		pjs.ui.Builder.build(pjs, particleSystem, canvas, getUrlParam('ui'), function() {
 			draw(new Date().getTime());
 		});
-
 	};
 
 	pjs.pause = function() {
