@@ -49,6 +49,17 @@ label {
 	color: black;
 }
 
+.x-mask-msg {
+	border: none;
+	background-color: none;
+}
+
+.x-mask-msg div {
+	background-image: none;
+	padding-left: 10px;
+	border: 1px solid gray;
+}
+
 .divider {
 	background-color: #CCC !important;
 	height: 1px !important;

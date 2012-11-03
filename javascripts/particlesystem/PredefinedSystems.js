@@ -5,6 +5,42 @@
 	pjs.defaultTexture.src = 'particle.png';
 
 	pjs.predefinedSystems = [{
+		name: 'meteor',
+		system: {
+			totalParticles: 150,
+			emissionRate: 150 / 2,
+			pos: {
+				x: 250,
+				y: 250
+			},
+			gravity: {
+				x: -200,
+				y: -200
+			},
+			angle: 90,
+			angleVar: 360,
+			speed: 15,
+			speedVar: 5,
+			life: 2,
+			lifeVar: 1,
+			radialAccel: 0,
+			radialAccelVar: 0,
+			tangentialAccel: 0,
+			tangentialAccelVar: 0,
+			texture: pjs.defaultTexture,
+			textureEnabled: true,
+			textureAdditive: true,
+			radius: 60,
+			radiusVar: 10,
+			startScale: 1,
+			endScale: 1,
+			startColor: [0.2, 0.4, 0.7, 1],
+			startColorVar: [0, 0, 0.2, 0.1],
+			endColor: [0, 0, 0, 1],
+			active: true,
+			duration: Infinity
+		}
+	}, {
 		name: 'fireworks',
 		system: {
 			totalParticles: 1500,
@@ -100,42 +136,6 @@
 			startScale: 1,
 			endScale: 1,
 			startColor: [0.12, 0.25, 0.76, 1],
-			endColor: [0, 0, 0, 1],
-			active: true,
-			duration: Infinity
-		}
-	}, {
-		name: 'meteor',
-		system: {
-			totalParticles: 150,
-			emissionRate: 150 / 2,
-			pos: {
-				x: 250,
-				y: 250
-			},
-			gravity: {
-				x: -200,
-				y: -200
-			},
-			angle: 90,
-			angleVar: 360,
-			speed: 15,
-			speedVar: 5,
-			life: 2,
-			lifeVar: 1,
-			radialAccel: 0,
-			radialAccelVar: 0,
-			tangentialAccel: 0,
-			tangentialAccelVar: 0,
-			texture: pjs.defaultTexture,
-			textureEnabled: true,
-			textureAdditive: true,
-			radius: 60,
-			radiusVar: 10,
-			startScale: 1,
-			endScale: 1,
-			startColor: [0.2, 0.4, 0.7, 1],
-			startColorVar: [0, 0, 0.2, 0.1],
 			endColor: [0, 0, 0, 1],
 			active: true,
 			duration: Infinity

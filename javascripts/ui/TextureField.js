@@ -1,5 +1,5 @@
 Ext.define('pjs.ui.TextureField', {
-	extend: 'Ext.container.Container',
+	extend: 'pjs.ui.FieldBase',
 	alias: 'widget.pjstexture',
 	layout: 'vbox',
 
