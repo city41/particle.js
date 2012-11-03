@@ -123,14 +123,19 @@ Ext.define('pjs.ui.Builder', {
 	},
 
 	_initMouseEvents: function(controller) {
-		Ext.getBody().on({
-			mouseenter: function() {
-				controller.resume();
-			},
+		var config = {
 			mouseleave: function() {
 				controller.pause();
 			}
-		});
+		};
+
+		// opera is weird here, doesnt like mousein or mouseenter
+		var enterProperty = Ext.isOpera ? 'mouseover' : 'mouseenter';
+		config[enterProperty] = function() {
+			controller.resume();
+		};
+
+		Ext.getBody().on(config);
 	}
 });
 
