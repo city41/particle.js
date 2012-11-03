@@ -59,7 +59,7 @@
 			for(var i = 0; i < particles.length; ++i) {
 				var p = particles[i];
 				if(p.life > 0 && p.color) {
-					if(!p.texture) {
+					if(!p.texture || !p.textureEnabled) {
 						this._renderParticle(context, p);
 					} else {
 						this._renderParticleTexture(context, p);
