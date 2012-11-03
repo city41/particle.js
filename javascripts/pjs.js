@@ -24,8 +24,6 @@
 	var paused = false;
 	var lastTimestamp = 0;
 
-	pjs.defaultTexture = new Image();
-	pjs.defaultTexture.src = 'particle.png';
 
 	var particleSystem;
 	var canvas;
