@@ -1,12 +1,16 @@
 Ext.define('pjs.ui.Builder', {
 	singleton: true,
 
-	// TODO: just make this a ui string
 	uiConfig: [
 		{
 			title: 'Predefined Systems',
 			items: [
-				{ type: 'systempicker' }
+				{ 
+					type: 'systempicker',
+					config: {
+						systems: pjs.predefinedSystems
+					}
+				}
 			]
 		}, {
 			title: 'Basics',
@@ -79,7 +83,9 @@ Ext.define('pjs.ui.Builder', {
 				autoScroll: true
 			}],
 			listeners: {
-				afterrender: callback
+				afterrender: function() {
+					Ext.defer(callback, 200);
+				}
 			}
 		});
 
@@ -98,13 +104,15 @@ Ext.define('pjs.ui.Builder', {
 	_buildGroup: function(target, title, propertyConfigs) {
 		var items = [];
 
-		Ext.Array.forEach(propertyConfigs, function(config, i) {
-			items.push({
+		Ext.Array.forEach(propertyConfigs, function(config) {
+			var item = {
 				xtype: 'pjs' + config.type,
 				target: target,
 				property: config.property,
 				padding: 6	
-			});
+			};
+			item = Ext.apply(item, config.config || {});
+			items.push(item);
 		});
 
 		return {
