@@ -1,5 +1,12 @@
 Ext.define('pjs.ui.TransformFnField', {
 	extend: 'Ext.panel.Panel',
+
+	requires: [
+		'Ext.panel.Panel',
+		'Ext.form.field.TextArea',
+		'Ext.button.Button'
+	],
+
 	alias: 'widget.pjstransformfn',
 	layout: 'vbox',
 	collapsible: true,

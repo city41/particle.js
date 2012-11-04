@@ -1,6 +1,12 @@
 (function() {
 	Ext.define('pjs.ui.SystemPicker', {
 		extend: 'Ext.form.field.ComboBox',
+
+		requires: [
+			'Ext.form.field.ComboBox',
+			'Ext.data.Store'
+		],
+
 		alias: 'widget.pjssystempicker',
 
 		fieldLabel: 'system',

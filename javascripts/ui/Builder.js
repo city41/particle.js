@@ -1,6 +1,13 @@
 Ext.define('pjs.ui.Builder', {
 	singleton: true,
 
+	requires: [
+		'Ext.container.Viewport',
+		'Ext.container.Container',
+		'pjs.ui.*'
+	],
+
+
 	uiConfig: [
 		{
 			title: 'Predefined Systems',

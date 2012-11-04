@@ -1,5 +1,11 @@
 Ext.define('pjs.ui.ColorField', {
 	extend: 'pjs.ui.FieldBase',
+
+	requires: [
+		'pjs.ui.FieldBase',
+		'Ext.form.field.Number'
+	],
+
 	alias: 'widget.pjscolor',
 	layout: 'hbox',
 

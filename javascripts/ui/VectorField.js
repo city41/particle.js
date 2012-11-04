@@ -1,5 +1,11 @@
 Ext.define('pjs.ui.VectorField', {
 	extend: 'pjs.ui.FieldBase',
+
+	requires: [
+		'pjs.ui.FieldBase',
+		'Ext.form.field.Number'
+	],
+
 	alias: 'widget.pjsvector',
 	layout: 'hbox',
 

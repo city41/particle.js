@@ -1,5 +1,11 @@
 Ext.define('pjs.ui.BooleanField', {
 	extend: 'pjs.ui.FieldBase',
+	
+	requires: [
+		'pjs.ui.FieldBase',
+		'Ext.form.field.ComboBox'
+	],
+	
 	alias: 'widget.pjsboolean',
 	layout: 'hbox',
 	width: 100,

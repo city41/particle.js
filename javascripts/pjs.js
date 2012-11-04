@@ -1,5 +1,7 @@
 (function() {
 	this.pjs = this.pjs || {};
+	//this['pjs'] = this['pjs'] || {};
+	//var pjs = this['pjs'];
 
 	this.requestAnimationFrame = window.requestAnimationFrame ||
 		window.mozRequestAnimationFrame ||

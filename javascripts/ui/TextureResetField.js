@@ -1,5 +1,11 @@
 Ext.define('pjs.ui.TextureResetField', {
 	extend: 'Ext.container.Container',
+
+	requires: [
+		'Ext.container.Container',
+		'Ext.button.Button'
+	],
+
 	alias: 'widget.pjstexturereset',
 	layout: 'hbox',
 
