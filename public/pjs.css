@@ -1,5 +1,6 @@
 .x-panel-header, .x-panel-body {
 	background: none;
+	background-image: none !important;
 	border: 0px;
 	box-shadow: none;
 	-webkit-box-shadow: none;

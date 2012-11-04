@@ -22,8 +22,8 @@
 		var height = getUrlParam('h');
 
 		return {
-			width: width || 350,
-			height: height || 400
+			width: width || 250,
+			height: height || 300
 		};
 	}
 
