@@ -5,6 +5,10 @@ Ext.define('pjs.ui.Parser', {
 	parse: function(raw) {
 		var results = [];
 
+		if(raw === 'none') {
+			return results;
+		}
+
 		var rawEntries = raw.split(':');
 
 		Ext.Array.forEach(rawEntries, function(rawEntry) {
