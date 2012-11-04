@@ -1,8 +1,8 @@
 # particle.js
 
+up and running [here](http://city41.github.com/particle.js/)
+
 A particle system designer written in JavaScript using HTML5 Canvas and ExtJS for the UI
-  
-Still very early (at time of writing, merely days old), stay tuned...  
   
 ![screenshot](https://raw.github.com/city41/particle.js/master/particlejs.png)
 
@@ -34,7 +34,11 @@ For example, to have pos, posVar and startColor UI components all in a "Simple" 
 
 ![screenshot](https://raw.github.com/city41/particle.js/master/exampleUi.png)
 
+Or, see it [in action](http://city41.github.com/particle.js/index.html?ui=Simple,pos=vector,posVar=vector,startColor=color)
+
 It's stupid you have to specify the ui type, as each parameter only works with a specific type. I should change that.
+
+You can also have no UI at all by specifying [ui=none](http://city41.github.com/particle.js/index.html?ui=none)
 
 #### All the possible parameters and their UI Types
 
