@@ -14,7 +14,10 @@ Ext.define('pjs.ui.CanvasWrapper', {
 			xtype: 'container',
 			itemId: 'canvasWrapper',
 			width: this.canvas.width + 10,
-			height: this.canvas.height + 10
+			height: this.canvas.height + 10,
+			style: {
+				backgroundColor: 'black'
+			}
 		}, {
 			xtype: 'container',
 			layout: 'column',
@@ -28,10 +31,18 @@ Ext.define('pjs.ui.CanvasWrapper', {
 					scope: this
 				}
 			},{
+				xtype: 'button',
+				columnWidth: 0.33,
+				text: 'Reset',
+				listeners: {
+					click: this._onResetClick,
+					scope: this
+				}
+			}, {
 				xtype: 'container',
 				itemId: 'fpsContainer',
 				html: '-- fps',
-				columnWidth: 0.66,
+				columnWidth: 0.33,
 				style: {
 					textAlign: 'right',
 					marginRight: '20px'
@@ -61,6 +72,10 @@ Ext.define('pjs.ui.CanvasWrapper', {
 			button.setText('Play');
 			this.fpsEl.innerHTML = '-- fps';
 		}
+	},
+
+	_onResetClick: function() {
+		window.location.href = window.location.href;
 	}
 });
 

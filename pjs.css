@@ -70,3 +70,7 @@ label {
 	margin-left: 40px !important;
 	margin-right: 4px !important;
 }
+
+canvas {
+	background-color black;
+}
