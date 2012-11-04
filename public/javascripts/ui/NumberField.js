@@ -1,5 +1,11 @@
 Ext.define('pjs.ui.NumberField', {
 	extend: 'pjs.ui.FieldBase',
+
+	requires: [
+		'pjs.ui.FieldBase',
+		'Ext.form.field.Number'
+	],
+
 	alias: 'widget.pjsnumber',
 	layout: 'hbox',
 	width: 100,

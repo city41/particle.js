@@ -1,0 +1,1 @@
+sencha -s javascripts/third/ext/ext-4.1.1a/src compile -classpath=javascripts/particlesystem,javascripts/ui,javascripts/pjs.js -option debug:false exclude -namespace Ext.chart,Ext.app,Ext.tree,Ext.ux and concat -yui -out pjs-min.js

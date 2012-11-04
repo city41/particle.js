@@ -1,0 +1,19 @@
+require 'rubygems'
+require 'closure-compiler'
+
+desc "minify javascript"
+task :minify do
+	compiler = Closure::Compiler.new(:compilation_level => 'ADVANCED_OPTIMIZATIONS')
+
+	input = IO.read('../public/pjs-min.js')
+
+	minified = compiler.compile(input)
+
+	puts ""
+	puts ""
+
+	dest = File.expand_path('../public/pjs-closured.js')
+  File.open(dest, "w") { |file| file.write(minified) }
+	puts "Created #{dest}"
+end
+

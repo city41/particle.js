@@ -1,5 +1,11 @@
 Ext.define('pjs.ui.TextureField', {
 	extend: 'pjs.ui.FieldBase',
+
+	requires: [
+		'pjs.ui.FieldBase',
+		'Ext.form.field.File'
+	],
+
 	alias: 'widget.pjstexture',
 	layout: 'vbox',
 

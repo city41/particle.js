@@ -14,7 +14,7 @@
 
 	pjs.Emitter.prototype = {
 		overlay: function(config) {
-			_.extend(this, config);
+			pjs.extend(this, config);
 			this.reset();
 		},
 
@@ -58,7 +58,7 @@
 			this.tangentialAccel = 0;
 			this.tangentialAccelVar = 0;
 
-			_.extend(this, config);
+			pjs.extend(this, config);
 
 			this.reset();
 		},
@@ -119,11 +119,11 @@
 			var life = this.life + this.lifeVar * pjs.random11() || 0;
 			particle.life = Math.max(0, life);
 
-			particle.scale = _.isNumber(this.startScale) ? this.startScale: 1;
-			particle.deltaScale = _.isNumber(this.endScale) ? (this.endScale - this.startScale) : 0;
+			particle.scale = pjs.isNumber(this.startScale) ? this.startScale: 1;
+			particle.deltaScale = pjs.isNumber(this.endScale) ? (this.endScale - this.startScale) : 0;
 			particle.deltaScale /= particle.life;
 
-			particle.radius = _.isNumber(this.radius) ? this.radius + (this.radiusVar || 0) * pjs.random11() : 0;
+			particle.radius = pjs.isNumber(this.radius) ? this.radius + (this.radiusVar || 0) * pjs.random11() : 0;
 
 			// color
 			if (this.startColor) {
@@ -177,7 +177,7 @@
 					normalize(p.radial);
 				}
 
-				var tangential = _.clone(p.radial);
+				var tangential = pjs.clone(p.radial);
 
 				p.radial.x *= p.radialAccel;
 				p.radial.y *= p.radialAccel;

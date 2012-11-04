@@ -1,5 +1,11 @@
 Ext.define('pjs.ui.CanvasWrapper', {
 	extend: 'Ext.container.Container',
+
+	requires: [
+		'Ext.container.Container',
+		'Ext.button.Button'
+	],
+
 	layout: 'vbox',
 	alias: 'widget.pjscanvaswrapper',
 

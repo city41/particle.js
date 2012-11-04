@@ -1,11 +1,11 @@
 Ext.define('pjs.ui.TextureLoader', {
+	requires: [],
 	singleton: true,
 	cache: {},
 
 	load: function(target, property, file) {
 		if(this.cache[file.name]) {
 			this._overlay(target, property, this.cache[file.name]);
-			console.log('got it from the cache!');
 		} else {
 			this._loadViaFile(target, property, file);
 		}
