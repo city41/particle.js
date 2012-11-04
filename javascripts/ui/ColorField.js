@@ -11,19 +11,19 @@ Ext.define('pjs.ui.ColorField', {
 
 	defaults: {
 		xtype: 'numberfield',
-		labelWidth: 20,
+		labelWidth: 17,
 		labelAlign: 'right',
 		minValue: 0,
 		maxValue: 255,
-		width: 85
+		width: 75
 	},
 
 	initComponent: function() {
 		this.items = [{
 			itemId: 'rfield',
 			fieldLabel: this.property + ' r:',
-			labelWidth: 100,
-			width: this.defaults.width + 100,
+			labelWidth: 90,
+			width: this.defaults.width + 70,
 			value: this._getValue('r'),
 			listeners: {
 				change: this._onChange,

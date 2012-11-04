@@ -80,7 +80,7 @@ Ext.define('pjs.ui.Builder', {
 			}, {
 				xtype: 'container',
 				items: this._getUIItems(particleSystem, uiConfig),
-				width: 500,
+				width: Ext.isIE ? 440 : 420,
 				height: canvas.height + 10,
 				autoScroll: true
 			}],
@@ -140,7 +140,7 @@ Ext.define('pjs.ui.Builder', {
 				align: 'stretch'
 			},
 			padding: 6,
-			width: 480
+			width: 400
 		};
 	},
 
