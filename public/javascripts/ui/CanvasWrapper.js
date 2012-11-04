@@ -16,8 +16,9 @@ Ext.define('pjs.ui.CanvasWrapper', {
 			width: this.canvas.width + 10,
 			height: this.canvas.height + 10,
 			style: {
-				backgroundColor: 'black'
-			}
+				backgroundColor: 'black',
+				marginRight: '5px'
+			},
 		}, {
 			xtype: 'container',
 			layout: 'column',
