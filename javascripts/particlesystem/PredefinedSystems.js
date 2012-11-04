@@ -12,6 +12,12 @@
 				y: (size.height * 2 / 3) | 0
 			};
 		},
+		centerOffBottom: function(size) {
+			return {
+				x: (size.width / 2) | 0,
+				y: size.height + 20
+			};
+		},
 		centerAboveTop: function(size) {
 			return {
 				x: (size.width / 2) | 0,
@@ -227,6 +233,9 @@
 			active: true,
 			duration: Infinity
 		}
+	}, {
+		name: 'bubbles',
+		system: {"totalParticles":500,"emissionRate":200,"active":true,"duration":Infinity,"pos":'centerOffBottom',"posVar":{"x":150,"y":0},"posVarTransformFn":null,"angle":90,"angleVar":20,"life":3.5,"lifeVar":1,"radius":8,"radiusVar":2,"textureEnabled":false,"textureAdditive":false,"startScale":1,"startScaleVar":0,"endScale":1,"endScaleVar":0,"startColor":[0.7843137254901961,0.7843137254901961,1,1],"startColorVar":[0,0,0.1568627450980392,0.1],"endColor":[0.1,0.1,0.1,0.2],"endColorVar":[0.1,0.1,0.1,0.2],"gravity":{"x":0,"y":-90},"radialAccel":0,"radialAccelVar":0,"tangentialAccel":0,"tangentialAccelVar":0,"speed":180,"speedVar":50,"_particleCount":499,"_particleIndex":499,"_elapsed":57.440000000000644,"_emitCounter":16.27499999999711,"frames":13,"fpsElapsed":0.21700000000000003}
 	}];
 
 })();
