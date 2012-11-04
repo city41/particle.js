@@ -1,7 +1,5 @@
 (function() {
 	this.pjs = this.pjs || {};
-	//this['pjs'] = this['pjs'] || {};
-	//var pjs = this['pjs'];
 
 	this.requestAnimationFrame = window.requestAnimationFrame ||
 		window.mozRequestAnimationFrame ||
@@ -91,6 +89,7 @@
 		});
 
 		canvas = document.createElement('canvas');
+		pjs.canvas = canvas;
 
 		var canvasSize = getCanvasSize();
 
@@ -100,6 +99,7 @@
 		pjs.positionPredefinedSystems(canvasSize);
 
 		context = canvas.getContext('2d');
+		pjs.context = context;
 
 		pjs.ui.Builder.build(pjs, particleSystem, canvas, getUrlParam('ui'), function() {
 			draw(new Date().getTime());
