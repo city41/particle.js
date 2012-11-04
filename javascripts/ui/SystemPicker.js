@@ -25,9 +25,11 @@
 			this.callParent(arguments);
 
 			this.on('select', this._onSelect, this);
+		},
 
-			this.setValue(this.systems[0].name);
-			this.target.reconfigure(this.systems[0].system);
+		setSystem: function(system) {
+			this.setValue(system);
+			this.target.reconfigure(system);
 		},
 
 		_onSelect: function(combo, records) {
