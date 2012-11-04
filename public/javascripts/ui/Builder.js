@@ -67,7 +67,7 @@ Ext.define('pjs.ui.Builder', {
 		}
 	],
 
-	build: function(controller, particleSystem, canvas, uiString, callback) {
+	build: function(controller, particleSystem, chosenSystem, canvas, uiString, callback) {
 		var uiConfig = (uiString && pjs.ui.Parser.parse(uiString)) || this.uiConfig;
 
 		Ext.create('Ext.container.Viewport', {
@@ -89,6 +89,7 @@ Ext.define('pjs.ui.Builder', {
 					var picker = viewport.down('pjssystempicker');
 
 					if(picker) {
+						picker.setSystem(chosenSystem);
 						picker.on('systemchange', this._onSystemChange, this);
 					}
 					Ext.defer(callback, 200);

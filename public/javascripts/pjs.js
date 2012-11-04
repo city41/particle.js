@@ -27,6 +27,17 @@
 		};
 	}
 
+	function getSystem() {
+		var specified = getUrlParam('system');
+		for(var i = 0; i < pjs.predefinedSystems.length; ++i) {
+			var ps = pjs.predefinedSystems[i];
+			if(ps.name === specified) {
+				return ps.system;
+			}
+		}
+		return pjs.predefinedSystems[0].system;
+	}
+
 	var paused = false;
 	var lastTimestamp = 0;
 
@@ -68,11 +79,12 @@
 			pjs.positionPredefinedSystems(canvasSize);
 			pjs.setTextureOnPredefinedSystems(pjs.defaultTexture);
 
-			pjs.ps = particleSystem = new pjs.Emitter(pjs.predefinedSystems[0].system);
+			var system = getSystem();
+			pjs.ps = particleSystem = new pjs.Emitter(system);
 
 			context = canvas.getContext('2d');
 
-			pjs.ui.Builder.build(pjs, particleSystem, canvas, getUrlParam('ui'), function() {
+			pjs.ui.Builder.build(pjs, particleSystem, system, canvas, getUrlParam('ui'), function() {
 				draw(new Date().getTime());
 			});
 		};
