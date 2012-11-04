@@ -1,16 +1,12 @@
 (function() {
 	this.pjs = this.pjs || {};
 
-	this.requestAnimationFrame = window.requestAnimationFrame ||
-		window.mozRequestAnimationFrame ||
-		window.webkitRequestAnimationFrame ||
-		window.msRequestAnimationFrame || 
-		window.oRequestAnimationFrame || 
-		function(callback) {
-			window.setTimeout(function() {
-				callback(new Date().getTime());
-			}, 1 / 60 * 1000);
-		};
+	this.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || window.oRequestAnimationFrame || function(callback) {
+		window.setTimeout(function() {
+			callback(new Date().getTime());
+		},
+		1 / 60 * 1000);
+	};
 
 	function getUrlParam(name) {
 		name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
@@ -33,7 +29,6 @@
 
 	var paused = false;
 	var lastTimestamp = 0;
-
 
 	var particleSystem;
 	var canvas;
@@ -59,51 +54,55 @@
 	}
 
 	pjs.onReady = function() {
-		pjs.ps = particleSystem = new pjs.Emitter({
-			totalParticles: 300,
-			emissionRate: 50,
-			pos: {
-				x: 175,
-				y: 350
-			},
-			angle: 90,
-			angleVar: 20,
-			speed: 25,
-			speedVar: 10,
-			life: 7,
-			lifeVar: 4,
-			radialAccel: 0,
-			radialAccelVar: 0,
-			tangentialAccel: 0,
-			tangentialAccelVar: 0,
-			radius: 10,
-			radiusVar: 4,
-			startScale: 1,
-			endScale: 0,
-			texture: pjs.defaultTexture,
-			textureEnabled: true,
-			startColor: [1, 0.5, 0, 0.8],
-			endColor: [0, 0, 0, 0],
-			active: true,
-			duration: Infinity
-		});
+		pjs.defaultTexture = new Image();
+		pjs.defaultTexture.src = 'particle.png';
 
-		canvas = document.createElement('canvas');
-		pjs.canvas = canvas;
+		pjs.defaultTexture.onload = function() {
+			pjs.ps = particleSystem = new pjs.Emitter({
+				totalParticles: 300,
+				emissionRate: 50,
+				pos: {
+					x: 175,
+					y: 350
+				},
+				angle: 90,
+				angleVar: 20,
+				speed: 25,
+				speedVar: 10,
+				life: 7,
+				lifeVar: 4,
+				radialAccel: 0,
+				radialAccelVar: 0,
+				tangentialAccel: 0,
+				tangentialAccelVar: 0,
+				radius: 10,
+				radiusVar: 4,
+				startScale: 1,
+				endScale: 0,
+				texture: pjs.defaultTexture,
+				textureEnabled: true,
+				startColor: [1, 0.5, 0, 0.8],
+				endColor: [0, 0, 0, 0],
+				active: true,
+				duration: Infinity
+			});
 
-		var canvasSize = getCanvasSize();
+			canvas = document.createElement('canvas');
 
-		canvas.width = canvasSize.width;
-		canvas.height = canvasSize.height;
+			var canvasSize = getCanvasSize();
 
-		pjs.positionPredefinedSystems(canvasSize);
+			canvas.width = canvasSize.width;
+			canvas.height = canvasSize.height;
 
-		context = canvas.getContext('2d');
-		pjs.context = context;
+			pjs.positionPredefinedSystems(canvasSize);
+			pjs.setTextureOnPredefinedSystems(pjs.defaultTexture);
 
-		pjs.ui.Builder.build(pjs, particleSystem, canvas, getUrlParam('ui'), function() {
-			draw(new Date().getTime());
-		});
+			context = canvas.getContext('2d');
+
+			pjs.ui.Builder.build(pjs, particleSystem, canvas, getUrlParam('ui'), function() {
+				draw(new Date().getTime());
+			});
+		};
 	};
 
 	pjs.pause = function() {
@@ -111,7 +110,7 @@
 	};
 
 	pjs.resume = function() {
-		if(paused) {
+		if (paused) {
 			paused = false;
 			lastTimestamp = 0;
 			draw(new Date().getTime());

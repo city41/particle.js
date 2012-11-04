@@ -22,13 +22,20 @@
 
 	this.pjs = this.pjs || {};
 
-	pjs.defaultTexture = new Image();
-	pjs.defaultTexture.src = 'particle.png';
 
 	pjs.positionPredefinedSystems = function(size) {
 		for(var i = 0; i < pjs.predefinedSystems.length; ++i) {
 			var pos = pjs.predefinedSystems[i].system.pos;
 			pjs.predefinedSystems[i].system.pos = posFuncs[pos](size);
+		}
+	};
+
+	pjs.setTextureOnPredefinedSystems = function(texture) {
+		for(var i = 0; i < pjs.predefinedSystems.length; ++i) {
+			var ps = pjs.predefinedSystems[i].system;
+			if(ps.textureEnabled) {
+				ps.texture = texture;
+			}
 		}
 	};
 
@@ -55,8 +62,8 @@
 			texture: pjs.defaultTexture,
 			textureEnabled: true,
 			textureAdditive: true,
-			radius: 60,
-			radiusVar: 10,
+			radius: 12,
+			radiusVar: 2,
 			startScale: 1,
 			endScale: 1,
 			startColor: [0.2, 0.4, 0.7, 1],
@@ -119,8 +126,8 @@
 			texture: pjs.defaultTexture,
 			textureEnabled: true,
 			textureAdditive: true,
-			radius: 54,
-			radiusVar: 10,
+			radius: 10,
+			radiusVar: 1,
 			startScale: 1,
 			endScale: 1,
 			startColor: [0.76, 0.25, 0.12, 1],
@@ -147,8 +154,8 @@
 			texture: pjs.defaultTexture,
 			textureEnabled: true,
 			textureAdditive: true,
-			radius: 37,
-			radiusVar: 10,
+			radius: 10,
+			radiusVar: 2,
 			startScale: 1,
 			endScale: 1,
 			startColor: [0.12, 0.25, 0.76, 1],
@@ -208,7 +215,7 @@
 			tangentialAccel: 45,
 			tangentialAccelVar: 0,
 			texture: pjs.defaultTexture,
-			textureEnabled: true,
+			textureEnabled: false,
 			textureAdditive: false,
 			radius: 10,
 			startScale: 1,
