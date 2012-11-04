@@ -38,7 +38,7 @@
 		return pjs.predefinedSystems[0].system;
 	}
 
-	var paused = false;
+	var paused = true;
 	var lastTimestamp = 0;
 
 	var particleSystem;
