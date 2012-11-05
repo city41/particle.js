@@ -69,6 +69,11 @@ You can also have no UI at all by specifying [ui=none](http://city41.github.com/
 * endColor, color, the ending color of a particle
 * endColorVar, color, end color variance
 
+## Ring of Fire particle system
+
+This is slightly hacked in at the moment, could use some code cleanup. To see this particle system, you need to add `transform=true`
+and `system=ringoffire` to the query parameters. Like [this](http://city41.github.com/particle.js/index.html?ui=Transform&transform=true&system=ringoffire)
+
 ## Future Features?
 
 It'd be cool to export these systems into a Cocos2D or LÖVE format. Also would be cool to export
