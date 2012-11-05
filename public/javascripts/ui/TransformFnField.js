@@ -1,53 +1,66 @@
-Ext.define('pjs.ui.TransformFnField', {
-	extend: 'Ext.panel.Panel',
+(function() {
+	var circleFn = 'return {\n' +
+		'\tx: Math.cos(pjs.toRad(value.x)) * 80,\n' +
+		'\ty: Math.sin(pjs.toRad(value.x)) * 80\n' +
+	'};';
 
-	requires: [
-		'Ext.panel.Panel',
-		'Ext.form.field.TextArea',
-		'Ext.button.Button'
-	],
 
-	alias: 'widget.pjstransformfn',
-	layout: 'vbox',
-	collapsible: true,
-	collapsed: true,
-	collapseFirst: true,
-	border: false,
-	componentCls: 'inner-panel',
+	Ext.define('pjs.ui.TransformFnField', {
+		extend: 'Ext.panel.Panel',
 
-	initComponent: function() {
-		this.title = this.property;
-		this.items = [{
-			itemId: 'fnfield',
-			xtype: 'textarea',
-			width: 300,
-			height: 100,
-			value: '' //this._getValue(),
-		}, {
-			xtype: 'button',
-			text: 'set',
-			listeners: {
-				click: this._onSet,
-				scope: this
+		requires: ['Ext.panel.Panel', 'Ext.form.field.TextArea', 'Ext.button.Button'],
+
+		alias: 'widget.pjstransformfn',
+		layout: 'vbox',
+		border: false,
+		componentCls: 'inner-panel',
+
+		initComponent: function() {
+			this.title = this.property;
+			this.items = [{
+				itemId: 'fnfield',
+				xtype: 'textarea',
+				width: 300,
+				height: 100,
+				value: circleFn
+			},
+			{
+				xtype: 'button',
+				text: 'set',
+				listeners: {
+					click: this._onSet,
+					scope: this
+				}
+			}];
+
+			this.callParent(arguments);
+
+			this.on('afterrender', function() {
+				debugger;
+				this._onSet();
+			}, this);
+		},
+
+		reload: function() {
+		},
+
+		_onSet: function() {
+			var fn = this.down('#fnfield').getValue();
+
+			var compiled;
+
+			try {
+				compiled = new Function('value', fn);
+			} catch(e) {
+				alert('function failed to compile');
+				return;
 			}
-		}];
 
-		this.callParent(arguments);
-	},
+			var config = {};
+			config[this.property] = compiled;
 
-	_getValue: function(property) {
-		return this.target[this.property];
-	},
-
-	_onSet: function() {
-		var fn = this.down('#fnfield').getValue();
-
-		var config = {};
-		config[this.property] = new Function("value", fn);
-
-		this.target.overlay(config);
-	}
-});
-
-
+			this.target.overlay(config);
+		}
+	});
+})();
 

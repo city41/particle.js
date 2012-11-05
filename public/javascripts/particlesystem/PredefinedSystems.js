@@ -29,19 +29,31 @@
 	this.pjs = this.pjs || {};
 
 	pjs.positionPredefinedSystems = function(size) {
-		for (var i = 0; i < pjs.predefinedSystems.length; ++i) {
-			var pos = pjs.predefinedSystems[i].system.pos;
-			pjs.predefinedSystems[i].system.pos = posFuncs[pos](size);
+		for (var i = 0; i < this.predefinedSystems.length; ++i) {
+			var pos = this.predefinedSystems[i].system.pos;
+			this.predefinedSystems[i].system.pos = posFuncs[pos](size);
 		}
 	};
 
 	pjs.setTextureOnPredefinedSystems = function(texture) {
-		for (var i = 0; i < pjs.predefinedSystems.length; ++i) {
-			var ps = pjs.predefinedSystems[i].system;
+		for (var i = 0; i < this.predefinedSystems.length; ++i) {
+			var ps = this.predefinedSystems[i].system;
 			if (ps.textureEnabled) {
 				ps.texture = texture;
 			}
 		}
+	};
+
+	pjs.deleteRingOfFire = function() {
+		var index;
+		for(var i = 0; i < this.predefinedSystems.length; ++i) {
+			if(this.predefinedSystems[i].name === 'ringoffire') {
+				index = i;
+				break;
+			}
+		}
+
+		this.predefinedSystems.splice(index, 1);
 	};
 
 	pjs.predefinedSystems = [{
@@ -138,7 +150,7 @@
 			startScale: 1,
 			endScale: 1,
 			startColor: [0.76, 0.25, 0.12, 1],
-			endColor: [0, 0, 0, 1],
+			endColor: [0, 0, 0, 0],
 			active: true,
 			duration: Infinity
 		}
@@ -357,7 +369,46 @@
 			"speed": 60,
 			"speedVar": 10
 		}
+	},
+	{
+		name: 'ringoffire',
+		system: {
+			"totalParticles": 800,
+			"emissionRate": 300,
+			"active": true,
+			"duration": Infinity,
+			pos: 'center',
+			"posVar": {
+				"x": 180,
+				"y": 20
+			},
+			"angle": 90,
+			"angleVar": 10,
+			"life": 1,
+			"lifeVar": 1,
+			"radius": 10,
+			"radiusVar": 1,
+			"textureEnabled": true,
+			"textureAdditive": true,
+			"startScale": 1,
+			"startScaleVar": 0,
+			"endScale": 1,
+			"endScaleVar": 0,
+			"startColor": [0.76, 0.25, 0.12, 1],
+			"startColorVar": [0, 0, 0, 0],
+			"endColor": [0, 0, 0, 0],
+			"endColorVar": [0, 0, 0, 0],
+			"gravity": {
+				"x": 0,
+				"y": 0
+			},
+			"radialAccel": 0,
+			"radialAccelVar": 0,
+			"tangentialAccel": 0,
+			"tangentialAccelVar": 0,
+			"speed": 60,
+			"speedVar": 20
+		}
 	}];
-
 })();
 
