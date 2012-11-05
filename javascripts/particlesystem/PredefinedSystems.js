@@ -257,7 +257,7 @@
 			"radius": 8,
 			"radiusVar": 2,
 			"textureEnabled": false,
-			"textureAdditive": false,
+			"textureAdditive": true,
 			"startScale": 1,
 			"startScaleVar": 0,
 			"endScale": 1,
@@ -275,13 +275,47 @@
 			"tangentialAccel": 0,
 			"tangentialAccelVar": 0,
 			"speed": 180,
-			"speedVar": 50,
-			"_particleCount": 499,
-			"_particleIndex": 499,
-			"_elapsed": 57.440000000000644,
-			"_emitCounter": 16.27499999999711,
-			"frames": 13,
-			"fpsElapsed": 0.21700000000000003
+			"speedVar": 50
+		}
+	},
+	{
+		name: 'watergeyser',
+		system: {
+			"totalParticles": 400,
+			"emissionRate": 100,
+			"active": true,
+			"duration": Infinity,
+			"pos": "centerBottom",
+			"posVar": {
+				"x": 0,
+				"y": 0
+			},
+			"angle": 90,
+			"angleVar": 10,
+			"life": 2.5,
+			"lifeVar": 1,
+			"radius": 5,
+			"radiusVar": 3,
+			"textureEnabled": false,
+			"textureAdditive": false,
+			"startScale": 1,
+			"startScaleVar": 0,
+			"endScale": 1,
+			"endScaleVar": 0,
+			"startColor": [0.0784313725490196, 0.23529411764705882, 1, 1],
+			"startColorVar": [0, 0, 0.19607843137254902, 0.3],
+			"endColor": [0.7843137254901961, 0.7843137254901961, 1, 0],
+			"endColorVar": [0, 0, 0, 0],
+			"gravity": {
+				"x": 0,
+				"y": 150
+			},
+			"radialAccel": 0,
+			"radialAccelVar": 0,
+			"tangentialAccel": 0,
+			"tangentialAccelVar": 0,
+			"speed": 180,
+			"speedVar": 50
 		}
 	}];
 
