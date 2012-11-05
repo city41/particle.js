@@ -13,8 +13,8 @@ Ext.define('pjs.ui.CanvasWrapper', {
 		this.items = [{
 			xtype: 'container',
 			itemId: 'canvasWrapper',
-			width: this.canvas.width + 10,
-			height: this.canvas.height + 10,
+			width: this.canvas.width,
+			height: this.canvas.height,
 			style: {
 				backgroundColor: 'black',
 				marginRight: '5px'
