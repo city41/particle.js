@@ -22,10 +22,6 @@
 				property: 'posVar'
 			},
 			{
-				type: 'transformfn',
-				property: 'posVarTransformFn'
-			},
-			{
 				type: 'divider'
 			},
 			{
@@ -152,8 +148,15 @@
 			}]
 		}],
 
-		build: function(controller, particleSystem, chosenSystem, canvas, uiString, callback) {
+		build: function(controller, particleSystem, chosenSystem, canvas, uiString, includeTransformFn, callback) {
 			var uiConfig = (uiString && pjs.ui.Parser.parse(uiString)) || this.uiConfig;
+
+			if(includeTransformFn) {
+				uiConfig[0].items.push({
+					type: 'transformfn',
+					property: 'posVarTransformFn'
+				});
+			}
 
 			Ext.create('Ext.container.Viewport', {
 				layout: 'hbox',

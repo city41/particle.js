@@ -84,7 +84,13 @@
 
 			context = canvas.getContext('2d');
 
-			pjs.ui.Builder.build(pjs, particleSystem, system, canvas, getUrlParam('ui'), function() {
+			var includeTransformFn = getUrlParam('transform') === 'true';
+
+			if(!includeTransformFn) {
+				pjs.deleteRingOfFire();
+			}
+
+			pjs.ui.Builder.build(pjs, particleSystem, system, canvas, getUrlParam('ui'), includeTransformFn, function() {
 				draw(new Date().getTime());
 			});
 		};
