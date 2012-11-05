@@ -161,7 +161,8 @@
 				items: [{
 					xtype: 'pjscanvaswrapper',
 					canvas: canvas,
-					particleSystem: particleSystem
+					particleSystem: particleSystem,
+					chosenSystem: chosenSystem
 				},
 				{
 					xtype: 'container',
