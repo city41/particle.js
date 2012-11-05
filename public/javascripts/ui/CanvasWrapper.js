@@ -76,7 +76,7 @@ Ext.define('pjs.ui.CanvasWrapper', {
 	},
 
 	_onResetClick: function() {
-		window.location.href = window.location.href;
+		this.particleSystem.reconfigure(this.chosenSystem);
 	}
 });
 
