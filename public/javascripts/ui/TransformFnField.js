@@ -41,7 +41,7 @@
 		},
 
 		reload: function() {
-			this.down('#fnfield').setValue(circleFn);
+			this.down('#fnfield').setValue(circleFn);`
 			this._onSet();
 		},
 

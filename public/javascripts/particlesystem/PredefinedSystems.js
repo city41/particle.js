@@ -21,7 +21,7 @@
 		centerAboveTop: function(size) {
 			return {
 				x: (size.width / 2) | 0,
-				y: - 10
+				y: 0
 			};
 		}
 	};
