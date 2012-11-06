@@ -1,7 +1,7 @@
 (function() {
 	var circleFn = 'return {\n' +
-		'\tx: Math.cos(pjs.toRad(value.x)) * 80,\n' +
-		'\ty: Math.sin(pjs.toRad(value.x)) * 80\n' +
+		'\tx: Math.cos(pjs.toRad(value.x)) * 70,\n' +
+		'\ty: Math.sin(pjs.toRad(value.x)) * 70\n' +
 	'};';
 
 
@@ -41,7 +41,7 @@
 		},
 
 		reload: function() {
-			this.down('#fnfield').setValue(circleFn);`
+			this.down('#fnfield').setValue(circleFn);
 			this._onSet();
 		},
 
