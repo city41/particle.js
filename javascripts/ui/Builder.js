@@ -203,14 +203,14 @@
 		_getUIItems: function(target, uiConfig) {
 			var items = [];
 			Ext.Array.forEach(uiConfig, function(entry) {
-				items.push(this._buildGroup(target, entry.title, entry.items));
+				items.push(this._buildGroup(target, entry.title, entry.items, uiConfig.length > 1));
 			},
 			this);
 
 			return items;
 		},
 
-		_buildGroup: function(target, title, propertyConfigs) {
+		_buildGroup: function(target, title, propertyConfigs, collapsible) {
 			var items = [];
 
 			Ext.Array.forEach(propertyConfigs, function(config) {
@@ -227,7 +227,7 @@
 				title: title,
 				items: items,
 				border: false,
-				collapsible: true,
+				collapsible: collapsible,
 				layout: {
 					type: 'vbox',
 					align: 'stretch'
@@ -248,10 +248,15 @@
 				Ext.getBody().unmask();
 			}
 
-			Ext.getBody().on({
-				mouseleave: pause,
-				mouseover: resume
-			});
+			var listeners = {
+				mouseleave: pause
+			};
+
+			// Opera is weird here, resorting to mouseover :-/
+			var mouseInEvent = Ext.isOpera ? 'mouseover' : 'mouseenter';
+			listeners[mouseInEvent] = resume;
+
+			Ext.getBody().on(listeners);
 		}
 	});
 })();

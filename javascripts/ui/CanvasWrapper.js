@@ -22,10 +22,13 @@ Ext.define('pjs.ui.CanvasWrapper', {
 		}, {
 			xtype: 'container',
 			layout: 'column',
-			width: this.canvas.width + 10,
+			width: this.canvas.width,
+			defaults: {
+				margin: 3
+			},
 			items: [{
 				xtype: 'button',
-				columnWidth: 0.33,
+				columnWidth: 0.25,
 				text: this.particleSystem.active ? 'Pause' : 'Play',
 				listeners: {
 					click: this._onClick,
@@ -33,7 +36,7 @@ Ext.define('pjs.ui.CanvasWrapper', {
 				}
 			},{
 				xtype: 'button',
-				columnWidth: 0.33,
+				columnWidth: 0.25,
 				text: 'Reset',
 				listeners: {
 					click: this._onResetClick,
@@ -43,10 +46,9 @@ Ext.define('pjs.ui.CanvasWrapper', {
 				xtype: 'container',
 				itemId: 'fpsContainer',
 				html: '-- fps',
-				columnWidth: 0.33,
+				columnWidth: 0.5,
 				style: {
-					textAlign: 'right',
-					marginRight: '20px'
+					textAlign: 'right'
 				}
 			}]
 		}];
