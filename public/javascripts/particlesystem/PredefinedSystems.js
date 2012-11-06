@@ -373,8 +373,8 @@
 	{
 		name: 'ringoffire',
 		system: {
-			"totalParticles": 800,
-			"emissionRate": 300,
+			"totalParticles": 400,
+			"emissionRate": 180,
 			"active": true,
 			"duration": Infinity,
 			pos: 'center',
