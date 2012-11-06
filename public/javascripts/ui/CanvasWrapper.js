@@ -18,7 +18,7 @@ Ext.define('pjs.ui.CanvasWrapper', {
 			style: {
 				backgroundColor: 'black',
 				marginRight: '5px'
-			},
+			}
 		}, {
 			xtype: 'container',
 			layout: 'column',
@@ -28,6 +28,7 @@ Ext.define('pjs.ui.CanvasWrapper', {
 			},
 			items: [{
 				xtype: 'button',
+				itemId: 'playbutton',
 				columnWidth: 0.25,
 				text: this.particleSystem.active ? 'Pause' : 'Play',
 				listeners: {
@@ -66,9 +67,16 @@ Ext.define('pjs.ui.CanvasWrapper', {
 		this.particleSystem.setFpsContainer(this.fpsEl);
 	},
 
+	reload: function() {
+		this._setButtonText(this.down('#playbutton'));
+	},
+
 	_onClick: function(button) {
 		this.particleSystem.active = !this.particleSystem.active;
+		this._setButtonText(button);
+	},
 
+	_setButtonText: function(button) {
 		if(this.particleSystem.active) {
 			button.setText('Pause');
 		} else {
@@ -79,6 +87,7 @@ Ext.define('pjs.ui.CanvasWrapper', {
 
 	_onResetClick: function() {
 		this.particleSystem.reconfigure(this.chosenSystem);
+		this.fireEvent('systemchange', this);
 	}
 });
 

@@ -6,7 +6,7 @@
 
 
 	Ext.define('pjs.ui.TransformFnField', {
-		extend: 'Ext.panel.Panel',
+		extend: 'pjs.ui.FieldBase',
 
 		requires: ['Ext.panel.Panel', 'Ext.form.field.TextArea', 'Ext.button.Button'],
 
@@ -36,12 +36,13 @@
 			this.callParent(arguments);
 
 			this.on('afterrender', function() {
-				debugger;
 				this._onSet();
 			}, this);
 		},
 
 		reload: function() {
+			this.down('#fnfield').setValue(circleFn);
+			this._onSet();
 		},
 
 		_onSet: function() {

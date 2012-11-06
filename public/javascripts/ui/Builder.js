@@ -158,14 +158,18 @@
 				});
 			}
 
-			Ext.create('Ext.container.Viewport', {
+			this.viewport = Ext.create('Ext.container.Viewport', {
 				layout: 'hbox',
 				padding: 8,
 				items: [{
 					xtype: 'pjscanvaswrapper',
 					canvas: canvas,
 					particleSystem: particleSystem,
-					chosenSystem: chosenSystem
+					chosenSystem: chosenSystem,
+					listeners: {
+						systemchange: this._onSystemChange,
+						scope: this
+					}
 				},
 				{
 					xtype: 'container',
@@ -198,6 +202,8 @@
 			Ext.Array.forEach(fields, function(field) {
 				field.reload();
 			});
+
+			this.viewport.down('pjscanvaswrapper').reload();
 		},
 
 		_getUIItems: function(target, uiConfig) {
