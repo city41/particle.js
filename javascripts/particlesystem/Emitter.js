@@ -156,12 +156,12 @@
 
 		_updateParticle: function(p, delta, i) {
 			if (p.life > 0) {
-				p.tmp = p.tmp || {
+				p.forces = p.forces || {
 					x: 0,
 					y: 0
 				};
-				p.tmp.x = 0;
-				p.tmp.y = 0;
+				p.forces.x = 0;
+				p.forces.y = 0;
 
 				p.radial = p.radial || {
 					x: 0,
@@ -170,6 +170,7 @@
 				p.radial.x = 0;
 				p.radial.y = 0;
 
+				// dont apply radial forces until moved away from the emitter
 				if ((p.pos.x !== this.pos.x || p.pos.y !== this.pos.y) && (p.radialAccel || p.tangentialAccel)) {
 					p.radial.x = p.pos.x - this.pos.x;
 					p.radial.y = p.pos.y - this.pos.y;
@@ -177,32 +178,34 @@
 					normalize(p.radial);
 				}
 
-				var tangential = pjs.clone(p.radial);
+				p.tangential = p.tangential || {
+					x: 0,
+					y: 0
+				};
+				p.tangential.x = p.radial.x;
+				p.tangential.y = p.radial.y;
 
 				p.radial.x *= p.radialAccel;
 				p.radial.y *= p.radialAccel;
 
-				var newy = tangential.x;
-				tangential.x = -tangential.y;
-				tangential.y = newy;
+				var newy = p.tangential.x;
+				p.tangential.x = -p.tangential.y;
+				p.tangential.y = newy;
 
-				tangential.x *= p.tangentialAccel;
-				tangential.y *= p.tangentialAccel;
+				p.tangential.x *= p.tangentialAccel;
+				p.tangential.y *= p.tangentialAccel;
 
-				p.tmp.x = p.radial.x + tangential.x + this.gravity.x;
-				p.tmp.y = p.radial.y + tangential.y + this.gravity.y;
+				p.forces.x = p.radial.x + p.tangential.x + this.gravity.x;
+				p.forces.y = p.radial.y + p.tangential.y + this.gravity.y;
 
-				p.tmp.x *= delta;
-				p.tmp.y *= delta;
+				p.forces.x *= delta;
+				p.forces.y *= delta;
 
-				p.vel.x += p.tmp.x;
-				p.vel.y += p.tmp.y;
+				p.vel.x += p.forces.x;
+				p.vel.y += p.forces.y;
 
-				p.tmp.x = p.vel.x * delta;
-				p.tmp.y = p.vel.y * delta;
-
-				p.pos.x += p.tmp.x;
-				p.pos.y += p.tmp.y;
+				p.pos.x += p.vel.x * delta;
+				p.pos.y += p.vel.y * delta;
 
 				p.life -= delta;
 
