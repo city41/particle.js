@@ -65,10 +65,22 @@ Ext.define('pjs.ui.CanvasWrapper', {
 
 		this.fpsEl = this.down('#fpsContainer').getEl().dom;
 		this.particleSystem.setFpsContainer(this.fpsEl);
+
+		Ext.fly(this.canvas).on('mouseup', this._onCanvasMouseUp, this);
+		Ext.fly(this.canvas).setStyle('cursor', 'crosshair');
 	},
 
 	reload: function() {
 		this._setButtonText(this.down('#playbutton'));
+	},
+
+	_onCanvasMouseUp: function(e, canvas) {
+		this.particleSystem.overlay({
+			pos: {
+				x: e.getX(),
+				y: e.getY()
+			}
+		});
 	},
 
 	_onClick: function(button) {
