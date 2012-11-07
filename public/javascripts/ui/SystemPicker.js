@@ -15,7 +15,7 @@
 		valueField: 'system',
 
 		initComponent: function() {
-			this.systems = pjs.predefinedSystems;
+			this.systems = pjs.predefinedSystems.systems;
 
 			this.store = Ext.create('Ext.data.Store', {
 				fields: ['name', 'system'],
