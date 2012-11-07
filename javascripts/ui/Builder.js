@@ -148,7 +148,7 @@
 			}]
 		}],
 
-		build: function(controller, particleSystem, chosenSystem, canvas, uiString, includeTransformFn, callback) {
+		build: function(controller, particleSystem, chosenSystem, canvas, uiString, includeTransformFn) {
 			var uiConfig = (uiString && pjs.ui.Parser.parse(uiString)) || this.uiConfig;
 
 			if(includeTransformFn) {
@@ -187,7 +187,6 @@
 							picker.setSystem(chosenSystem);
 							picker.on('systemchange', this._onSystemChange, this);
 						}
-						Ext.defer(callback, 200);
 					},
 					scope: this
 				}
