@@ -27,17 +27,6 @@
 		};
 	}
 
-	function getSystem() {
-		var specified = getUrlParam('system');
-		for(var i = 0; i < pjs.predefinedSystems.length; ++i) {
-			var ps = pjs.predefinedSystems[i];
-			if(ps.name === specified) {
-				return ps.system;
-			}
-		}
-		return pjs.predefinedSystems[0].system;
-	}
-
 	var paused = true;
 	var lastTimestamp = 0;
 
@@ -76,10 +65,10 @@
 			canvas.width = canvasSize.width;
 			canvas.height = canvasSize.height;
 
-			pjs.positionPredefinedSystems(canvasSize);
-			pjs.setTextureOnPredefinedSystems(pjs.defaultTexture);
+			pjs.predefinedSystems.positionSystems(canvasSize);
+			pjs.predefinedSystems.setTexture(pjs.defaultTexture);
 
-			var system = getSystem();
+			var system = pjs.predefinedSystems.getSystem(getUrlParam('system'));
 			pjs.ps = particleSystem = new pjs.Emitter(system);
 
 			context = canvas.getContext('2d');
@@ -87,7 +76,7 @@
 			var includeTransformFn = getUrlParam('transform') === 'true';
 
 			if(!includeTransformFn) {
-				pjs.deleteRingOfFire();
+				pjs.predefinedSystems.deleteSystem('ringoffire');
 			}
 
 			pjs.ui.Builder.build(pjs, particleSystem, system, canvas, getUrlParam('ui'), includeTransformFn);
