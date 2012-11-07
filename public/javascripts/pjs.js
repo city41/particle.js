@@ -90,9 +90,7 @@
 				pjs.deleteRingOfFire();
 			}
 
-			pjs.ui.Builder.build(pjs, particleSystem, system, canvas, getUrlParam('ui'), includeTransformFn, function() {
-				draw(new Date().getTime());
-			});
+			pjs.ui.Builder.build(pjs, particleSystem, system, canvas, getUrlParam('ui'), includeTransformFn);
 		};
 	};
 
