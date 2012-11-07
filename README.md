@@ -20,6 +20,7 @@ particle.js is very configurable via query parameters. Here's the low down:
 * **h**: integer, height of the canvas in pixels
 * **system**: string, the initial predefined particle system to start out with.
     * choices so far include: meteor, fireworks, fire, galaxy, snow and spiral
+    * ringoffire is also a choice, see below
 * **ui**: string, specifies which UI components to include for alterning the system, see below
 
 ### Changing the UI
@@ -30,7 +31,7 @@ The **ui** query parameter takes a string that specifies what UI components to i
 
 For example, to have pos, posVar and startColor UI components all in a "Simple" category, the string would be
 
-    **ui=**Simple,pos=vector,posVar=vector,startColor=color
+    ui=Simple,pos=vector,posVar=vector,startColor=color
 
 ![screenshot](https://raw.github.com/city41/particle.js/master/exampleUi.png)
 
@@ -68,6 +69,11 @@ You can also have no UI at all by specifying [ui=none](http://city41.github.com/
 * startColorVar, color, starting color variance
 * endColor, color, the ending color of a particle
 * endColorVar, color, end color variance
+
+## Ring of Fire particle system
+
+This is slightly hacked in at the moment, could use some code cleanup. To see this particle system, you need to add `transform=true`
+and `system=ringoffire` to the query parameters. Like [this](http://city41.github.com/particle.js/index.html?ui=Transform&transform=true&system=ringoffire)
 
 ## Future Features?
 
