@@ -227,36 +227,6 @@
 			}
 		},
 		{
-			name: 'spiral',
-			system: {
-				totalParticles: 500,
-				emissionRate: 500 / 12,
-				pos: 'center',
-				angle: 90,
-				angleVar: 0,
-				speed: 150,
-				speedVar: 0,
-				life: 12,
-				lifeVar: 0,
-				radialAccel: - 380,
-				radialAccelVar: 0,
-				tangentialAccel: 45,
-				tangentialAccelVar: 0,
-				texture: pjs.defaultTexture,
-				textureEnabled: false,
-				textureAdditive: false,
-				radius: 10,
-				startScale: 1,
-				endScale: 1,
-				startColor: [0.5, 0.5, 0.5, 1],
-				startColorVar: [0.5, 0.5, 0.5, 0],
-				endColor: [0.5, 0.5, 0.5, 1],
-				endColorVar: [0.5, 0.5, 0.5, 0],
-				active: true,
-				duration: Infinity
-			}
-		},
-		{
 			name: 'bubbles',
 			system: {
 				"totalParticles": 500,
