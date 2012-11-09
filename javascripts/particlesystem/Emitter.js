@@ -1,6 +1,10 @@
 (function() {
 	this.pjs = this.pjs || {};
 
+	/*
+	 * Given a vector of any length, returns a vector
+	 * pointing in the same direction but with a magnitude of 1
+	 */
 	function normalize(vector) {
 		var length = Math.sqrt(vector.x * vector.x + vector.y * vector.y);
 
@@ -13,22 +17,38 @@
 	};
 
 	pjs.Emitter.prototype = {
+
+		/*
+		 * Applies all the properties in config to the particle system,
+		 * a good way to change just one or two things about the system
+		 * on the fly
+		 */
 		overlay: function(config) {
 			pjs.extend(this, config);
 			this.reset();
 		},
 
+		/*
+		 * completely reconfigures the particle system. First applies all 
+		 * the defaults, then overlays everything found in config
+		 */
 		reconfigure: function(config) {
 			this.totalParticles = 0;
 			this.emissionRate = 0;
 
 			this.active = false;
 			this.duration = Infinity;
-			
-			this.pos = { x: 0, y: 0 };
-			this.posVar = { x: 0, y: 0 };
+
+			this.pos = {
+				x: 0,
+				y: 0
+			};
+			this.posVar = {
+				x: 0,
+				y: 0
+			};
 			this.posVarTransformFn = null;
-			
+
 			this.angle = 0;
 			this.angleVar = 0;
 
@@ -47,12 +67,15 @@
 			this.endScale = 0;
 			this.endScaleVar = 0;
 
-			this.startColor = [0,0,0,0];
-			this.startColorVar = [0,0,0,0];
-			this.endColor = [0,0,0,0];
-			this.endColorVar = [0,0,0,0];
+			this.startColor = [0, 0, 0, 0];
+			this.startColorVar = [0, 0, 0, 0];
+			this.endColor = [0, 0, 0, 0];
+			this.endColorVar = [0, 0, 0, 0];
 
-			this.gravity = { x: 0, y: 0 };
+			this.gravity = {
+				x: 0,
+				y: 0
+			};
 			this.radialAccel = 0;
 			this.radialAccelVar = 0;
 			this.tangentialAccel = 0;
@@ -63,9 +86,14 @@
 			this.reset();
 		},
 
+		/*
+		 * flushes out the particle pool and starts the system over
+		 * from the beginning. Replacing all the particles with new ones
+		 * is a bit nuclear, but gets the job done
+		 */
 		reset: function() {
 			this._particlePool = [];
-			
+
 			for (var i = 0; i < this.totalParticles; ++i) {
 				this._particlePool.push(new pjs.Particle());
 			}
@@ -76,22 +104,32 @@
 			this._emitCounter = 0;
 		},
 
+		/*
+		 * Returns whether all the particles in the pool are currently active
+		 */
 		_isFull: function() {
 			return this._particleCount === this.totalParticles;
 		},
 
+		/*
+		 * Takes a dormant particle out of the pool and makes it active.
+		 * Does nothing if there is no free particle availabe
+		 */
 		_addParticle: function() {
 			if (this._isFull()) {
 				return false;
 			}
 
 			var p = this._particlePool[this._particleCount];
-			this._initParticle(p);
-			++this._particleCount;
+			this._initParticle(p); ++this._particleCount;
 
 			return true;
 		},
 
+		/*
+		 * Initializes the particle based on the current settings
+		 * of the particle system
+		 */
 		_initParticle: function(particle) {
 			particle.texture = this.texture;
 			particle.textureEnabled = this.textureEnabled;
@@ -102,7 +140,7 @@
 				y: this.posVar.y * pjs.random11()
 			};
 
-			if(this.posVarTransformFn) {
+			if (this.posVarTransformFn) {
 				posVar = this.posVarTransformFn(posVar);
 			}
 
@@ -111,6 +149,11 @@
 
 			var angle = this.angle + this.angleVar * pjs.random11();
 			var speed = this.speed + this.speedVar * pjs.random11();
+
+			// it's easier to set speed and angle at this level
+			// but once the particle is active and being updated, it's easier
+			// to use a vector to indicate speed and angle. So particle.setVelocity
+			// converts the angle and speed values to a velocity vector
 			particle.setVelocity(angle, speed);
 
 			particle.radialAccel = this.radialAccel + this.radialAccelVar * pjs.random11() || 0;
@@ -126,36 +169,36 @@
 			particle.radius = pjs.isNumber(this.radius) ? this.radius + (this.radiusVar || 0) * pjs.random11() : 0;
 
 			// color
+			// note that colors are stored as arrays => [r,g,b,a],
+			// this makes it easier to tweak the color every frame in _updateParticle
+			// The renderer will take this array and turn it into a css rgba string
 			if (this.startColor) {
 				var startColor = [
-					this.startColor[0] + this.startColorVar[0] * pjs.random11(), 
-					this.startColor[1] + this.startColorVar[1] * pjs.random11(), 
-					this.startColor[2] + this.startColorVar[2] * pjs.random11(), 
-					this.startColor[3] + this.startColorVar[3] * pjs.random11()
-				];
+				this.startColor[0] + this.startColorVar[0] * pjs.random11(), this.startColor[1] + this.startColorVar[1] * pjs.random11(), this.startColor[2] + this.startColorVar[2] * pjs.random11(), this.startColor[3] + this.startColorVar[3] * pjs.random11()];
 
+				// if there is no endColor, then the particle will end up staying at startColor the whole time
 				var endColor = startColor;
 				if (this.endColor) {
 					endColor = [
-						this.endColor[0] + this.endColorVar[0] * pjs.random11(),
-						this.endColor[1] + this.endColorVar[1] * pjs.random11(),
-						this.endColor[2] + this.endColorVar[2] * pjs.random11(),
-						this.endColor[3] + this.endColorVar[3] * pjs.random11()
-					];
+					this.endColor[0] + this.endColorVar[0] * pjs.random11(), this.endColor[1] + this.endColorVar[1] * pjs.random11(), this.endColor[2] + this.endColorVar[2] * pjs.random11(), this.endColor[3] + this.endColorVar[3] * pjs.random11()];
 				}
 
 				particle.color = startColor;
-				particle.deltaColor = [
-					(endColor[0] - startColor[0]) / particle.life,
-					(endColor[1] - startColor[1]) / particle.life,
-					(endColor[2] - startColor[2]) / particle.life,
-					(endColor[3] - startColor[3]) / particle.life
-				];
+				particle.deltaColor = [(endColor[0] - startColor[0]) / particle.life, (endColor[1] - startColor[1]) / particle.life, (endColor[2] - startColor[2]) / particle.life, (endColor[3] - startColor[3]) / particle.life];
 			}
 		},
 
+		/*
+		 * Updates a particle based on how much time has passed in delta
+		 * Moves the particle using its velocity and all forces acting on it (gravity,
+		 * radial and tangential acceleration), and updates all the properties of the
+		 * particle like its size, color, etc
+		 */
 		_updateParticle: function(p, delta, i) {
 			if (p.life > 0) {
+
+				// these vectors are stored on the particle so we can reuse them, avoids
+				// generating lots of unnecessary objects each frame
 				p.forces = p.forces || {
 					x: 0,
 					y: 0
@@ -189,7 +232,7 @@
 				p.radial.y *= p.radialAccel;
 
 				var newy = p.tangential.x;
-				p.tangential.x = -p.tangential.y;
+				p.tangential.x = - p.tangential.y;
 				p.tangential.y = newy;
 
 				p.tangential.x *= p.tangentialAccel;
@@ -220,11 +263,31 @@
 
 				++this._particleIndex;
 			} else {
+				// the particle has died, time to return it to the particle pool
+				// take the particle at the current index
 				var temp = this._particlePool[i];
+
+				// and move it to the end of the active particles, keeping all alive particles pushed
+				// up to the front of the pool
 				this._particlePool[i] = this._particlePool[this._particleCount - 1];
 				this._particlePool[this._particleCount - 1] = temp;
 
+				// decrease the count to indicate that one less particle in the pool is active.
 				--this._particleCount;
+			}
+		},
+
+		_updateFrameRate: function(delta) {
+			++this.frames;
+			this.fpsElapsed += delta;
+
+			// if more than 2 seconds has passed, update the current fps value
+			if (this.fpsElapsed > 2 && this.fpsContainer) {
+				var fps = this.frames / this.fpsElapsed;
+				fps = Math.round(fps * 100) / 100;
+				this.fpsContainer.innerHTML = fps + ' fps';
+				this.fpsElapsed = 0;
+				this.frames = 0;
 			}
 		},
 
@@ -233,19 +296,10 @@
 				return;
 			}
 
-			++this.frames;
-			this.fpsElapsed += delta;
-
-			if(this.fpsElapsed > 2 && this.fpsContainer) {
-				var fps = this.frames / this.fpsElapsed;
-				fps = Math.round(fps * 100) / 100;
-				this.fpsContainer.innerHTML = fps + ' fps';
-				this.fpsElapsed = 0;
-				this.frames = 0;
-			}
-
+			this._updateFrameRate(delta);
 
 			if (this.emissionRate) {
+				// emit new particles based on how much time has passed and the emission rate
 				var rate = 1.0 / this.emissionRate;
 				this._emitCounter += delta;
 

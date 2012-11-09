@@ -23,6 +23,12 @@
 				x: (size.width / 2) | 0,
 				y: 0
 			};
+		},
+		bottomLeft: function(size){
+			return {
+				x: 0,
+				y: size.height + 5
+			};
 		}
 	};
 
@@ -307,22 +313,22 @@
 			}
 		},
 		{
-			name: 'flower',
+			name: 'ribbon',
 			system: {
-				"totalParticles": 300,
-				"emissionRate": 75,
+				"totalParticles": 200,
+				"emissionRate": 40,
 				"active": true,
 				"duration": Infinity,
-				"pos": "center",
+				"pos": "bottomLeft",
 				"posVar": {
-					"x": 0,
+					"x": 30,
 					"y": 0
 				},
-				"angle": 90,
-				"angleVar": 360,
-				"life": 2,
-				"lifeVar": 1,
-				"radius": 20,
+				"angle": 55,
+				"angleVar": 0,
+				"life": 2.5,
+				"lifeVar": 0,
+				"radius": 10,
 				"radiusVar": 5,
 				"textureEnabled": false,
 				"textureAdditive": false,
@@ -330,20 +336,20 @@
 				"startScaleVar": 0,
 				"endScale": 1,
 				"endScaleVar": 0,
-				"startColor": [0, 0, 1, 1],
+				"startColor": [1, 0, 0, 1],
 				"startColorVar": [0, 0, 0, 0],
-				"endColor": [1, 0, 0, 0.2],
+				"endColor": [0, 0, 1, 1],
 				"endColorVar": [0, 0, 0, 0],
 				"gravity": {
 					"x": 0,
-					"y": 0
+					"y": -45
 				},
-				"radialAccel": - 40,
+				"radialAccel": 0,
 				"radialAccelVar": 0,
-				"tangentialAccel": 40,
+				"tangentialAccel": 60,
 				"tangentialAccelVar": 0,
-				"speed": 60,
-				"speedVar": 10
+				"speed": 180,
+				"speedVar": 50
 			}
 		},
 		{
