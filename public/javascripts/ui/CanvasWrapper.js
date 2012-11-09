@@ -98,8 +98,7 @@ Ext.define('pjs.ui.CanvasWrapper', {
 	},
 
 	_onResetClick: function() {
-		this.particleSystem.reconfigure(this.chosenSystem);
-		this.fireEvent('systemchange', this);
+		this.fireEvent('reset', this);
 	}
 });
 

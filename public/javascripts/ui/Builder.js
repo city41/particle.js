@@ -150,6 +150,7 @@
 
 		build: function(controller, particleSystem, chosenSystem, canvas, uiString, includeTransformFn) {
 			var uiConfig = (uiString && pjs.ui.Parser.parse(uiString)) || this.uiConfig;
+			this.particleSystem = particleSystem;
 
 			if(includeTransformFn) {
 				uiConfig[0].items.push({
@@ -167,7 +168,7 @@
 					particleSystem: particleSystem,
 					chosenSystem: chosenSystem,
 					listeners: {
-						systemchange: this._onSystemChange,
+						reset: this._onReset,
 						scope: this
 					}
 				},
@@ -193,6 +194,15 @@
 			});
 
 			this._initFocusEvents(controller);
+		},
+
+		_onReset: function() {
+			var picker = this.viewport.down('pjssystempicker');
+
+			if(picker) {
+				this.particleSystem.reconfigure(picker.getValue());
+			}
+			this._onSystemChange();
 		},
 
 		_onSystemChange: function() {
