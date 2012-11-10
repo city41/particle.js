@@ -160,7 +160,7 @@
 			}
 
 			this.viewport = Ext.create('Ext.container.Viewport', {
-				layout: 'hbox',
+				layout: 'column',
 				padding: 8,
 				items: [{
 					xtype: 'pjscanvaswrapper',
