@@ -160,7 +160,8 @@
 				});
 			}
 
-			this.viewport = Ext.create('Ext.container.Viewport', {
+			this.viewport = Ext.create('Ext.container.Container', {
+				renderTo: Ext.getBody(),
 				layout: 'column',
 				padding: 8,
 				items: [{
