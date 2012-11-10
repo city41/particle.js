@@ -151,6 +151,7 @@
 		build: function(controller, particleSystem, chosenSystem, canvas, uiString, includeTransformFn) {
 			var uiConfig = (uiString && pjs.ui.Parser.parse(uiString)) || this.uiConfig;
 			this.particleSystem = particleSystem;
+			this.chosenSystem = chosenSystem;
 
 			if(includeTransformFn) {
 				uiConfig[0].items.push({
@@ -201,7 +202,10 @@
 
 			if(picker) {
 				this.particleSystem.reconfigure(picker.getValue());
+			} else {
+				this.particleSystem.reconfigure(this.chosenSystem);
 			}
+
 			this._onSystemChange();
 		},
 
