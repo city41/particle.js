@@ -6,6 +6,10 @@ A particle system designer written in JavaScript using HTML5 Canvas and ExtJS fo
   
 ![screenshot](https://raw.github.com/city41/particle.js/master/particlejs.png)
 
+## License
+
+Since particle.js currently uses ExtJS, particle.js needs to be under the GPL. I don't like this, and have plans to eventually switch to another UI framework. But that is the case for now. I needed to get a UI up quickly, and I know Ext well, so...
+
 ## Features
 
 * Same particle system parameters as Cocos2D and LÖVE
