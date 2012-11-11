@@ -14,8 +14,8 @@ Ext.define('pjs.ui.TextureResetField', {
 
 		var button = this.add({
 			xtype: 'button',
-			text: 'reset',
-			width: 100
+			text: 'reset texture',
+			width: 180
 		});
 
 		button.on('click', this._resetTexture, this);

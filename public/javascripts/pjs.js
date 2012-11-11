@@ -83,16 +83,17 @@
 		};
 	};
 
-	pjs.pause = function() {
-		paused = true;
+	pjs.isPaused = function() {
+		return paused;
 	};
 
-	pjs.resume = function() {
-		if (paused) {
-			paused = false;
+	pjs.togglePause = function() {
+		paused = !paused;
+
+		if(!paused) {
 			lastTimestamp = 0;
 			draw(new Date().getTime());
 		}
-	}
+	};
 })();
 
