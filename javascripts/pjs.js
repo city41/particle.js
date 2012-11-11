@@ -1,12 +1,26 @@
 (function() {
 	this.pjs = this.pjs || {};
+	var lastTime = 0;
 
-	this.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || window.oRequestAnimationFrame || function(callback) {
-		window.setTimeout(function() {
-			callback(new Date().getTime());
-		},
-		1 / 60 * 1000);
-	};
+	this.requestAnimationFrame = window.requestAnimationFrame || 
+		window.mozRequestAnimationFrame || 
+		window.webkitRequestAnimationFrame || 
+		window.msRequestAnimationFrame || 
+		window.oRequestAnimationFrame;
+
+	if (!this.requestAnimationFrame) {
+		// polyfill, primarily for IE9
+		this.requestAnimationFrame = function(callback, element) {
+			var currTime = new Date().getTime();
+			var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+			var id = window.setTimeout(function() {
+				callback(currTime + timeToCall);
+			},
+			timeToCall);
+			lastTime = currTime + timeToCall;
+			return id;
+		};
+	}
 
 	function getUrlParam(name) {
 		name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
@@ -22,8 +36,8 @@
 		var height = getUrlParam('h');
 
 		return {
-			width: +width || 250,
-			height: +height || 300
+			width: + width || 250,
+			height: + height || 300
 		};
 	}
 
@@ -75,7 +89,7 @@
 
 			var includeTransformFn = getUrlParam('transform') === 'true';
 
-			if(!includeTransformFn) {
+			if (!includeTransformFn) {
 				pjs.predefinedSystems.deleteSystem('ringoffire');
 			}
 
@@ -88,9 +102,9 @@
 	};
 
 	pjs.togglePause = function() {
-		paused = !paused;
+		paused = ! paused;
 
-		if(!paused) {
+		if (!paused) {
 			lastTimestamp = 0;
 			draw(new Date().getTime());
 		}
