@@ -1,5 +1,4 @@
 (function() {
-	var maskMsg = 'bring mouse here to activate';
 	Ext.define('pjs.ui.Builder', {
 		singleton: true,
 
@@ -169,6 +168,7 @@
 					canvas: canvas,
 					particleSystem: particleSystem,
 					chosenSystem: chosenSystem,
+					controller: controller,
 					listeners: {
 						reset: this._onReset,
 						scope: this
@@ -183,7 +183,6 @@
 				}],
 				listeners: {
 					afterrender: function(viewport) {
-						Ext.getBody().mask(maskMsg);
 						var picker = viewport.down('pjssystempicker');
 
 						if (picker) {
@@ -195,7 +194,7 @@
 				}
 			});
 
-			this._initFocusEvents(controller);
+			//this._initFocusEvents(controller);
 		},
 
 		_onReset: function() {
@@ -255,28 +254,6 @@
 				padding: 6,
 				width: 400
 			};
-		},
-
-		_initFocusEvents: function(controller) {
-			function pause() {
-				controller.pause();
-				Ext.getBody().mask(maskMsg);
-			}
-
-			function resume() {
-				controller.resume();
-				Ext.getBody().unmask();
-			}
-
-			var listeners = {
-				mouseleave: pause
-			};
-
-			// Opera is weird here, resorting to mouseover :-/
-			var mouseInEvent = Ext.isOpera ? 'mouseover' : 'mouseenter';
-			listeners[mouseInEvent] = resume;
-
-			Ext.getBody().on(listeners);
 		}
 	});
 })();

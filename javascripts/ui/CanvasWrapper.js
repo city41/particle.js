@@ -30,9 +30,9 @@ Ext.define('pjs.ui.CanvasWrapper', {
 				xtype: 'button',
 				itemId: 'playbutton',
 				columnWidth: 0.25,
-				text: this.particleSystem.active ? 'Pause' : 'Play',
+				text: this.controller.isPaused() ? 'Play' : 'Pause',
 				listeners: {
-					click: this._onClick,
+					click: this._onPlayClick,
 					scope: this
 				}
 			},{
@@ -68,6 +68,8 @@ Ext.define('pjs.ui.CanvasWrapper', {
 
 		Ext.fly(this.canvas).on('mouseup', this._onCanvasMouseUp, this);
 		Ext.fly(this.canvas).setStyle('cursor', 'crosshair');
+
+		this.reload();
 	},
 
 	reload: function() {
@@ -83,17 +85,16 @@ Ext.define('pjs.ui.CanvasWrapper', {
 		});
 	},
 
-	_onClick: function(button) {
-		this.particleSystem.active = !this.particleSystem.active;
+	_onPlayClick: function(button) {
+		this.controller.togglePause();
 		this._setButtonText(button);
 	},
 
 	_setButtonText: function(button) {
-		if(this.particleSystem.active) {
-			button.setText('Pause');
-		} else {
+		if(this.controller.isPaused()) {
 			button.setText('Play');
-			this.fpsEl.innerHTML = '-- fps';
+		} else {
+			button.setText('Pause');
 		}
 	},
 
