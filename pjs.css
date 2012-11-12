@@ -12,15 +12,12 @@
 }
 
 .x-panel-header-text {
-	font-size: 16px;
-	color: black;
+	font-size: 14px;
+	color: #666;
 }
 
 .x-panel {
-	border: 2px solid gray;
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
-	border-radius: 10px;
+	border: 1px solid gray;
 
 	padding: 10px;
 
@@ -34,7 +31,6 @@
 }
 
 label {
-	font-weight: bold;
 }
 
 .inner-panel.x-panel {
