@@ -4,8 +4,18 @@
 	<title>Particle Designer</title>
 	<link rel="stylesheet" href="javascripts/third/ext/ext-4.1.1a/resources/css/ext-all.css" />
 	<link rel="stylesheet" href="pjs.css" />
+	<style>
+		#canvasContainer {
+			float: left;
+		}
+		#guiContainer {
+			float: left;
+		}
+	</style>
 </head>
 <body>
+	<div id="canvasContainer"></div>
+	<div id="guiContainer"></div>
 	<script type="text/javascript" src="pjs-min.js"></script>
 	<script type="text/javascript">
 		Ext.onReady(pjs.onReady);

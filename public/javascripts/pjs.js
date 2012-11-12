@@ -41,7 +41,7 @@
 		};
 	}
 
-	var paused = true;
+	var paused = false;
 	var lastTimestamp = 0;
 
 	var particleSystem;
@@ -78,6 +78,7 @@
 
 			canvas.width = canvasSize.width;
 			canvas.height = canvasSize.height;
+			document.getElementById('canvasContainer').appendChild(canvas);
 
 			pjs.predefinedSystems.positionSystems(canvasSize);
 			pjs.predefinedSystems.setTexture(pjs.defaultTexture);
@@ -93,7 +94,10 @@
 				pjs.predefinedSystems.deleteSystem('ringoffire');
 			}
 
-			pjs.ui.Builder.build(pjs, particleSystem, system, canvas, getUrlParam('ui'), includeTransformFn);
+			//pjs.ui.Builder.build(pjs, particleSystem, system, canvas, getUrlParam('ui'), includeTransformFn);
+			new pjs.ui.DatBuilder(pjs, particleSystem, system, canvas, getUrlParam('ui'), includeTransformFn);
+
+			draw(new Date().getTime());
 		};
 	};
 

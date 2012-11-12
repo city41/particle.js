@@ -4,9 +4,19 @@
 	<title>Particle Designer</title>
 	<link rel="stylesheet" href="javascripts/third/ext/ext-4.1.1a/resources/css/ext-all.css" />
 	<link rel="stylesheet" href="pjs.css" />
+	<style>
+		#canvasContainer {
+			float: left;
+		}
+		#guiContainer {
+			float: left;
+		}
+	</style>
 </head>
 <body>
-	<script type="text/javascript" src="javascripts/third/underscore-min.js"></script>
+	<div id="canvasContainer"></div>
+	<div id="guiContainer"></div>
+	<script type="text/javascript" src="javascripts/third/dat.gui.js"></script>
 
 	<script type="text/javascript" src="javascripts/particlesystem/util.js"></script>
 	<script type="text/javascript" src="javascripts/particlesystem/Particle.js"></script>
@@ -29,6 +39,7 @@
 	<script type="text/javascript" src="javascripts/ui/CanvasWrapper.js"></script>
 	<script type="text/javascript" src="javascripts/ui/SystemPicker.js"></script>
 	<script type="text/javascript" src="javascripts/ui/Builder.js"></script>
+	<script type="text/javascript" src="javascripts/ui/DatBuilder.js"></script>
 
 	<script type="text/javascript" src="javascripts/pjs.js"></script>
 

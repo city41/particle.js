@@ -95,9 +95,9 @@
 				radiusVar: 2,
 				startScale: 1,
 				endScale: 1,
-				startColor: [0.2, 0.4, 0.7, 1],
-				startColorVar: [0, 0, 0.2, 0.1],
-				endColor: [0, 0, 0, 1],
+				startColor: [255, 0, 0, 1],
+				startColorVar: [0, 0, 0, 0],
+				endColor: [0, 0, 255, 1],
 				active: true,
 				duration: Infinity
 			}

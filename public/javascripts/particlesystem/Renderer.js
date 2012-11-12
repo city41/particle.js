@@ -8,9 +8,9 @@
 	 * in place of the actual alpha (useful for texture rendering)
 	 */
 	function colorArrayToString(array, overrideAlpha) {
-		var r = (array[0] * 255) | 0;
-		var g = (array[1] * 255) | 0;
-		var b = (array[2] * 255) | 0;
+		var r = (array[0]) | 0;
+		var g = (array[1]) | 0;
+		var b = (array[2]) | 0;
 		var a = overrideAlpha || array[3];
 
 		return 'rgba(' + r + ', ' + g + ', ' +  b + ', ' + a + ')';
