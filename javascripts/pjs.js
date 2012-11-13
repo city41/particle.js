@@ -59,8 +59,12 @@
 
 		document.getElementById(statsContainerId).appendChild(stats.domElement);
 
-		var graph = document.getElementById('fpsGraph');
-		graph.parentNode.removeChild(graph);
+		var graphs = ['fpsGraph', 'msGraph'];
+		for(var i = 0; i < graphs.length; ++i) {
+			var graphId = graphs[i];
+			var graph = document.getElementById(graphId);
+			graph.parentNode.removeChild(graph);
+		}
 	}
 
 	function draw(timestamp) {
