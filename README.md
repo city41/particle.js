@@ -2,18 +2,18 @@
 
 up and running [here](http://city41.github.com/particle.js/)
 
-A particle system designer written in JavaScript using HTML5 Canvas and ExtJS for the UI
+A particle system designer written in JavaScript using HTML5 Canvas and dat-gui for the UI
   
 ![screenshot](https://raw.github.com/city41/particle.js/master/particlejs.png)
 
 ## License
 
-Since particle.js currently uses ExtJS, particle.js needs to be under the GPL. I don't like this, and have plans to eventually switch to another UI framework. But that is the case for now. I needed to get a UI up quickly, and I know Ext well, so...
+Once this branch gets merged into master, then particle.js will have the Apache 2.0 license. Woot!
 
 ## Features
 
-* Same particle system parameters as Cocos2D and LÖVE
-* UI agnostic, the particle system itself has no Ext code in it
+* Almost the same particle system parameters as Cocos2D and LÖVE
+* UI agnostic, the particle system itself has no dat-gui code in it
 * Configurable UI through a query parameter (show only the parameters you care about)
 
 ## Query Parameters
@@ -35,13 +35,10 @@ The **ui** query parameter takes a string that specifies what UI components to i
 
 For example, to have pos, posVar and startColor UI components all in a "Simple" category, the string would be
 
-    ui=Simple,pos=vector,posVar=vector,startColor=color
+    ui=Simple,pos,posVar,startColor
 
-![screenshot](https://raw.github.com/city41/particle.js/master/exampleUi.png)
 
-Or, see it [in action](http://city41.github.com/particle.js/index.html?ui=Simple,pos=vector,posVar=vector,startColor=color)
-
-It's stupid you have to specify the ui type, as each parameter only works with a specific type. I should change that.
+[like this](http://city41.github.com/particle.js/index.html?ui=Simple,pos,posVar,startColor)
 
 You can also have no UI at all by specifying [ui=none](http://city41.github.com/particle.js/index.html?ui=none)
 
