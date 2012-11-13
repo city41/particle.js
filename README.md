@@ -2,7 +2,7 @@
 
 up and running [here](http://city41.github.com/particle.js/)  
   
-version two, which does not use Ext, is running [here](up and running [here](http://city41.github.com/particle.js/v2) (this will become the main version soon)  
+version two, which does not use Ext, is running [here](http://city41.github.com/particle.js/v2) (this will become the main version soon)  
   
 A particle system designer written in JavaScript using HTML5 Canvas and ExtJS for the UI
   
