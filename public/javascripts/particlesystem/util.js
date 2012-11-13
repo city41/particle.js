@@ -48,5 +48,28 @@
 		return clone;
 	};
 
+	pjs.deepClone = function(obj, exceptions) {
+		if(typeof obj !== 'object') {
+			return obj;
+		}
+		if(Array.isArray(obj)) {
+			var cloneArray = [];
+			for(var i = 0; i < obj.length; ++i) {
+				cloneArray.push(pjs.deepClone(obj[i], exceptions));
+			}
+			return cloneArray;
+		}
+
+		var clone = {};
+		for(var prop in obj) {
+			if(exceptions.indexOf(prop) > -1) {
+				clone[prop] = obj[prop];
+			} else {
+				clone[prop] = pjs.deepClone(obj[prop], exceptions);
+			}
+		}
+		return clone;
+	};
+
 })();
 

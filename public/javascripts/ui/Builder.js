@@ -2,10 +2,9 @@
 	this.pjs = this.pjs || {};
 	pjs.ui = pjs.ui || {};
 	
-	pjs.ui.DatBuilder = function(controller, particleSystem, chosenSystem, canvas, uiString, includeTransformFn) {
-		this.controller = controller;
+	pjs.ui.Builder = function(containerId, particleSystem, canvas, uiString, includeTransformFn) {
+		this.containerId = containerId;
 		this.particleSystem = particleSystem;
-		this.chosenSystem = chosenSystem;
 		this.canvas = canvas;
 		this.uiConfig = uiString && pjs.ui.Parser.parse(uiString) || pjs.ui.FullConfig;
 		this.includeTransformFn = includeTransformFn;
@@ -13,12 +12,11 @@
 		this.build();
 	};
 
-	pjs.ui.DatBuilder.prototype = {
+	pjs.ui.Builder.prototype = {
 		build: function() {
 			var gui = new dat.GUI();
 
-			// TODO, pass this ID in
-			document.getElementById('guiContainer').appendChild(gui.domElement);
+			document.getElementById(this.containerId).appendChild(gui.domElement);
 
 			var useFolders = this.uiConfig.length > 1;
 

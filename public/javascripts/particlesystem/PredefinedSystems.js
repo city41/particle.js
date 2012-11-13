@@ -36,13 +36,15 @@
 
 	pjs.predefinedSystems = {
 		getSystem: function(name) {
+			var system = this.systems[0];
 			for (var i = 0; i < this.systems.length; ++i) {
 				var ps = this.systems[i];
 				if (ps.name === name) {
-					return ps;
+					system = ps;
+					break;
 				}
 			}
-			return this.systems[0];
+			return pjs.deepClone(system, ['texture']);
 		},
 
 		positionSystems: function(size) {

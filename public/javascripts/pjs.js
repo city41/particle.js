@@ -78,7 +78,6 @@
 
 			canvas.width = canvasSize.width;
 			canvas.height = canvasSize.height;
-			document.getElementById('canvasContainer').appendChild(canvas);
 
 			pjs.predefinedSystems.positionSystems(canvasSize);
 			pjs.predefinedSystems.setTexture(pjs.defaultTexture);
@@ -95,7 +94,8 @@
 			}
 
 			//pjs.ui.Builder.build(pjs, particleSystem, system, canvas, getUrlParam('ui'), includeTransformFn);
-			new pjs.ui.DatBuilder(pjs, particleSystem, system, canvas, getUrlParam('ui'), includeTransformFn);
+			new pjs.ui.Builder('guiContainer', particleSystem, canvas, getUrlParam('ui'), includeTransformFn);
+			new pjs.ui.CanvasWrapper('canvasContainer', particleSystem, canvas, pjs);
 
 			draw(new Date().getTime());
 		};
