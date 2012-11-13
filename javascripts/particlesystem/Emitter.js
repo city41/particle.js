@@ -30,7 +30,7 @@
 		 */
 		overlay: function(config) {
 			pjs.extend(this, config);
-			this.reset();
+			this.restart();
 		},
 
 		/*
@@ -88,7 +88,7 @@
 
 			pjs.extend(this, config);
 
-			this.reset();
+			this.restart();
 		},
 
 		/*
@@ -96,7 +96,7 @@
 		 * from the beginning. Replacing all the particles with new ones
 		 * is a bit nuclear, but gets the job done
 		 */
-		reset: function() {
+		restart: function() {
 			this._particlePool = [];
 
 			for (var i = 0; i < this.totalParticles; ++i) {
@@ -107,6 +107,11 @@
 			this._particleIndex = 0;
 			this._elapsed = 0;
 			this._emitCounter = 0;
+		},
+
+		reset: function() {
+			var system = pjs.predefinedSystems.getSystem(this.currentSystem);
+			this.reconfigure(system.system);
 		},
 
 		/*
@@ -346,7 +351,7 @@
 			tp = tp | 0;
 			if(tp !== this._totalParticles) {
 				this._totalParticles = tp;
-				this.reset();
+				this.restart();
 			}
 		}
 	});
