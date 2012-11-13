@@ -9,7 +9,9 @@
 		this.uiConfig = uiString && pjs.ui.Parser.parse(uiString) || pjs.ui.FullConfig;
 		this.includeTransformFn = includeTransformFn;
 
-		this.build();
+		if(this.uiConfig.length) {
+			this.build();
+		}
 	};
 
 	pjs.ui.Builder.prototype = {
@@ -86,8 +88,11 @@
 			gui.add(this.particleSystem, 'currentSystem', systems);
 		},
 
-		_texture: function() {},
-		_texturereset: function() {}
+		_texturereset: function(gui) {
+			gui.add(this.particleSystem, 'resetTexture').name('reset texture');
+		},
+
+		_texture: function() {}
 	};
 })();
 

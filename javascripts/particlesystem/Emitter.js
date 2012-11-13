@@ -33,6 +33,12 @@
 			this.restart();
 		},
 
+		resetTexture: function() {
+			this.overlay({
+				texture: pjs.defaultTexture
+			});
+		},
+
 		/*
 		 * completely reconfigures the particle system. First applies all 
 		 * the defaults, then overlays everything found in config
