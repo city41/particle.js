@@ -19,7 +19,7 @@
 
 		var result = Math.random() * range + min;
 
-		if (isInteger(min) && isInteger(max) && !dontFloor) {
+		if (isInteger(min) && isInteger(max) && ! dontFloor) {
 			return Math.floor(result);
 		} else {
 			return result;
@@ -31,9 +31,25 @@
 	};
 
 	pjs.extend = function(obj, config) {
-		for(var prop in config) {
-			if(config.hasOwnProperty(prop)) {
+		for (var prop in config) {
+			if (config.hasOwnProperty(prop)) {
 				obj[prop] = config[prop];
+			}
+		}
+	};
+
+	pjs.recursiveExtend = function(obj, config, exceptions) {
+		for (var prop in config) {
+			if (config.hasOwnProperty(prop)) {
+				if (exceptions.indexOf(prop) > - 1) {
+					obj[prop] = config[prop];
+				} else {
+					if (typeof config[prop] === 'object') {
+						pjs.recursiveExtend(obj[prop], config[prop], exceptions);
+					} else {
+						obj[prop] = config[prop];
+					}
+				}
 			}
 		}
 	};
@@ -49,20 +65,20 @@
 	};
 
 	pjs.deepClone = function(obj, exceptions) {
-		if(typeof obj !== 'object') {
+		if (typeof obj !== 'object') {
 			return obj;
 		}
-		if(Array.isArray(obj)) {
+		if (Array.isArray(obj)) {
 			var cloneArray = [];
-			for(var i = 0; i < obj.length; ++i) {
+			for (var i = 0; i < obj.length; ++i) {
 				cloneArray.push(pjs.deepClone(obj[i], exceptions));
 			}
 			return cloneArray;
 		}
 
 		var clone = {};
-		for(var prop in obj) {
-			if(exceptions.indexOf(prop) > -1) {
+		for (var prop in obj) {
+			if (exceptions.indexOf(prop) > - 1) {
 				clone[prop] = obj[prop];
 			} else {
 				clone[prop] = pjs.deepClone(obj[prop], exceptions);

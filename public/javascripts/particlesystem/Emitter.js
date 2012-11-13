@@ -50,14 +50,14 @@
 			this.active = false;
 			this.duration = Infinity;
 
-			this.pos = {
-				x: 0,
-				y: 0
-			};
-			this.posVar = {
-				x: 0,
-				y: 0
-			};
+			this.pos = this.pos || {};
+			this.pos.x = 0;
+			this.pos.y = 0;
+
+			this.posVar = this.posVar || {};
+			this.posVar.x = 0;
+			this.posVar.y = 0;
+
 			this.posVarTransformFn = null;
 
 			this.angle = 0;
@@ -78,21 +78,40 @@
 			this.endScale = 0;
 			this.endScaleVar = 0;
 
-			this.startColor = [0, 0, 0, 0];
-			this.startColorVar = [0, 0, 0, 0];
-			this.endColor = [0, 0, 0, 0];
-			this.endColorVar = [0, 0, 0, 0];
+			this.startColor = this.startColor || [];
+			this.startColor[0] = 0;
+			this.startColor[1] = 0;
+			this.startColor[2] = 0;
+			this.startColor[3] = 0;
 
-			this.gravity = {
-				x: 0,
-				y: 0
-			};
+			this.startColorVar = this.startColorVar || [];
+			this.startColorVar[0] = 0;
+			this.startColorVar[1] = 0;
+			this.startColorVar[2] = 0;
+			this.startColorVar[3] = 0;
+
+			this.endColor = this.endColor || [];
+			this.endColor[0] = 0;
+			this.endColor[1] = 0;
+			this.endColor[2] = 0;
+			this.endColor[3] = 0;
+
+			this.endColorVar = this.endColorVar || [];
+			this.endColorVar[0] = 0;
+			this.endColorVar[1] = 0;
+			this.endColorVar[2] = 0;
+			this.endColorVar[3] = 0;
+
+			this.gravity = this.gravity || {};
+			this.gravity.x = 0;
+			this.gravity.y = 0;
+
 			this.radialAccel = 0;
 			this.radialAccelVar = 0;
 			this.tangentialAccel = 0;
 			this.tangentialAccelVar = 0;
 
-			pjs.extend(this, config);
+			pjs.recursiveExtend(this, config, ['texture']);
 
 			this.restart();
 		},

@@ -37,6 +37,19 @@
 
 			this._addPlayButton(gui);
 			this._addResetButton(gui);
+
+			this._listenForAllControllers(gui);
+		},
+
+		_listenForAllControllers: function(gui) {
+			for(var folderName in gui.__folders) {
+				if(gui.__folders.hasOwnProperty(folderName)) {
+					this._listenForAllControllers(gui.__folders[folderName]);
+				}
+			}
+			for(var i = 0; i < gui.__controllers.length; ++i) {
+				gui.__controllers[i].listen();
+			}
 		},
 
 		_addPlayButton: function(gui) {
