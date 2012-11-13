@@ -2,10 +2,11 @@
 	this.pjs = this.pjs || {};
 	pjs.ui = pjs.ui || {};
 	
-	pjs.ui.Builder = function(containerId, particleSystem, canvas, uiString, includeTransformFn) {
+	pjs.ui.Builder = function(containerId, particleSystem, canvas, controller, uiString, includeTransformFn) {
 		this.containerId = containerId;
 		this.particleSystem = particleSystem;
 		this.canvas = canvas;
+		this.controller = controller;
 		this.uiConfig = uiString && pjs.ui.Parser.parse(uiString) || pjs.ui.FullConfig;
 		this.includeTransformFn = includeTransformFn;
 
@@ -33,6 +34,22 @@
 					this._addItem(folder, config.items[k]);
 				}
 			}
+
+			this._addPlayButton(gui);
+			this._addResetButton(gui);
+		},
+
+		_addPlayButton: function(gui) {
+			var c = gui.add(this.controller, 'togglePause').name(this.controller.isPaused() ? 'Play' : 'Pause');
+			var me = this;
+			c.__onChange = function() {
+				// opposite, because togglePause hasnt been called yet
+				c.name(me.controller.isPaused() ? 'Pause' : 'Play');
+			};
+		},
+
+		_addResetButton: function(gui) {
+			gui.add(this.particleSystem, 'reset').name('Reset');
 		},
 
 		_addItem: function(gui, item) {
