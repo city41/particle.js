@@ -312,26 +312,10 @@
 			}
 		},
 
-		_updateFrameRate: function(delta) {
-			++this.frames;
-			this.fpsElapsed += delta;
-
-			// if more than 2 seconds has passed, update the current fps value
-			if (this.fpsElapsed > 2 && this.fpsContainer) {
-				var fps = this.frames / this.fpsElapsed;
-				fps = Math.round(fps * 100) / 100;
-				this.fpsContainer.innerHTML = fps + ' fps';
-				this.fpsElapsed = 0;
-				this.frames = 0;
-			}
-		},
-
 		update: function(delta) {
 			if (!this.active) {
 				return;
 			}
-
-			this._updateFrameRate(delta);
 
 			if (this.emissionRate) {
 				// emit new particles based on how much time has passed and the emission rate
@@ -353,12 +337,6 @@
 				var p = this._particlePool[this._particleIndex];
 				this._updateParticle(p, delta, this._particleIndex);
 			}
-		},
-
-		setFpsContainer: function(el) {
-			this.fpsContainer = el;
-			this.frames = 0;
-			this.fpsElapsed = 0;
 		}
 	};
 
