@@ -47,11 +47,27 @@
 	var particleSystem;
 	var canvas;
 	var context;
+	var stats;
+
+	function initStats(statsContainerId) {
+		stats = new Stats();
+		stats.setMode(0);
+
+		stats.domElement.style.position = 'absolute';
+		stats.domElement.style.top = 0;
+		stats.domElement.style.left = 0;
+
+		document.getElementById(statsContainerId).appendChild(stats.domElement);
+
+		var graph = document.getElementById('fpsGraph');
+		graph.parentNode.removeChild(graph);
+	}
 
 	function draw(timestamp) {
 		if (paused) {
 			return;
 		}
+		stats.begin();
 
 		var delta = timestamp - (lastTimestamp || timestamp);
 		lastTimestamp = timestamp;
@@ -65,6 +81,7 @@
 		pjs.Renderer.render(context, particleSystem.particles);
 
 		requestAnimationFrame(draw);
+		stats.end();
 	}
 
 	pjs.onReady = function() {
@@ -95,6 +112,7 @@
 
 			new pjs.ui.Builder('guiContainer', particleSystem, canvas, pjs, getUrlParam('ui'), includeTransformFn);
 			document.getElementById('canvasContainer').appendChild(canvas);
+			initStats('canvasContainer');
 
 			draw(new Date().getTime());
 		};
