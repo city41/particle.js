@@ -1,6 +1,8 @@
 (function() {
 	this.pjs = this.pjs || {};
 
+	var bufferCache = {};
+
 	/*
 	 * Given an array with four channels (r, g, b and a),
 	 * returns a css rgba string compatible with Canvas.
@@ -21,9 +23,16 @@
 	 * an Image element). Used for _renderParticleTexture
 	 */
 	function getBuffer(texture) {
-		var canvas = document.createElement('canvas');
-		canvas.width = texture.width;
-		canvas.height = texture.height;
+		var size = '' + texture.width + 'x' + texture.height;
+
+		var canvas = bufferCache[size];
+
+		if(!canvas) {
+			canvas = document.createElement('canvas');
+			canvas.width = texture.width;
+			canvas.height = texture.height;
+			bufferCache[size] = canvas;
+		}
 
 		return canvas;
 	}
