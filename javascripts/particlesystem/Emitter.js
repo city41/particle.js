@@ -12,8 +12,13 @@
 		vector.y /= length;
 	}
 
-	pjs.Emitter = function(config) {
-		this.reconfigure(config || {});
+	pjs.Emitter = function(system) {
+		if(!system) {
+			throw new Error("Must create an Emitter with a system");
+		}
+
+		this._currentSystem = system.name;
+		this.reconfigure(system.system);
 	};
 
 	pjs.Emitter.prototype = {
@@ -342,6 +347,19 @@
 			if(tp !== this._totalParticles) {
 				this._totalParticles = tp;
 				this.reset();
+			}
+		}
+	});
+
+	Object.defineProperty(pjs.Emitter.prototype, 'currentSystem', {
+		get: function() {
+			return this._currentSystem;
+		},
+		set: function(cs) {
+			if(this._currentSystem !== cs) {
+				this._currentSystem = cs;
+				var system = pjs.predefinedSystems.getSystem(cs);
+				this.reconfigure(system.system);
 			}
 		}
 	});

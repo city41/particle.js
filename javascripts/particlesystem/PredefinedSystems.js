@@ -39,10 +39,10 @@
 			for (var i = 0; i < this.systems.length; ++i) {
 				var ps = this.systems[i];
 				if (ps.name === name) {
-					return ps.system;
+					return ps;
 				}
 			}
-			return this.systems[0].system;
+			return this.systems[0];
 		},
 
 		positionSystems: function(size) {
