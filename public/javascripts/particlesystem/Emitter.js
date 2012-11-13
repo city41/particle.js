@@ -33,7 +33,7 @@
 		 * the defaults, then overlays everything found in config
 		 */
 		reconfigure: function(config) {
-			this.totalParticles = 0;
+			this._totalParticles = 0;
 			this.emissionRate = 0;
 
 			this.active = false;
@@ -333,5 +333,17 @@
 		}
 	});
 
+	Object.defineProperty(pjs.Emitter.prototype, 'totalParticles', {
+		get: function() {
+			return this._totalParticles;
+		},
+		set: function(tp) {
+			tp = tp | 0;
+			if(tp !== this._totalParticles) {
+				this._totalParticles = tp;
+				this.reset();
+			}
+		}
+	});
 })();
 

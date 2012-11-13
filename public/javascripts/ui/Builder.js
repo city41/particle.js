@@ -1,260 +1,81 @@
 (function() {
-	Ext.define('pjs.ui.Builder', {
-		singleton: true,
+	this.pjs = this.pjs || {};
+	pjs.ui = pjs.ui || {};
+	
+	pjs.ui.DatBuilder = function(controller, particleSystem, chosenSystem, canvas, uiString, includeTransformFn) {
+		this.controller = controller;
+		this.particleSystem = particleSystem;
+		this.chosenSystem = chosenSystem;
+		this.canvas = canvas;
+		//uiString = 'Color,startColor=color,endColor=color,textureAdditive=boolean';
+		this.uiConfig = pjs.ui.FullConfig;// pjs.ui.Parser.parse(uiString);
+		this.includeTransformFn = includeTransformFn;
 
-		requires: ['Ext.container.Viewport', 'Ext.container.Container', 'pjs.ui.*'],
+		this.build();
+	};
 
-		uiConfig: [{
-			title: 'Predefined Systems',
-			items: [{
-				type: 'systempicker'
-			}]
-		},
-		{
-			title: 'Basics',
-			items: [{
-				type: 'vector',
-				property: 'pos'
-			},
-			{
-				type: 'vector',
-				property: 'posVar'
-			},
-			{
-				type: 'divider'
-			},
-			{
-				type: 'number',
-				property: 'life'
-			},
-			{
-				type: 'number',
-				property: 'lifeVar'
-			},
-			{
-				type: 'divider'
-			},
-			{
-				type: 'number',
-				property: 'totalParticles'
-			},
-			{
-				type: 'number',
-				property: 'emissionRate'
-			}]
-		},
-		{
-			title: 'Appearance',
-			items: [{
-				type: 'color',
-				property: 'startColor'
-			},
-			{
-				type: 'color',
-				property: 'startColorVar'
-			},
-			{
-				type: 'divider'
-			},
-			{
-				type: 'color',
-				property: 'endColor'
-			},
-			{
-				type: 'color',
-				property: 'endColorVar'
-			},
-			{
-				type: 'divider'
-			},
-			{
-				type: 'number',
-				property: 'radius'
-			},
-			{
-				type: 'number',
-				property: 'radiusVar'
-			}]
-		},
-		{
-			title: 'Texture',
-			items: [{
-				type: 'texture',
-				property: 'texture'
-			},
-			{
-				type: 'boolean',
-				property: 'textureEnabled'
-			},
-			{
-				type: 'boolean',
-				property: 'textureAdditive'
-			},
-			{
-				type: 'texturereset',
-				property: 'texture'
-			}]
-		},
-		{
-			title: 'Physics',
-			items: [{
-				type: 'number',
-				property: 'speed'
-			},
-			{
-				type: 'number',
-				property: 'speedVar'
-			},
-			{
-				type: 'divider'
-			},
-			{
-				type: 'number',
-				property: 'angle'
-			},
-			{
-				type: 'number',
-				property: 'angleVar'
-			},
-			{
-				type: 'divider'
-			},
-			{
-				type: 'vector',
-				property: 'gravity'
-			},
-			{
-				type: 'divider'
-			},
-			{
-				type: 'number',
-				property: 'radialAccel'
-			},
-			{
-				type: 'number',
-				property: 'radialAccelVar'
-			},
-			{
-				type: 'divider'
-			},
-			{
-				type: 'number',
-				property: 'tangentialAccel'
-			},
-			{
-				type: 'number',
-				property: 'tangentialAccelVar'
-			}]
-		}],
+	pjs.ui.DatBuilder.prototype = {
+		build: function() {
+			var gui = new dat.GUI();
+			document.getElementById('guiContainer').appendChild(gui.domElement);
 
-		build: function(controller, particleSystem, chosenSystem, canvas, uiString, includeTransformFn) {
-			var uiConfig = (uiString && pjs.ui.Parser.parse(uiString)) || this.uiConfig;
-			this.particleSystem = particleSystem;
-			this.chosenSystem = chosenSystem;
-
-			if(includeTransformFn) {
-				uiConfig[0].items.push({
-					type: 'transformfn',
-					property: 'posVarTransformFn'
-				});
-			}
-
-			this.viewport = Ext.create('Ext.container.Container', {
-				renderTo: Ext.getBody(),
-				layout: 'column',
-				padding: 8,
-				items: [{
-					xtype: 'pjscanvaswrapper',
-					canvas: canvas,
-					particleSystem: particleSystem,
-					chosenSystem: chosenSystem,
-					controller: controller,
-					listeners: {
-						reset: this._onReset,
-						scope: this
-					}
-				},
-				{
-					xtype: 'container',
-					items: this._getUIItems(particleSystem, uiConfig),
-					width: Ext.isIE ? 440: 420,
-					height: canvas.height + 10,
-					autoScroll: true
-				}],
-				listeners: {
-					afterrender: function(viewport) {
-						var picker = viewport.down('pjssystempicker');
-
-						if (picker) {
-							picker.setSystem(chosenSystem);
-							picker.on('systemchange', this._onSystemChange, this);
-						}
-					},
-					scope: this
+			for(var i = 0; i < this.uiConfig.length; ++i) {
+				var config = this.uiConfig[i];
+				if(this.uiConfig.length > 1) {
+					var folder = gui.addFolder(config.title || 'Section');
+				} else {
+					folder = gui;
 				}
-			});
-
-			//this._initFocusEvents(controller);
-		},
-
-		_onReset: function() {
-			var picker = this.viewport.down('pjssystempicker');
-
-			if(picker) {
-				this.particleSystem.reconfigure(picker.getValue());
-			} else {
-				this.particleSystem.reconfigure(this.chosenSystem);
+				for(var k = 0; k < config.items.length; ++k) {
+					this._addItem(folder, config.items[k]);
+				}
 			}
-
-			this._onSystemChange();
 		},
 
-		_onSystemChange: function() {
-			var fields = Ext.ComponentQuery.query('pjsfield');
-
-			Ext.Array.forEach(fields, function(field) {
-				field.reload();
-			});
-
-			this.viewport.down('pjscanvaswrapper').reload();
+		_addItem: function(gui, item) {
+			this['_' + item.type](gui, item.property);
 		},
 
-		_getUIItems: function(target, uiConfig) {
-			var items = [];
-			Ext.Array.forEach(uiConfig, function(entry) {
-				items.push(this._buildGroup(target, entry.title, entry.items, uiConfig.length > 1));
-			},
-			this);
-
-			return items;
+		_boolean: function(gui, property) {
+			gui.add(this.particleSystem, property);
 		},
 
-		_buildGroup: function(target, title, propertyConfigs, collapsible) {
-			var items = [];
+		_color: function(gui, property) {
+			gui.addColor(this.particleSystem, property);	
+		},
 
-			Ext.Array.forEach(propertyConfigs, function(config) {
-				items.push({
-					xtype: 'pjs' + config.type,
-					target: target,
-					property: config.property,
-					padding: 6
-				});
-			});
+		_colorvar: function(gui, property) {
+			var folder = gui.addFolder(property);
+			folder.add(this.particleSystem[property], '0').min(0).max(255).name('red');
+			folder.add(this.particleSystem[property], '1').min(0).max(255).name('green');
+			folder.add(this.particleSystem[property], '2').min(0).max(255).name('blue');
+			folder.add(this.particleSystem[property], '3').min(0).max(1).name('alpha');
+		},
 
-			return {
-				xtype: 'panel',
-				title: title,
-				items: items,
-				border: false,
-				collapsible: collapsible,
-				layout: {
-					type: 'vbox',
-					align: 'stretch'
-				},
-				padding: 6,
-				width: 400
-			};
-		}
-	});
+		_posvector: function(gui, property) {
+			var folder = gui.addFolder(property);
+			folder.add(this.particleSystem[property], 'x').min(0).max(this.canvas.width);
+			folder.add(this.particleSystem[property], 'y').min(0).max(this.canvas.height);
+		},
+
+		_vector: function(gui, property) {
+			var folder = gui.addFolder(property);
+			folder.add(this.particleSystem[property], 'x').min(-500).max(500);
+			folder.add(this.particleSystem[property], 'y').min(-500).max(500);
+		},
+
+		_number: function(gui, property) {
+			return gui.add(this.particleSystem, property).min(-500).max(500);
+		},
+
+		_unsignednumber: function(gui, property) {
+			gui.add(this.particleSystem, property).min(0).max(1000);
+		},
+
+
+		_texture: function() {},
+		_texturereset: function() {},
+		_systempicker: function() {}
+	};
 })();
 
