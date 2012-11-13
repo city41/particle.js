@@ -7,8 +7,7 @@
 		this.particleSystem = particleSystem;
 		this.chosenSystem = chosenSystem;
 		this.canvas = canvas;
-		//uiString = 'Color,startColor=color,endColor=color,textureAdditive=boolean';
-		this.uiConfig = pjs.ui.FullConfig;// pjs.ui.Parser.parse(uiString);
+		this.uiConfig = uiString && pjs.ui.Parser.parse(uiString) || pjs.ui.FullConfig;
 		this.includeTransformFn = includeTransformFn;
 
 		this.build();
@@ -17,11 +16,15 @@
 	pjs.ui.DatBuilder.prototype = {
 		build: function() {
 			var gui = new dat.GUI();
+
+			// TODO, pass this ID in
 			document.getElementById('guiContainer').appendChild(gui.domElement);
+
+			var useFolders = this.uiConfig.length > 1;
 
 			for(var i = 0; i < this.uiConfig.length; ++i) {
 				var config = this.uiConfig[i];
-				if(this.uiConfig.length > 1) {
+				if(useFolders) {
 					var folder = gui.addFolder(config.title || 'Section');
 				} else {
 					folder = gui;
@@ -41,7 +44,9 @@
 		},
 
 		_color: function(gui, property) {
-			gui.addColor(this.particleSystem, property);	
+			var folder = gui.addFolder(property);
+			folder.addColor(this.particleSystem, property).name('color');
+			folder.add(this.particleSystem[property], '3').min(0).max(1).name('alpha');
 		},
 
 		_colorvar: function(gui, property) {
@@ -73,9 +78,18 @@
 		},
 
 
+		_systempicker: function(gui) {
+			var systems = [];
+			for(var i = 0; i < pjs.predefinedSystems.systems.length; ++i) {
+				var system = pjs.predefinedSystems.systems[i];
+				systems.push(system.name);
+			}
+
+			gui.add(this.particleSystem, 'currentSystem', systems);
+		},
+
 		_texture: function() {},
-		_texturereset: function() {},
-		_systempicker: function() {}
+		_texturereset: function() {}
 	};
 })();
 
