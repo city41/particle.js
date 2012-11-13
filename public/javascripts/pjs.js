@@ -93,9 +93,8 @@
 				pjs.predefinedSystems.deleteSystem('ringoffire');
 			}
 
-			//pjs.ui.Builder.build(pjs, particleSystem, system, canvas, getUrlParam('ui'), includeTransformFn);
-			new pjs.ui.Builder('guiContainer', particleSystem, canvas, getUrlParam('ui'), includeTransformFn);
-			new pjs.ui.CanvasWrapper('canvasContainer', particleSystem, canvas, pjs);
+			new pjs.ui.Builder('guiContainer', particleSystem, canvas, pjs, getUrlParam('ui'), includeTransformFn);
+			document.getElementById('canvasContainer').appendChild(canvas);
 
 			draw(new Date().getTime());
 		};
