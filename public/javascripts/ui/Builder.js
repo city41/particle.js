@@ -1,4 +1,11 @@
 (function() {
+	var circleFnSrc = 
+		'var r = pjs.toRad(value.x);\n' +
+		'return {\n' +
+		'x: Math.cos(r) * 70,\n' +
+		'y: Math.sin(r) * 70\n' +
+	'};';
+
 	this.pjs = this.pjs || {};
 	pjs.ui = pjs.ui || {};
 	
@@ -10,16 +17,17 @@
 		this.uiConfig = uiString && pjs.ui.Parser.parse(uiString) || pjs.ui.FullConfig;
 		this.includeTransformFn = includeTransformFn;
 
-		if(this.uiConfig.length) {
-			this.build();
-		}
+		this.build(includeTransformFn);
 	};
 
 	pjs.ui.Builder.prototype = {
-		build: function() {
+		build: function(includeTransformFn) {
 			var gui = new dat.GUI();
 
 			document.getElementById(this.containerId).appendChild(gui.domElement);
+
+			this._addPlayButton(gui);
+			this._addResetButton(gui);
 
 			var useFolders = this.uiConfig.length > 1;
 
@@ -35,8 +43,12 @@
 				}
 			}
 
-			this._addPlayButton(gui);
-			this._addResetButton(gui);
+			if(includeTransformFn) {
+				this.particleSystem.transformFn = circleFnSrc;
+				var transformFolder = gui.addFolder('posVar Transform');
+				transformFolder.addTextArea(this.particleSystem, 'transformFn').name('function');
+			}
+
 
 			this._listenForAllControllers(gui);
 		},
@@ -66,7 +78,8 @@
 		},
 
 		_addItem: function(gui, item) {
-			this['_' + item.type](gui, item.property);
+			var type = pjs.ui.PropertyMap[item];
+			this['_' + type](gui, item);
 		},
 
 		_boolean: function(gui, property) {
@@ -118,11 +131,10 @@
 			gui.add(this.particleSystem, 'currentSystem', systems);
 		},
 
-		_texturereset: function(gui) {
-			gui.add(this.particleSystem, 'resetTexture').name('reset texture');
-		},
-
-		_texture: function() {}
+		_texture: function(gui) {
+			gui.addFile(this.particleSystem, 'textureFile');
+			gui.add(this.particleSystem, 'resetTexture');
+		}
 	};
 })();
 
