@@ -23,11 +23,10 @@
 
 				for(var s = 0; s < split.length; ++s) {
 					var rawItem = split[s];
-					var splitItem = rawItem.split('=');
-					entry.items.push({
-						property: splitItem[0],
-						type: splitItem[1]
-					});
+					var item = rawItem.split('=')[0];
+					if(entry.items.indexOf(item) < 0) {
+						entry.items.push(item);
+					}
 				}
 				results.push(entry);
 			}

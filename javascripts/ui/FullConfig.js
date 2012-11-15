@@ -2,123 +2,53 @@
 	this.pjs = this.pjs || {};
 	this.pjs.ui = this.pjs.ui || {};
 
+	this.pjs.ui.PropertyMap = {
+		pos: 'posvector',
+		posVar: 'posvector',
+		life: 'unsignednumber',
+		lifeVar: 'unsignednumber',
+		totalParticles: 'unsignednumber',
+		emissionRate: 'unsignednumber',
+		startColor: 'color',
+		startColorVar: 'colorvar',
+		endColor: 'color',
+		endColorVar: 'colorvar',
+		radius: 'unsignednumber',
+		radiusVar: 'unsignednumber',
+		texture: 'texture',
+		textureEnabled: 'boolean',
+		textureAdditive: 'boolean',
+		speed: 'number',
+		speedVar: 'unsignednumber',
+		angle: 'number',
+		angleVar: 'unsignednumber',
+		gravity: 'vector',
+		radialAccel: 'number',
+		radialAccelVar: 'unsignednumber',
+		tangentialAccel: 'number',
+		tangentialAccelVar: 'unsignednumber',
+		system: 'systempicker'
+	};
+
 	this.pjs.ui.FullConfig = [{
 		title: 'Predefined Systems',
-		items: [{
-			type: 'systempicker'
-		}]
+		items: ['system']
 	},
 	{
 		title: 'Basics',
-		items: [{
-			type: 'posvector',
-			property: 'pos'
-		},
-		{
-			type: 'posvector',
-			property: 'posVar'
-		},
-		{
-			type: 'unsignednumber',
-			property: 'life'
-		},
-		{
-			type: 'unsignednumber',
-			property: 'lifeVar'
-		},
-		{
-			type: 'unsignednumber',
-			property: 'totalParticles'
-		},
-		{
-			type: 'unsignednumber',
-			property: 'emissionRate'
-		}]
+		items: ['pos', 'posVar', 'life', 'lifeVar', 'totalParticles', 'emissionRate']
 	},
 	{
 		title: 'Appearance',
-		items: [{
-			type: 'color',
-			property: 'startColor'
-		},
-		{
-			type: 'colorvar',
-			property: 'startColorVar'
-		},
-		{
-			type: 'color',
-			property: 'endColor'
-		},
-		{
-			type: 'colorvar',
-			property: 'endColorVar'
-		},
-		{
-			type: 'unsignednumber',
-			property: 'radius'
-		},
-		{
-			type: 'unsignednumber',
-			property: 'radiusVar'
-		}]
+		items: ['startColor', 'startColorVar', 'endColor', 'endColorVar', 'radius', 'radiusVar']
 	},
 	{
 		title: 'Texture',
-		items: [{
-			type: 'texture',
-			property: 'texture'
-		},
-		{
-			type: 'boolean',
-			property: 'textureEnabled'
-		},
-		{
-			type: 'boolean',
-			property: 'textureAdditive'
-		},
-		{
-			type: 'texturereset',
-			property: 'texture'
-		}]
+		items: ['texture', 'textureEnabled', 'textureAdditive' ]
 	},
 	{
 		title: 'Physics',
-		items: [{
-			type: 'number',
-			property: 'speed'
-		},
-		{
-			type: 'unsignednumber',
-			property: 'speedVar'
-		},
-		{
-			type: 'number',
-			property: 'angle'
-		},
-		{
-			type: 'unsignednumber',
-			property: 'angleVar'
-		},
-		{
-			type: 'vector',
-			property: 'gravity'
-		},
-		{
-			type: 'number',
-			property: 'radialAccel'
-		},
-		{
-			type: 'unsignednumber',
-			property: 'radialAccelVar'
-		},
-		{
-			type: 'number',
-			property: 'tangentialAccel'
-		},
-		{
-			type: 'unsignednumber',
-			property: 'tangentialAccelVar'
-		}]
+		items: ['speed', 'speedVar', 'angle', 'angleVar', 'gravity', 'radialAccel', 'radialAccelVar', 'tangentialAccel', 'tangentialAccelVar']
 	}];
 
 })();

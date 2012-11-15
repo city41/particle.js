@@ -371,5 +371,33 @@
 			}
 		}
 	});
+
+	Object.defineProperty(pjs.Emitter.prototype, 'transformFn', {
+		get: function() {
+			return this._transformFnSrc || '';
+		}, 
+		set: function(src) {
+			this._transformFnSrc = src;
+			try {
+				this.posVarTransformFn = new Function('value', src);
+			} catch(e) {
+				this.posVarTransformFn = null;
+			}
+		}
+	});
+
+	Object.defineProperty(pjs.Emitter.prototype, 'textureFile', {
+		get: function() {
+			return (this._file && this._file.name) || '';
+		},
+		set: function(file) {
+			try {
+				pjs.TextureLoader.load(this, 'texture', file);
+				this._file = file;
+			} catch(e) {
+
+			}
+		}
+	});
 })();
 

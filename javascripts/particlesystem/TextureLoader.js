@@ -1,8 +1,9 @@
 (function() {
 	this.pjs = this.pjs || {};
-	this.pjs.ui = this.pjs.ui || {};
 
-	this.pjs.ui.TextureLoader = {
+	this.pjs.TextureLoader = {
+		cache: {},
+
 		load: function(target, property, file) {
 			if (this.cache[file.name]) {
 				this._overlay(target, property, this.cache[file.name]);
@@ -12,15 +13,12 @@
 		},
 
 		_overlay: function(target, property, result) {
-			var config = {};
-			config[property] = result;
-			target.overlay(config);
+			target[property] = result;
 		},
 
 		_loadViaFile: function(target, property, file) {
 			if (!this._isImageFile(file)) {
-				alert('this does not appear to be an image');
-				return;
+				throw new Error('this does not appear to be an image');
 			}
 
 			var me = this;
@@ -50,7 +48,7 @@
 				return false;
 			}
 
-			return ['png', 'jpg', 'jpeg', 'gif'].indexOf(extenstion.toLowerCase()) > -1;
+			return ['png', 'jpg', 'jpeg', 'gif'].indexOf(extension.toLowerCase()) > -1;
 		}
 	};
 })();
