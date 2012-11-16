@@ -13,7 +13,13 @@
 		},
 
 		_overlay: function(target, property, result) {
-			target[property] = result;
+			if(result.width) {
+				target[property] = result;
+			} else {
+				result.onload = function() {
+					target[property] = result;
+				};
+			}
 		},
 
 		_loadViaFile: function(target, property, file) {
