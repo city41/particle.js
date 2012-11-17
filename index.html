@@ -2,14 +2,29 @@
 <html lang="en">
 <head>
 	<title>Particle Designer</title>
-	<link rel="stylesheet" href="javascripts/third/ext/ext-4.1.1a/resources/css/ext-all.css" />
 	<link rel="stylesheet" href="pjs.css" />
+	<style>
+		#canvasContainer {
+			float: left;
+			position: relative;
+			background-color: black;
+		}
+		#guiContainerContainer {
+			float: left;
+		}
+		#statsContainer {
+			float: left;
+		}
+	</style>
 </head>
 <body>
+	<div id="canvasContainer"></div>
+
 	<script type="text/javascript" src="pjs-min.js"></script>
 	<script type="text/javascript">
-		Ext.onReady(pjs.onReady);
+		window.onload = pjs.onReady;
 	</script>
 </body>
 </html>
+
 

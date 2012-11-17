@@ -36,13 +36,15 @@
 
 	pjs.predefinedSystems = {
 		getSystem: function(name) {
+			var system = this.systems[0];
 			for (var i = 0; i < this.systems.length; ++i) {
 				var ps = this.systems[i];
 				if (ps.name === name) {
-					return ps.system;
+					system = ps;
+					break;
 				}
 			}
-			return this.systems[0].system;
+			return pjs.deepClone(system, ['texture']);
 		},
 
 		positionSystems: function(size) {
@@ -95,8 +97,8 @@
 				radiusVar: 2,
 				startScale: 1,
 				endScale: 1,
-				startColor: [0.2, 0.4, 0.7, 1],
-				startColorVar: [0, 0, 0.2, 0.1],
+				startColor: [51, 102, 178.5, 1],
+				startColorVar: [0, 0, 51, 0.1],
 				endColor: [0, 0, 0, 1],
 				active: true,
 				duration: Infinity
@@ -126,10 +128,10 @@
 				radiusVar: 2,
 				startScale: 1,
 				endScale: 1,
-				startColor: [0.5, 0.5, 0.5, 1],
-				startColorVar: [0.5, 0.5, 0.5, 0.1],
-				endColor: [0.1, 0.1, 0.1, 0.2],
-				endColorVar: [0.1, 0.1, 0.1, 0.2],
+				startColor: [127.5, 127.5, 127.5, 1],
+				startColorVar: [127.5, 127.5, 127.5, 0],
+				endColor: [25.5, 25.5, 25.5, 0.2],
+				endColorVar: [25.5, 25.5, 25.5, 0.2],
 				active: true,
 				duration: Infinity
 			}
@@ -161,7 +163,7 @@
 				radiusVar: 1,
 				startScale: 1,
 				endScale: 1,
-				startColor: [0.76, 0.25, 0.12, 1],
+				startColor: [193.8, 63.75, 30.6, 1],
 				endColor: [0, 0, 0, 0],
 				active: true,
 				duration: Infinity
@@ -190,7 +192,7 @@
 				radiusVar: 2,
 				startScale: 1,
 				endScale: 1,
-				startColor: [0.12, 0.25, 0.76, 1],
+				startColor: [30.6, 63.75, 193.8, 1],
 				endColor: [0, 0, 0, 1],
 				active: true,
 				duration: Infinity
@@ -226,8 +228,8 @@
 				radiusVar: 2,
 				startScale: 1,
 				endScale: 0.3,
-				startColor: [1, 1, 1, 1],
-				endColor: [1, 1, 1, 0],
+				startColor: [255, 255, 255, 1],
+				endColor: [255, 255, 255, 0],
 				active: true,
 				duration: Infinity
 			}
@@ -256,10 +258,10 @@
 				"startScaleVar": 0,
 				"endScale": 1,
 				"endScaleVar": 0,
-				"startColor": [0.7843137254901961, 0.7843137254901961, 1, 1],
-				"startColorVar": [0, 0, 0.1568627450980392, 0.1],
-				"endColor": [0.1, 0.1, 0.1, 0.2],
-				"endColorVar": [0.1, 0.1, 0.1, 0.2],
+				"startColor": [198.9, 198.9, 255, 1],
+				"startColorVar": [0, 0, 38, 0.1],
+				"endColor": [25.5, 25.5, 25.5, 0.2],
+				"endColorVar": [25.5, 25.5, 25.5, 0.2],
 				"gravity": {
 					"x": 0,
 					"y": - 90
@@ -296,9 +298,9 @@
 				"startScaleVar": 0,
 				"endScale": 1,
 				"endScaleVar": 0,
-				"startColor": [0.0784313725490196, 0.23529411764705882, 1, 1],
-				"startColorVar": [0, 0, 0.19607843137254902, 0.3],
-				"endColor": [0.7843137254901961, 0.7843137254901961, 1, 0],
+				"startColor": [19.89, 59.93, 255, 1],
+				"startColorVar": [0, 0, 48, 0.3],
+				"endColor": [198.9, 198.9, 255, 0],
 				"endColorVar": [0, 0, 0, 0],
 				"gravity": {
 					"x": 0,
@@ -336,9 +338,9 @@
 				"startScaleVar": 0,
 				"endScale": 1,
 				"endScaleVar": 0,
-				"startColor": [1, 0, 0, 1],
+				"startColor": [255, 0, 0, 1],
 				"startColorVar": [0, 0, 0, 0],
-				"endColor": [0, 0, 1, 1],
+				"endColor": [0, 0, 255, 1],
 				"endColorVar": [0, 0, 0, 0],
 				"gravity": {
 					"x": 0,
@@ -376,10 +378,8 @@
 				"startScaleVar": 0,
 				"endScale": 1,
 				"endScaleVar": 0,
-				"startColor": [0.76, 0.25, 0.12, 1],
-				"startColorVar": [0, 0, 0, 0],
-				"endColor": [0, 0, 0, 0],
-				"endColorVar": [0, 0, 0, 0],
+				startColor: [193.8, 63.75, 30.6, 1],
+				endColor: [0, 0, 0, 0],
 				"gravity": {
 					"x": 0,
 					"y": 0
