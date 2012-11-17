@@ -27,7 +27,9 @@
 		radialAccelVar: 'unsignednumber',
 		tangentialAccel: 'number',
 		tangentialAccelVar: 'unsignednumber',
-		system: 'systempicker'
+		system: 'systempicker',
+		startScale: 'unsignednumber',
+		endScale: 'unsignednumber'
 	};
 
 	this.pjs.ui.FullConfig = [{
