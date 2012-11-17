@@ -1,260 +1,151 @@
 (function() {
-	Ext.define('pjs.ui.Builder', {
-		singleton: true,
+	var circleFnSrc = 'var r = pjs.toRad(value.x);\n' + 'return {\n' + 'x: Math.cos(r) * 70,\n' + 'y: Math.sin(r) * 70\n' + '};';
 
-		requires: ['Ext.container.Viewport', 'Ext.container.Container', 'pjs.ui.*'],
+	this.pjs = this.pjs || {};
+	pjs.ui = pjs.ui || {};
 
-		uiConfig: [{
-			title: 'Predefined Systems',
-			items: [{
-				type: 'systempicker'
-			}]
-		},
-		{
-			title: 'Basics',
-			items: [{
-				type: 'vector',
-				property: 'pos'
-			},
-			{
-				type: 'vector',
-				property: 'posVar'
-			},
-			{
-				type: 'divider'
-			},
-			{
-				type: 'number',
-				property: 'life'
-			},
-			{
-				type: 'number',
-				property: 'lifeVar'
-			},
-			{
-				type: 'divider'
-			},
-			{
-				type: 'number',
-				property: 'totalParticles'
-			},
-			{
-				type: 'number',
-				property: 'emissionRate'
-			}]
-		},
-		{
-			title: 'Appearance',
-			items: [{
-				type: 'color',
-				property: 'startColor'
-			},
-			{
-				type: 'color',
-				property: 'startColorVar'
-			},
-			{
-				type: 'divider'
-			},
-			{
-				type: 'color',
-				property: 'endColor'
-			},
-			{
-				type: 'color',
-				property: 'endColorVar'
-			},
-			{
-				type: 'divider'
-			},
-			{
-				type: 'number',
-				property: 'radius'
-			},
-			{
-				type: 'number',
-				property: 'radiusVar'
-			}]
-		},
-		{
-			title: 'Texture',
-			items: [{
-				type: 'texture',
-				property: 'texture'
-			},
-			{
-				type: 'boolean',
-				property: 'textureEnabled'
-			},
-			{
-				type: 'boolean',
-				property: 'textureAdditive'
-			},
-			{
-				type: 'texturereset',
-				property: 'texture'
-			}]
-		},
-		{
-			title: 'Physics',
-			items: [{
-				type: 'number',
-				property: 'speed'
-			},
-			{
-				type: 'number',
-				property: 'speedVar'
-			},
-			{
-				type: 'divider'
-			},
-			{
-				type: 'number',
-				property: 'angle'
-			},
-			{
-				type: 'number',
-				property: 'angleVar'
-			},
-			{
-				type: 'divider'
-			},
-			{
-				type: 'vector',
-				property: 'gravity'
-			},
-			{
-				type: 'divider'
-			},
-			{
-				type: 'number',
-				property: 'radialAccel'
-			},
-			{
-				type: 'number',
-				property: 'radialAccelVar'
-			},
-			{
-				type: 'divider'
-			},
-			{
-				type: 'number',
-				property: 'tangentialAccel'
-			},
-			{
-				type: 'number',
-				property: 'tangentialAccelVar'
-			}]
-		}],
+	pjs.ui.Builder = function(containerId, particleSystem, canvas, controller, uiString, includeTransformFn) {
+		this.containerId = containerId;
+		this.particleSystem = particleSystem;
+		this.canvas = canvas;
+		this.controller = controller;
+		this.uiConfig = uiString && pjs.ui.Parser.parse(uiString) || pjs.ui.FullConfig;
+		this.includeTransformFn = includeTransformFn;
 
-		build: function(controller, particleSystem, chosenSystem, canvas, uiString, includeTransformFn) {
-			var uiConfig = (uiString && pjs.ui.Parser.parse(uiString)) || this.uiConfig;
-			this.particleSystem = particleSystem;
-			this.chosenSystem = chosenSystem;
+		this.build(includeTransformFn);
+	};
 
-			if(includeTransformFn) {
-				uiConfig[0].items.push({
-					type: 'transformfn',
-					property: 'posVarTransformFn'
-				});
-			}
+	pjs.ui.Builder.prototype = {
+		build: function(includeTransformFn) {
+			var gui = new dat.GUI({ resizable: false, width: 370 });
+			this.rootGui = gui;
 
-			this.viewport = Ext.create('Ext.container.Container', {
-				renderTo: Ext.getBody(),
-				layout: 'column',
-				padding: 8,
-				items: [{
-					xtype: 'pjscanvaswrapper',
-					canvas: canvas,
-					particleSystem: particleSystem,
-					chosenSystem: chosenSystem,
-					controller: controller,
-					listeners: {
-						reset: this._onReset,
-						scope: this
-					}
-				},
-				{
-					xtype: 'container',
-					items: this._getUIItems(particleSystem, uiConfig),
-					width: Ext.isIE ? 440: 420,
-					height: canvas.height + 10,
-					autoScroll: true
-				}],
-				listeners: {
-					afterrender: function(viewport) {
-						var picker = viewport.down('pjssystempicker');
+			this._addPlayButton(gui);
+			this._addResetButton(gui);
 
-						if (picker) {
-							picker.setSystem(chosenSystem);
-							picker.on('systemchange', this._onSystemChange, this);
-						}
-					},
-					scope: this
+			var useFolders = this.uiConfig.length > 1;
+
+			for (var i = 0; i < this.uiConfig.length; ++i) {
+				var config = this.uiConfig[i];
+				if (useFolders) {
+					var folder = gui.addFolder(config.title || 'Section');
+				} else {
+					folder = gui;
 				}
-			});
-
-			//this._initFocusEvents(controller);
-		},
-
-		_onReset: function() {
-			var picker = this.viewport.down('pjssystempicker');
-
-			if(picker) {
-				this.particleSystem.reconfigure(picker.getValue());
-			} else {
-				this.particleSystem.reconfigure(this.chosenSystem);
+				for (var k = 0; k < config.items.length; ++k) {
+					this._addItem(folder, config.items[k]);
+				}
 			}
 
-			this._onSystemChange();
+			if (includeTransformFn) {
+				this.particleSystem.transformFn = circleFnSrc;
+				var transformFolder = gui.addFolder('posVar Transform');
+				transformFolder.addTextArea(this.particleSystem, 'transformFn').name('function');
+			}
+
+			if(!useFolders) {
+				this._openAllSubFolders();
+			}
 		},
 
-		_onSystemChange: function() {
-			var fields = Ext.ComponentQuery.query('pjsfield');
+		_openAllSubFolders: function() {
+			for(var folderName in this.rootGui.__folders) {
+				if(this.rootGui.__folders.hasOwnProperty(folderName)) {
 
-			Ext.Array.forEach(fields, function(field) {
-				field.reload();
-			});
-
-			this.viewport.down('pjscanvaswrapper').reload();
+					var folder = this.rootGui.__folders[folderName];
+					folder.closed = false;
+				}
+			}
 		},
 
-		_getUIItems: function(target, uiConfig) {
-			var items = [];
-			Ext.Array.forEach(uiConfig, function(entry) {
-				items.push(this._buildGroup(target, entry.title, entry.items, uiConfig.length > 1));
-			},
-			this);
-
-			return items;
+		_updateDisplays: function(gui) {
+			for (var folderName in gui.__folders) {
+				if (gui.__folders.hasOwnProperty(folderName)) {
+					this._updateDisplays(gui.__folders[folderName]);
+				}
+			}
+			for (var i = 0; i < gui.__controllers.length; ++i) {
+				gui.__controllers[i].updateDisplay();
+			}
 		},
 
-		_buildGroup: function(target, title, propertyConfigs, collapsible) {
-			var items = [];
-
-			Ext.Array.forEach(propertyConfigs, function(config) {
-				items.push({
-					xtype: 'pjs' + config.type,
-					target: target,
-					property: config.property,
-					padding: 6
-				});
-			});
-
-			return {
-				xtype: 'panel',
-				title: title,
-				items: items,
-				border: false,
-				collapsible: collapsible,
-				layout: {
-					type: 'vbox',
-					align: 'stretch'
-				},
-				padding: 6,
-				width: 400
+		_addPlayButton: function(gui) {
+			var c = gui.add(this.controller, 'togglePause').name(this.controller.isPaused() ? 'Play': 'Pause');
+			var me = this;
+			c.__onChange = function() {
+				// opposite, because togglePause hasnt been called yet
+				c.name(me.controller.isPaused() ? 'Pause': 'Play');
 			};
+		},
+
+		_addResetButton: function(gui) {
+			var c = gui.add(this.particleSystem, 'reset').name('Reset');
+			var me = this;
+			c.onChange(function() {
+				setTimeout(function() {
+					if(me.includeTransformFn) {
+						me.particleSystem.transformFn = circleFnSrc;
+					}
+					me._updateDisplays(me.rootGui);
+				}, 0);
+			});
+		},
+
+		_addItem: function(gui, item) {
+			var type = pjs.ui.PropertyMap[item];
+			this['_' + type](gui, item);
+		},
+
+		_boolean: function(gui, property) {
+			gui.add(this.particleSystem, property);
+		},
+
+		_color: function(gui, property) {
+			var folder = gui.addFolder(property);
+			folder.add(this.particleSystem[property], '0').min(0).max(255).name('red');
+			folder.add(this.particleSystem[property], '1').min(0).max(255).name('green');
+			folder.add(this.particleSystem[property], '2').min(0).max(255).name('blue');
+			folder.add(this.particleSystem[property], '3').min(0).max(1).name('alpha');
+		},
+
+		_posvector: function(gui, property) {
+			var folder = gui.addFolder(property);
+			folder.add(this.particleSystem[property], 'x').min(0).max(this.canvas.width);
+			folder.add(this.particleSystem[property], 'y').min(0).max(this.canvas.height);
+		},
+
+		_vector: function(gui, property) {
+			var folder = gui.addFolder(property);
+			folder.add(this.particleSystem[property], 'x').min(-500).max(500);
+			folder.add(this.particleSystem[property], 'y').min(-500).max(500);
+		},
+
+		_number: function(gui, property) {
+			return gui.add(this.particleSystem, property).min(-500).max(500);
+		},
+
+		_unsignednumber: function(gui, property) {
+			gui.add(this.particleSystem, property).min(0).max(1000);
+		},
+
+		_systempicker: function(gui) {
+			var systems = [];
+			for (var i = 0; i < pjs.predefinedSystems.systems.length; ++i) {
+				var system = pjs.predefinedSystems.systems[i];
+				systems.push(system.name);
+			}
+
+			var c = gui.add(this.particleSystem, 'currentSystem', systems);
+			var me = this;
+			c.onChange(function() {
+				me._updateDisplays(me.rootGui);
+			});
+		},
+
+		_texture: function(gui) {
+			gui.addFile(this.particleSystem, 'textureFile');
+			gui.add(this.particleSystem, 'resetTexture');
 		}
-	});
+	};
 })();
 

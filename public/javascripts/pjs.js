@@ -47,11 +47,31 @@
 	var particleSystem;
 	var canvas;
 	var context;
+	var stats;
+
+	function initStats(statsContainerId) {
+		stats = new Stats();
+		stats.setMode(0);
+
+		stats.domElement.style.position = 'absolute';
+		stats.domElement.style.top = 0;
+		stats.domElement.style.left = 0;
+
+		document.getElementById(statsContainerId).appendChild(stats.domElement);
+
+		var graphs = ['fpsGraph', 'msGraph'];
+		for(var i = 0; i < graphs.length; ++i) {
+			var graphId = graphs[i];
+			var graph = document.getElementById(graphId);
+			graph.parentNode.removeChild(graph);
+		}
+	}
 
 	function draw(timestamp) {
 		if (paused) {
 			return;
 		}
+		stats.begin();
 
 		var delta = timestamp - (lastTimestamp || timestamp);
 		lastTimestamp = timestamp;
@@ -65,6 +85,7 @@
 		pjs.Renderer.render(context, particleSystem.particles);
 
 		requestAnimationFrame(draw);
+		stats.end();
 	}
 
 	pjs.onReady = function() {
@@ -93,7 +114,11 @@
 				pjs.predefinedSystems.deleteSystem('ringoffire');
 			}
 
-			pjs.ui.Builder.build(pjs, particleSystem, system, canvas, getUrlParam('ui'), includeTransformFn);
+			new pjs.ui.Builder('guiContainer', particleSystem, canvas, pjs, getUrlParam('ui'), includeTransformFn);
+			document.getElementById('canvasContainer').appendChild(canvas);
+			initStats('canvasContainer');
+
+			draw(new Date().getTime());
 		};
 	};
 
