@@ -5,7 +5,7 @@ up and running [here](http://city41.github.com/particle.js/)
 
 A particle system designer written in JavaScript using HTML5 Canvas and dat-gui for the UI
   
-![screenshot](https://raw.github.com/city41/particle.js/datgui/particlejs.png)
+![screenshot](https://raw.github.com/city41/particle.js/master/particlejs.png)
 
 ## Main Purpose
 
