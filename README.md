@@ -48,9 +48,11 @@ The **ui** query parameter takes a string that specifies what UI components to i
 
 For example, to have pos, posVar and startColor UI components all in a "Simple" category, the string would be
 
-    ui=Simple,pos,posVar,startColor
+    ui=Simple,pos,posVar
 
-[like this](http://city41.github.com/particle.js/index.html?ui=Simple,pos,posVar,startColor)
+[like this](http://city41.github.com/particle.js/index.html?ui=Simple,pos,posVar)
+
+(NOTE: when there is only one category, a folder for the category is not created, so you don't see the title of the category anywhere)
 
 Or to have two different categories:
 
