@@ -122,7 +122,13 @@ The stats.js library is untouched by me.
 
 I know, it's bad. Sorry about that. I promise to come back and flesh out the tests. They are in the `spec` directory and use jasmine.
 
-## Future Features?
+## Experimental, Import Cocos2D particle plist files
 
-It'd be cool to export these systems into a Cocos2D or LÖVE format. Also would be cool to export
-them into a format that would be compatible with ImpactJS and Cocos2D-JavaScript.
+As a first stab at Cocos2D support, I have an experimental branch where you can import plist files for Cocos2D particle systems.
+
+The experiment is running [here](http://city41.github.com/particle.js/exp/)
+
+You can find some sample plist files at the Cocos2D repo [here](https://github.com/cocos2d/cocos2d-iphone/tree/master-v2/Resources/Particles)
+
+A few things don't work yet, most notably textures. This is because the textures are gzipped in the plist file. So far I know of no way to deflate in JavaScript, but looking into it.
+
