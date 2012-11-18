@@ -130,5 +130,5 @@ The experiment is running [here](http://city41.github.com/particle.js/exp/)
 
 You can find some sample plist files at the Cocos2D repo [here](https://github.com/cocos2d/cocos2d-iphone/tree/master-v2/Resources/Particles)
 
-A few things don't work yet, most notably textures. This is because the textures are gzipped in the plist file. So far I know of no way to deflate in JavaScript, but looking into it.
+A few things don't work yet, most notably textures. The textures in the plist are base64 encoded, gzipped TIFFs. I've been able to unwrap and get at them using [gzip-js](https://github.com/beatgammit/gzip-js) and [tiff.js](https://github.com/GPHemsley/tiff-js), which is pretty freakin' sweet if you ask me (the JS community rocks!). But so far the alpha channels appear to not be handled, so I'm looking into adding that to tiff.js. For now, you're probably best off turning off the texture once the plist loads.
 
