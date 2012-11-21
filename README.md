@@ -128,7 +128,11 @@ As a first stab at Cocos2D support, I have an experimental branch where you can 
 
 The experiment is running [here](http://city41.github.com/particle.js/exp/)
 
-You can find some sample plist files at the Cocos2D repo [here](https://github.com/cocos2d/cocos2d-iphone/tree/master-v2/Resources/Particles)
+You can find some sample plist files at the Cocos2D repo [here](https://github.com/cocos2d/cocos2d-iphone/tree/master-v2/Resources/Particles), known to work are `BoilingFoam.plist`, `LaveFlow.plist` and `Comet.plist`. Known to **not** work is `Meteor.plist`.
+  
+Textures will most likely load correctly as long as they are TIFFs. For many of Cocos2D plist files, the texture data is stored as base64 encoded, gzipped TIFFs. I am using [gzip-js](https://github.com/beatgammit/gzip-js) and [tiff.js](https://github.com/GPHemsley/tiff-js) to get at the texture data and load it, which is pretty freakin' sweet if you ask me (the JS community rocks!).  
+  
+But, sometimes the texture data is actually a PNG. I've not yet got the texture loader smart enough to differentiate between the two, so if you try a plist that actually contains a PNG, it will blow up.
 
-A few things don't work yet, most notably textures. The textures in the plist are base64 encoded, gzipped TIFFs. I've been able to unwrap and get at them using [gzip-js](https://github.com/beatgammit/gzip-js) and [tiff.js](https://github.com/GPHemsley/tiff-js), which is pretty freakin' sweet if you ask me (the JS community rocks!). But so far the alpha channels appear to not be handled, so I'm looking into adding that to tiff.js. For now, you're probably best off turning off the texture once the plist loads.
+Also missing is the ability to spin the particles. But this little experiment is looking good and I should be able to solidify it and get particle.js fully loading Cocos2D plist files soon.
 
