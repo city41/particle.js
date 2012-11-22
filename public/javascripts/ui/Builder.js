@@ -1,11 +1,12 @@
 define([
+	'particlesystem/PredefinedSystems',
 	'ui/FullConfig', 
 	'ui/PropertyMap', 
 	'ui/Parser',
 	'third/dat.gui.min'
 ], 
-function(fullConfig, propertyMap, Parser) {
-	Builder = function(containerId, particleSystem, canvas, controller, uiString) {
+function(predefinedSystems, fullConfig, propertyMap, Parser) {
+	var Builder = function(containerId, particleSystem, canvas, controller, uiString) {
 		this.containerId = containerId;
 		this.particleSystem = particleSystem;
 		this.canvas = canvas;
@@ -121,8 +122,8 @@ function(fullConfig, propertyMap, Parser) {
 
 		_systempicker: function(gui) {
 			var systems = [];
-			for (var i = 0; i < PredefinedSystems.systems.length; ++i) {
-				var system = PredefinedSystems.systems[i];
+			for (var i = 0; i < predefinedSystems.systems.length; ++i) {
+				var system = predefinedSystems.systems[i];
 				systems.push(system.name);
 			}
 

@@ -1,5 +1,5 @@
 define(function() {
-	TextureLoader = {
+	var TextureLoader = {
 		cache: {},
 
 		load: function(target, property, file) {

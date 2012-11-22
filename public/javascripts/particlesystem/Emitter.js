@@ -16,7 +16,7 @@ function(Particle, TextureLoader, predefinedSystems, util) {
 		vector.y /= length;
 	}
 
-	Emitter = function(system, defaultTexture) {
+	var Emitter = function(system, defaultTexture) {
 		if(!system) {
 			throw new Error("Must create an Emitter with a system");
 		}
