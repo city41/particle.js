@@ -1,6 +1,10 @@
-(function() {
-	this.pjs = this.pjs || {};
-
+define([
+	'particlesystem/Particle',
+	'particlesystem/TextureLoader', 
+	'particlesystem/PredefinedSystems',
+	'particlesystem/util'
+], 
+function(Particle, TextureLoader, predefinedSystems, util) {
 	/*
 	 * Given a vector of any length, returns a vector
 	 * pointing in the same direction but with a magnitude of 1
@@ -12,16 +16,17 @@
 		vector.y /= length;
 	}
 
-	pjs.Emitter = function(system) {
+	Emitter = function(system, defaultTexture) {
 		if(!system) {
 			throw new Error("Must create an Emitter with a system");
 		}
 
+		this._defaultTexture = defaultTexture;
 		this._currentSystem = system.name;
 		this.reconfigure(system.system);
 	};
 
-	pjs.Emitter.prototype = {
+	Emitter.prototype = {
 
 		/*
 		 * Applies all the properties in config to the particle system,
@@ -29,13 +34,13 @@
 		 * on the fly
 		 */
 		overlay: function(config) {
-			pjs.extend(this, config);
+			util.extend(this, config);
 			this.restart();
 		},
 
 		resetTexture: function() {
 			this.overlay({
-				texture: pjs.defaultTexture
+				texture: this._defaultTexture
 			});
 		},
 
@@ -111,7 +116,7 @@
 			this.tangentialAccel = 0;
 			this.tangentialAccelVar = 0;
 
-			pjs.recursiveExtend(this, config, ['texture']);
+			util.recursiveExtend(this, config, ['texture']);
 
 			this.restart();
 		},
@@ -125,7 +130,7 @@
 			this._particlePool = [];
 
 			for (var i = 0; i < this.totalParticles; ++i) {
-				this._particlePool.push(new pjs.Particle());
+				this._particlePool.push(new Particle());
 			}
 
 			this._particleCount = 0;
@@ -135,7 +140,7 @@
 		},
 
 		reset: function() {
-			var system = pjs.predefinedSystems.getSystem(this.currentSystem);
+			var system = predefinedSystems.getSystem(this.currentSystem);
 			this.reconfigure(system.system);
 		},
 
@@ -171,8 +176,8 @@
 			particle.textureAdditive = this.textureAdditive;
 
 			var posVar = {
-				x: this.posVar.x * pjs.random11(),
-				y: this.posVar.y * pjs.random11()
+				x: this.posVar.x * util.random11(),
+				y: this.posVar.y * util.random11()
 			};
 
 			if (this.posVarTransformFn) {
@@ -182,8 +187,8 @@
 			particle.pos.x = this.pos.x + posVar.x;
 			particle.pos.y = this.pos.y + posVar.y;
 
-			var angle = this.angle + this.angleVar * pjs.random11();
-			var speed = this.speed + this.speedVar * pjs.random11();
+			var angle = this.angle + this.angleVar * util.random11();
+			var speed = this.speed + this.speedVar * util.random11();
 
 			// it's easier to set speed and angle at this level
 			// but once the particle is active and being updated, it's easier
@@ -191,17 +196,17 @@
 			// converts the angle and speed values to a velocity vector
 			particle.setVelocity(angle, speed);
 
-			particle.radialAccel = this.radialAccel + this.radialAccelVar * pjs.random11() || 0;
-			particle.tangentialAccel = this.tangentialAccel + this.tangentialAccelVar * pjs.random11() || 0;
+			particle.radialAccel = this.radialAccel + this.radialAccelVar * util.random11() || 0;
+			particle.tangentialAccel = this.tangentialAccel + this.tangentialAccelVar * util.random11() || 0;
 
-			var life = this.life + this.lifeVar * pjs.random11() || 0;
+			var life = this.life + this.lifeVar * util.random11() || 0;
 			particle.life = Math.max(0, life);
 
-			particle.scale = pjs.isNumber(this.startScale) ? this.startScale: 1;
-			particle.deltaScale = pjs.isNumber(this.endScale) ? (this.endScale - this.startScale) : 0;
+			particle.scale = util.isNumber(this.startScale) ? this.startScale: 1;
+			particle.deltaScale = util.isNumber(this.endScale) ? (this.endScale - this.startScale) : 0;
 			particle.deltaScale /= particle.life;
 
-			particle.radius = pjs.isNumber(this.radius) ? this.radius + (this.radiusVar || 0) * pjs.random11() : 0;
+			particle.radius = util.isNumber(this.radius) ? this.radius + (this.radiusVar || 0) * util.random11() : 0;
 
 			// color
 			// note that colors are stored as arrays => [r,g,b,a],
@@ -209,13 +214,13 @@
 			// The renderer will take this array and turn it into a css rgba string
 			if (this.startColor) {
 				var startColor = [
-				this.startColor[0] + this.startColorVar[0] * pjs.random11(), this.startColor[1] + this.startColorVar[1] * pjs.random11(), this.startColor[2] + this.startColorVar[2] * pjs.random11(), this.startColor[3] + this.startColorVar[3] * pjs.random11()];
+				this.startColor[0] + this.startColorVar[0] * util.random11(), this.startColor[1] + this.startColorVar[1] * util.random11(), this.startColor[2] + this.startColorVar[2] * util.random11(), this.startColor[3] + this.startColorVar[3] * util.random11()];
 
 				// if there is no endColor, then the particle will end up staying at startColor the whole time
 				var endColor = startColor;
 				if (this.endColor) {
 					endColor = [
-					this.endColor[0] + this.endColorVar[0] * pjs.random11(), this.endColor[1] + this.endColorVar[1] * pjs.random11(), this.endColor[2] + this.endColorVar[2] * pjs.random11(), this.endColor[3] + this.endColorVar[3] * pjs.random11()];
+					this.endColor[0] + this.endColorVar[0] * util.random11(), this.endColor[1] + this.endColorVar[1] * util.random11(), this.endColor[2] + this.endColorVar[2] * util.random11(), this.endColor[3] + this.endColorVar[3] * util.random11()];
 				}
 
 				particle.color = startColor;
@@ -340,13 +345,13 @@
 		}
 	};
 
-	Object.defineProperty(pjs.Emitter.prototype, 'particles', {
+	Object.defineProperty(Emitter.prototype, 'particles', {
 		get: function() {
 			return this._particlePool;
 		}
 	});
 
-	Object.defineProperty(pjs.Emitter.prototype, 'totalParticles', {
+	Object.defineProperty(Emitter.prototype, 'totalParticles', {
 		get: function() {
 			return this._totalParticles;
 		},
@@ -359,20 +364,20 @@
 		}
 	});
 
-	Object.defineProperty(pjs.Emitter.prototype, 'currentSystem', {
+	Object.defineProperty(Emitter.prototype, 'currentSystem', {
 		get: function() {
 			return this._currentSystem;
 		},
 		set: function(cs) {
 			if(this._currentSystem !== cs) {
 				this._currentSystem = cs;
-				var system = pjs.predefinedSystems.getSystem(cs);
+				var system = predefinedSystems.getSystem(cs);
 				this.reconfigure(system.system);
 			}
 		}
 	});
 
-	Object.defineProperty(pjs.Emitter.prototype, 'transformFn', {
+	Object.defineProperty(Emitter.prototype, 'transformFn', {
 		get: function() {
 			return this._transformFnSrc || '';
 		}, 
@@ -386,18 +391,20 @@
 		}
 	});
 
-	Object.defineProperty(pjs.Emitter.prototype, 'textureFile', {
+	Object.defineProperty(Emitter.prototype, 'textureFile', {
 		get: function() {
 			return (this._file && this._file.name) || '';
 		},
 		set: function(file) {
 			try {
-				pjs.TextureLoader.load(this, 'texture', file);
+				TextureLoader.load(this, 'texture', file);
 				this._file = file;
 			} catch(e) {
 
 			}
 		}
 	});
-})();
+
+	return Emitter;
+});
 

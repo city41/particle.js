@@ -1,9 +1,6 @@
-(function() {
-	this.pjs = this.pjs || {};
-	this.pjs.ui = this.pjs.ui || {};
-
+define(function() {
 	//Position,pos=vector,posVar=vector:Angle,angle=number,angleVar=number
-	this.pjs.ui.Parser = {
+	Parser = {
 		parse: function(raw) {
 			var results = [];
 
@@ -34,5 +31,7 @@
 			return results;
 		}
 	};
-})();
+
+	return Parser;
+});
 

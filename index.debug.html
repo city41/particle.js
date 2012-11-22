@@ -3,7 +3,7 @@
 <head>
 	<title>Particle Designer</title>
 	<link rel="stylesheet" href="pjs.css" />
-	<link rel="stylesheet" href="style.css" />
+	<link rel="stylesheet" href="datgui.css" />
 	<style>
 		#canvasContainer {
 			float: left;
@@ -20,26 +20,7 @@
 </head>
 <body>
 	<div id="canvasContainer"></div>
-
-	<script type="text/javascript" src="javascripts/particlesystem/util.js"></script>
-	<script type="text/javascript" src="javascripts/particlesystem/Particle.js"></script>
-	<script type="text/javascript" src="javascripts/particlesystem/Emitter.js"></script>
-	<script type="text/javascript" src="javascripts/particlesystem/Renderer.js"></script>
-	<script type="text/javascript" src="javascripts/particlesystem/PredefinedSystems.js"></script>
-	<script type="text/javascript" src="javascripts/particlesystem/TextureLoader.js"></script>
-
-	<script type="text/javascript" src="javascripts/third/stats.min.js"></script>
-	<script type="text/javascript" src="javascripts/third/dat.gui.min.js"></script>
-
-	<script type="text/javascript" src="javascripts/ui/Parser.js"></script>
-	<script type="text/javascript" src="javascripts/ui/FullConfig.js"></script>
-	<script type="text/javascript" src="javascripts/ui/Builder.js"></script>
-
-	<script type="text/javascript" src="javascripts/pjs.js"></script>
-
-	<script type="text/javascript">
-		window.onload = pjs.onReady;
-	</script>
+	<script data-main="javascripts/main.js" type="text/javascript" src="javascripts/third/require.js"></script>
 </body>
 </html>
 

@@ -1,22 +1,22 @@
-(function() {
-	var circleFnSrc = 'var r = pjs.toRad(value.x);\n' + 'return {\n' + 'x: Math.cos(r) * 70,\n' + 'y: Math.sin(r) * 70\n' + '};';
-
-	this.pjs = this.pjs || {};
-	pjs.ui = pjs.ui || {};
-
-	pjs.ui.Builder = function(containerId, particleSystem, canvas, controller, uiString, includeTransformFn) {
+define([
+	'ui/FullConfig', 
+	'ui/PropertyMap', 
+	'ui/Parser',
+	'third/dat.gui.min'
+], 
+function(fullConfig, propertyMap, Parser) {
+	Builder = function(containerId, particleSystem, canvas, controller, uiString) {
 		this.containerId = containerId;
 		this.particleSystem = particleSystem;
 		this.canvas = canvas;
 		this.controller = controller;
-		this.uiConfig = uiString && pjs.ui.Parser.parse(uiString) || pjs.ui.FullConfig;
-		this.includeTransformFn = includeTransformFn;
+		this.uiConfig = uiString && Parser.parse(uiString) || fullConfig;
 
-		this.build(includeTransformFn);
+		this.build();
 	};
 
-	pjs.ui.Builder.prototype = {
-		build: function(includeTransformFn) {
+	Builder.prototype = {
+		build: function() {
 			var gui = new dat.GUI({ resizable: false, width: 370 });
 			this.rootGui = gui;
 
@@ -35,12 +35,6 @@
 				for (var k = 0; k < config.items.length; ++k) {
 					this._addItem(folder, config.items[k]);
 				}
-			}
-
-			if (includeTransformFn) {
-				this.particleSystem.transformFn = circleFnSrc;
-				var transformFolder = gui.addFolder('posVar Transform');
-				transformFolder.addTextArea(this.particleSystem, 'transformFn').name('function');
 			}
 
 			if(!useFolders) {
@@ -83,16 +77,13 @@
 			var me = this;
 			c.onChange(function() {
 				setTimeout(function() {
-					if(me.includeTransformFn) {
-						me.particleSystem.transformFn = circleFnSrc;
-					}
 					me._updateDisplays(me.rootGui);
 				}, 0);
 			});
 		},
 
 		_addItem: function(gui, item) {
-			var type = pjs.ui.PropertyMap[item];
+			var type = propertyMap[item];
 			this['_' + type](gui, item);
 		},
 
@@ -130,8 +121,8 @@
 
 		_systempicker: function(gui) {
 			var systems = [];
-			for (var i = 0; i < pjs.predefinedSystems.systems.length; ++i) {
-				var system = pjs.predefinedSystems.systems[i];
+			for (var i = 0; i < PredefinedSystems.systems.length; ++i) {
+				var system = PredefinedSystems.systems[i];
 				systems.push(system.name);
 			}
 
@@ -147,5 +138,7 @@
 			gui.add(this.particleSystem, 'resetTexture');
 		}
 	};
-})();
+
+	return Builder;
+});
 

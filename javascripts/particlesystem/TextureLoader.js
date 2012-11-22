@@ -1,7 +1,5 @@
-(function() {
-	this.pjs = this.pjs || {};
-
-	this.pjs.TextureLoader = {
+define(function() {
+	TextureLoader = {
 		cache: {},
 
 		load: function(target, property, file) {
@@ -57,5 +55,7 @@
 			return ['png', 'jpg', 'jpeg', 'gif'].indexOf(extension.toLowerCase()) > -1;
 		}
 	};
-})();
+
+	return TextureLoader;
+});
 
