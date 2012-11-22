@@ -9,12 +9,11 @@ A particle system designer written in JavaScript using HTML5 Canvas and dat-gui 
 
 ## Main Purpose
 
-This particle editor was written to support an article I wrote. The needs of the article came first and so
-that does mean particle.js possibly has less than optimal choices for general usage.  
+This particle editor was written to support an article I wrote for [Build New Games](http://buildnewgames.com/particle-systems/).
+The needs of the article came first and so that does mean particle.js possibly has less than optimal choices for general usage.  
   
-It would be nice if particle.js took on a life beyond the article, but in all honesty I have no plans for that
-just yet.
-
+I am currently in the midst of improving particle.js, primarily to support Cocos2D (see the last section below)
+  
 ## License
 
 Licensed under Apache 2.0. This generally means you can do just about anything you want with this code.
@@ -46,13 +45,13 @@ The **ui** query parameter takes a string that specifies what UI components to i
 
     <category name>,<parameter name>,<parameter 2 name>:<category name>,<parameter name>,<parameter name>
 
-For example, to have pos, posVar and startColor UI components all in a "Simple" category, the string would be
+For example, to have pos, and posVar UI components all in a "Simple" category, the string would be
 
     ui=Simple,pos,posVar
 
 [like this](http://city41.github.com/particle.js/index.html?ui=Simple,pos,posVar)
 
-(NOTE: when there is only one category, a folder for the category is not created, so you don't see the title of the category anywhere)
+*(NOTE: when there is only one category, a folder for the category is not created, so you don't see the title of the category anywhere)*
 
 Or to have two different categories:
 
@@ -68,8 +67,8 @@ You can fully hide the UI by hitting 'h', and bring it back with 'h' again
 
 #### All the possible parameters and their UI Types
 
-* **totalParticles** (unsignednumber) total number of particles in the particle pool
-* **emissionRate** (unsignednumber) rate at which particles are released
+* **totalParticles** `unsignednumber` total number of particles in the particle pool
+* **emissionRate** `unsignednumber` rate at which particles are released
 * **pos** `vector` starting position for particles
 * **posVar** `vector` variance in particle starting positions
 * **gravity** `vector` the gravity vector
