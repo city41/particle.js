@@ -1,5 +1,5 @@
 ({
     baseUrl: "../public/javascripts",
-    name: "pjs",
+    name: "main",
     out: "../public/pjs-min.js"
 })
