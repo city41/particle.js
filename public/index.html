@@ -3,27 +3,20 @@
 <head>
 	<title>Particle Designer</title>
 	<link rel="stylesheet" href="pjs.css" />
+	<link rel="stylesheet" href="datgui.css" />
 	<style>
 		#canvasContainer {
 			float: left;
 			position: relative;
 			background-color: black;
 		}
-		#guiContainerContainer {
-			float: left;
-		}
-		#statsContainer {
-			float: left;
-		}
 	</style>
 </head>
 <body>
 	<div id="canvasContainer"></div>
 
+	<script type="text/javascript" src="javascripts/third/require.js"></script>
 	<script type="text/javascript" src="pjs-min.js"></script>
-	<script type="text/javascript">
-		window.onload = pjs.onReady;
-	</script>
 </body>
 </html>
 

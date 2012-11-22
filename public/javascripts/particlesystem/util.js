@@ -1,91 +1,95 @@
-(function() {
-	function isInteger(num) {
-		return num === (num | 0);
-	}
+define(function() {
 
-	this.pjs = this.pjs || {};
+	var util = {
+		isIE: navigator.userAgent.indexOf('MSIE') > -1,
 
-	pjs.toRad = function(deg) {
-		return Math.PI * deg / 180;
-	};
+		toRad: function(deg) {
+			return Math.PI * deg / 180;
+		},
 
-	pjs.random = function(minOrMax, maxOrUndefined, dontFloor) {
-		dontFloor = dontFloor || false;
+		isNumber: function(i) {
+			return typeof i === 'number';
+		},
+ 
+		isInteger: function(num) {
+			return num === (num | 0);
+		},
 
-		var min = pjs.isNumber(maxOrUndefined) ? minOrMax: 0;
-		var max = pjs.isNumber(maxOrUndefined) ? maxOrUndefined: minOrMax;
+		random: function(minOrMax, maxOrUndefined, dontFloor) {
+			dontFloor = dontFloor || false;
 
-		var range = max - min;
+			var min = this.isNumber(maxOrUndefined) ? minOrMax: 0;
+			var max = this.isNumber(maxOrUndefined) ? maxOrUndefined: minOrMax;
 
-		var result = Math.random() * range + min;
+			var range = max - min;
 
-		if (isInteger(min) && isInteger(max) && ! dontFloor) {
-			return Math.floor(result);
-		} else {
-			return result;
-		}
-	};
+			var result = Math.random() * range + min;
 
-	pjs.random11 = function() {
-		return pjs.random(-1, 1, true);
-	};
-
-	pjs.extend = function(obj, config) {
-		for (var prop in config) {
-			if (config.hasOwnProperty(prop)) {
-				obj[prop] = config[prop];
+			if (this.isInteger(min) && this.isInteger(max) && !dontFloor) {
+				return Math.floor(result);
+			} else {
+				return result;
 			}
-		}
-	};
+		},
 
-	pjs.recursiveExtend = function(obj, config, exceptions) {
-		for (var prop in config) {
-			if (config.hasOwnProperty(prop)) {
-				if (exceptions.indexOf(prop) > - 1) {
+		random11: function() {
+			return this.random(-1, 1, true);
+		},
+
+		extend: function(obj, config) {
+			for (var prop in config) {
+				if (config.hasOwnProperty(prop)) {
 					obj[prop] = config[prop];
-				} else {
-					if (typeof config[prop] === 'object') {
-						pjs.recursiveExtend(obj[prop], config[prop], exceptions);
-					} else {
+				}
+			}
+		},
+
+		recursiveExtend: function(obj, config, exceptions) {
+			for (var prop in config) {
+				if (config.hasOwnProperty(prop)) {
+					if (exceptions.indexOf(prop) > - 1) {
 						obj[prop] = config[prop];
+					} else {
+						if (typeof config[prop] === 'object') {
+							this.recursiveExtend(obj[prop], config[prop], exceptions);
+						} else {
+							obj[prop] = config[prop];
+						}
 					}
 				}
 			}
-		}
-	};
+		},
 
-	pjs.isNumber = function(i) {
-		return typeof i === 'number';
-	};
+		clone: function(obj) {
+			var clone = {};
+			this.extend(clone, obj);
+			return clone;
+		},
 
-	pjs.clone = function(obj) {
-		var clone = {};
-		pjs.extend(clone, obj);
-		return clone;
-	};
-
-	pjs.deepClone = function(obj, exceptions) {
-		if (typeof obj !== 'object') {
-			return obj;
-		}
-		if (Array.isArray(obj)) {
-			var cloneArray = [];
-			for (var i = 0; i < obj.length; ++i) {
-				cloneArray.push(pjs.deepClone(obj[i], exceptions));
+		deepClone: function(obj, exceptions) {
+			if (typeof obj !== 'object') {
+				return obj;
 			}
-			return cloneArray;
-		}
-
-		var clone = {};
-		for (var prop in obj) {
-			if (exceptions.indexOf(prop) > - 1) {
-				clone[prop] = obj[prop];
-			} else {
-				clone[prop] = pjs.deepClone(obj[prop], exceptions);
+			if (Array.isArray(obj)) {
+				var cloneArray = [];
+				for (var i = 0; i < obj.length; ++i) {
+					cloneArray.push(this.deepClone(obj[i], exceptions));
+				}
+				return cloneArray;
 			}
+
+			var clone = {};
+			for (var prop in obj) {
+				if (exceptions.indexOf(prop) > - 1) {
+					clone[prop] = obj[prop];
+				} else {
+					clone[prop] = this.deepClone(obj[prop], exceptions);
+				}
+			}
+			return clone;
 		}
-		return clone;
 	};
 
-})();
+	return util;
+});
 

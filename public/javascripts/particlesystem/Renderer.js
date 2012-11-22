@@ -1,6 +1,4 @@
-(function() {
-	this.pjs = this.pjs || {};
-
+define(function() {
 	var bufferCache = {};
 
 	/*
@@ -38,8 +36,7 @@
 	}
 
 
-	pjs.Renderer = {
-
+	Renderer = {
 		/*
 		 * renders a particle to the given context without using textures. Uses
 		 * the particle's color to draw a circle at the particle's location
@@ -114,5 +111,7 @@
 		}
 	};
 
-})();
+	return Renderer;
+
+});
 

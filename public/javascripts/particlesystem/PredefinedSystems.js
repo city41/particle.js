@@ -1,4 +1,4 @@
-(function() {
+define(['particlesystem/util'], function(util) {
 	var posFuncs = {
 		center: function(size) {
 			return {
@@ -32,9 +32,7 @@
 		}
 	};
 
-	this.pjs = this.pjs || {};
-
-	pjs.predefinedSystems = {
+	PredefinedSystems = {
 		getSystem: function(name) {
 			var system = this.systems[0];
 			for (var i = 0; i < this.systems.length; ++i) {
@@ -44,7 +42,7 @@
 					break;
 				}
 			}
-			return pjs.deepClone(system, ['texture']);
+			return util.deepClone(system, ['texture']);
 		},
 
 		positionSystems: function(size) {
@@ -90,7 +88,6 @@
 				radialAccelVar: 0,
 				tangentialAccel: 0,
 				tangentialAccelVar: 0,
-				texture: pjs.defaultTexture,
 				textureEnabled: true,
 				textureAdditive: true,
 				radius: 12,
@@ -156,7 +153,6 @@
 				radialAccelVar: 0,
 				tangentialAccel: 0,
 				tangentialAccelVar: 0,
-				texture: pjs.defaultTexture,
 				textureEnabled: true,
 				textureAdditive: true,
 				radius: 10,
@@ -185,7 +181,6 @@
 				radialAccelVar: 0,
 				tangentialAccel: 80,
 				tangentialAccelVar: 0,
-				texture: pjs.defaultTexture,
 				textureEnabled: true,
 				textureAdditive: true,
 				radius: 10,
@@ -353,45 +348,9 @@
 				"speed": 180,
 				"speedVar": 50
 			}
-		},
-		{
-			name: 'ringoffire',
-			system: {
-				"totalParticles": 400,
-				"emissionRate": 180,
-				"active": true,
-				"duration": Infinity,
-				pos: 'center',
-				"posVar": {
-					"x": 180,
-					"y": 20
-				},
-				"angle": 90,
-				"angleVar": 10,
-				"life": 1,
-				"lifeVar": 1,
-				"radius": 10,
-				"radiusVar": 1,
-				"textureEnabled": true,
-				"textureAdditive": true,
-				"startScale": 1,
-				"startScaleVar": 0,
-				"endScale": 1,
-				"endScaleVar": 0,
-				startColor: [193.8, 63.75, 30.6, 1],
-				endColor: [0, 0, 0, 0],
-				"gravity": {
-					"x": 0,
-					"y": 0
-				},
-				"radialAccel": 0,
-				"radialAccelVar": 0,
-				"tangentialAccel": 0,
-				"tangentialAccelVar": 0,
-				"speed": 60,
-				"speedVar": 20
-			}
 		}]
 	};
-})();
+
+	return PredefinedSystems;
+});
 

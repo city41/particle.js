@@ -1,38 +1,5 @@
-(function() {
-	this.pjs = this.pjs || {};
-	this.pjs.ui = this.pjs.ui || {};
-
-	this.pjs.ui.PropertyMap = {
-		pos: 'posvector',
-		posVar: 'posvector',
-		life: 'unsignednumber',
-		lifeVar: 'unsignednumber',
-		totalParticles: 'unsignednumber',
-		emissionRate: 'unsignednumber',
-		startColor: 'color',
-		startColorVar: 'color',
-		endColor: 'color',
-		endColorVar: 'color',
-		radius: 'unsignednumber',
-		radiusVar: 'unsignednumber',
-		texture: 'texture',
-		textureEnabled: 'boolean',
-		textureAdditive: 'boolean',
-		speed: 'number',
-		speedVar: 'unsignednumber',
-		angle: 'number',
-		angleVar: 'unsignednumber',
-		gravity: 'vector',
-		radialAccel: 'number',
-		radialAccelVar: 'unsignednumber',
-		tangentialAccel: 'number',
-		tangentialAccelVar: 'unsignednumber',
-		system: 'systempicker',
-		startScale: 'unsignednumber',
-		endScale: 'unsignednumber'
-	};
-
-	this.pjs.ui.FullConfig = [{
+define(function() {
+	return [{
 		title: 'Predefined Systems',
 		items: ['system']
 	},
@@ -52,6 +19,5 @@
 		title: 'Physics',
 		items: ['speed', 'speedVar', 'angle', 'angleVar', 'gravity', 'radialAccel', 'radialAccelVar', 'tangentialAccel', 'tangentialAccelVar']
 	}];
-
-})();
+});
 

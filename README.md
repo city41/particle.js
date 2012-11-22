@@ -14,6 +14,12 @@ The needs of the article came first and so that does mean particle.js possibly h
   
 I am currently in the midst of improving particle.js, primarily to support Cocos2D (see the last section below)
   
+## Building
+
+head to the `r/` directory and run `r.js -o build.js`, out will pop `pjs-min.js` up in the `public` directory. the `require.js` script is required (see the script tags in index.html).  
+  
+r.js is the requirejs optimizer. You can install it with npm: `npm install -g requirejs`. See [http://requirejs.org](http://requirejs.org) for more info
+  
 ## License
 
 Licensed under Apache 2.0. This generally means you can do just about anything you want with this code.
@@ -36,7 +42,6 @@ all parameters are optional.
 * **h**: integer, height of the canvas in pixels (default is 300)
 * **system**: string, the initial predefined particle system to start out with.
     * choices so far include: `meteor`, `fireworks`, `fire`, `galaxy`, `snow`, `watergeyser` and `ribbon`
-    * `ringoffire` is also a choice, see below
 * **ui**: string, specifies which UI components to include for alterning the system, see below
 
 ### Changing the UI
@@ -93,11 +98,6 @@ You can fully hide the UI by hitting 'h', and bring it back with 'h' again
 * **startColorVar** `color` starting color variance
 * **endColor** `color` the ending color of a particle
 * **endColorVar** `color` end color variance
-
-## Ring of Fire particle system
-
-This is a *smidge* hacked in, it was added for the article. To see this particle system, you need to add `transform=true`
-and `system=ringoffire` to the query parameters. Like [this](http://city41.github.com/particle.js/index.html?ui=Transform&transform=true&system=ringoffire)
 
 ## About datGUI
 

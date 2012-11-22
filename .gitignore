@@ -6,7 +6,6 @@
 *~
 .DS_Store
 public/pjs-min.js
-public/pjs-closured.js
 dat-gui/build/
 README.html
 
