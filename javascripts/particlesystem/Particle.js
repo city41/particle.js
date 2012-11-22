@@ -1,5 +1,5 @@
 define(['particlesystem/util'], function(util) {
-	Particle = function() {
+	var Particle = function() {
 		this.pos = {
 			x: 0,
 			y: 0

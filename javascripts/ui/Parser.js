@@ -1,6 +1,6 @@
 define(function() {
 	//Position,pos=vector,posVar=vector:Angle,angle=number,angleVar=number
-	Parser = {
+	var Parser = {
 		parse: function(raw) {
 			var results = [];
 
