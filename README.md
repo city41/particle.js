@@ -117,10 +117,6 @@ My fork primarily includes two additions:
 particle.js also uses stats.js to display framerate info. I hack it a smidge, and get rid of the realtime graphs after instantiating a `stats` object.
 The stats.js library is untouched by me.
 
-## Test Coverage
-
-I know, it's bad. Sorry about that. I promise to come back and flesh out the tests. They are in the `spec` directory and use jasmine.
-
 ## Experimental, Import Cocos2D particle plist files
 
 As a first stab at Cocos2D support, I have an experimental branch where you can import plist files for Cocos2D particle systems.

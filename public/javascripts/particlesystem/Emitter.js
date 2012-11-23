@@ -369,20 +369,6 @@ function(Particle, TextureLoader, predefinedSystems, util) {
 		}
 	});
 
-	Object.defineProperty(Emitter.prototype, 'transformFn', {
-		get: function() {
-			return this._transformFnSrc || '';
-		}, 
-		set: function(src) {
-			this._transformFnSrc = src;
-			try {
-				this.posVarTransformFn = new Function('value', src);
-			} catch(e) {
-				this.posVarTransformFn = null;
-			}
-		}
-	});
-
 	Object.defineProperty(Emitter.prototype, 'textureFile', {
 		get: function() {
 			return (this._file && this._file.name) || '';
