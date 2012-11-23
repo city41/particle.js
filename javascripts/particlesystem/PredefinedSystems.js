@@ -58,16 +58,6 @@ define(['particlesystem/util'], function(util) {
 			}
 		},
 
-		deleteSystem: function(systemName) {
-			var index;
-			for (var i = 0; i < this.systems.length; ++i) {
-				if (this.systems[i].name === systemName) {
-					this.systems.splice(i, 1);
-					return;
-				}
-			}
-		},
-
 		systems: [{
 			name: 'meteor',
 			system: {
@@ -232,121 +222,121 @@ define(['particlesystem/util'], function(util) {
 		{
 			name: 'bubbles',
 			system: {
-				"totalParticles": 500,
-				"emissionRate": 200,
-				"active": true,
-				"duration": Infinity,
-				"pos": 'centerOffBottom',
-				"posVar": {
-					"x": 150,
-					"y": 0
+				totalParticles: 500,
+				emissionRate: 200,
+				active: true,
+				duration: Infinity,
+				pos: 'centerOffBottom',
+				posVar: {
+					x: 150,
+					y: 0
 				},
-				"angle": 90,
-				"angleVar": 20,
-				"life": 3.5,
-				"lifeVar": 1,
-				"radius": 8,
-				"radiusVar": 2,
-				"textureEnabled": false,
-				"textureAdditive": true,
-				"startScale": 1,
-				"startScaleVar": 0,
-				"endScale": 1,
-				"endScaleVar": 0,
-				"startColor": [198.9, 198.9, 255, 1],
-				"startColorVar": [0, 0, 38, 0.1],
-				"endColor": [25.5, 25.5, 25.5, 0.2],
-				"endColorVar": [25.5, 25.5, 25.5, 0.2],
-				"gravity": {
-					"x": 0,
-					"y": - 90
+				angle: 90,
+				angleVar: 20,
+				life: 3.5,
+				lifeVar: 1,
+				radius: 8,
+				radiusVar: 2,
+				textureEnabled: false,
+				textureAdditive: true,
+				startScale: 1,
+				startScaleVar: 0,
+				endScale: 1,
+				endScaleVar: 0,
+				startColor: [198.9, 198.9, 255, 1],
+				startColorVar: [0, 0, 38, 0.1],
+				endColor: [25.5, 25.5, 25.5, 0.2],
+				endColorVar: [25.5, 25.5, 25.5, 0.2],
+				gravity: {
+					x: 0,
+					y: - 90
 				},
-				"radialAccel": 0,
-				"radialAccelVar": 0,
-				"tangentialAccel": 0,
-				"tangentialAccelVar": 0,
-				"speed": 180,
-				"speedVar": 50
+				radialAccel: 0,
+				radialAccelVar: 0,
+				tangentialAccel: 0,
+				tangentialAccelVar: 0,
+				speed: 180,
+				speedVar: 50
 			}
 		},
 		{
 			name: 'watergeyser',
 			system: {
-				"totalParticles": 400,
-				"emissionRate": 100,
-				"active": true,
-				"duration": Infinity,
-				"pos": "centerBottom",
-				"posVar": {
-					"x": 0,
-					"y": 0
+				totalParticles: 400,
+				emissionRate: 100,
+				active: true,
+				duration: Infinity,
+				pos: 'centerBottom',
+				posVar: {
+					x: 0,
+					y: 0
 				},
-				"angle": 90,
-				"angleVar": 10,
-				"life": 2.5,
-				"lifeVar": 1,
-				"radius": 5,
-				"radiusVar": 3,
-				"textureEnabled": false,
-				"textureAdditive": false,
-				"startScale": 1,
-				"startScaleVar": 0,
-				"endScale": 1,
-				"endScaleVar": 0,
-				"startColor": [19.89, 59.93, 255, 1],
-				"startColorVar": [0, 0, 48, 0.3],
-				"endColor": [198.9, 198.9, 255, 0],
-				"endColorVar": [0, 0, 0, 0],
-				"gravity": {
-					"x": 0,
-					"y": 150
+				angle: 90,
+				angleVar: 10,
+				life: 2.5,
+				lifeVar: 1,
+				radius: 5,
+				radiusVar: 3,
+				textureEnabled: false,
+				textureAdditive: false,
+				startScale: 1,
+				startScaleVar: 0,
+				endScale: 1,
+				endScaleVar: 0,
+				startColor: [19.89, 59.93, 255, 1],
+				startColorVar: [0, 0, 48, 0.3],
+				endColor: [198.9, 198.9, 255, 0],
+				endColorVar: [0, 0, 0, 0],
+				gravity: {
+					x: 0,
+					y: 150
 				},
-				"radialAccel": 0,
-				"radialAccelVar": 0,
-				"tangentialAccel": 0,
-				"tangentialAccelVar": 0,
-				"speed": 180,
-				"speedVar": 50
+				radialAccel: 0,
+				radialAccelVar: 0,
+				tangentialAccel: 0,
+				tangentialAccelVar: 0,
+				speed: 180,
+				speedVar: 50
 			}
 		},
 		{
 			name: 'ribbon',
 			system: {
-				"totalParticles": 200,
-				"emissionRate": 40,
-				"active": true,
-				"duration": Infinity,
-				"pos": "bottomLeft",
-				"posVar": {
-					"x": 30,
-					"y": 0
+				totalParticles: 200,
+				emissionRate: 40,
+				active: true,
+				duration: Infinity,
+				pos: 'bottomLeft',
+				posVar: {
+					x: 30,
+					y: 0
 				},
-				"angle": 55,
-				"angleVar": 0,
-				"life": 2.5,
-				"lifeVar": 0,
-				"radius": 10,
-				"radiusVar": 5,
-				"textureEnabled": false,
-				"textureAdditive": false,
-				"startScale": 1,
-				"startScaleVar": 0,
-				"endScale": 1,
-				"endScaleVar": 0,
-				"startColor": [255, 0, 0, 1],
-				"startColorVar": [0, 0, 0, 0],
-				"endColor": [0, 0, 255, 1],
-				"endColorVar": [0, 0, 0, 0],
-				"gravity": {
-					"x": 0,
-					"y": -45
+				angle: 55,
+				angleVar: 0,
+				life: 2.5,
+				lifeVar: 0,
+				radius: 10,
+				radiusVar: 5,
+				textureEnabled: false,
+				textureAdditive: false,
+				startScale: 1,
+				startScaleVar: 0,
+				endScale: 1,
+				endScaleVar: 0,
+				startColor: [255, 0, 0, 1],
+				startColorVar: [0, 0, 0, 0],
+				endColor: [0, 0, 255, 1],
+				endColorVar: [0, 0, 0, 0],
+				gravity: {
+					x: 0,
+					y: -45
 				},
-				"radialAccel": 0,
-				"radialAccelVar": 0,
-				"tangentialAccel": 60,
-				"tangentialAccelVar": 0,
-				"speed": 180,
-				"speedVar": 50
+				radialAccel: 0,
+				radialAccelVar: 0,
+				tangentialAccel: 60,
+				tangentialAccelVar: 0,
+				speed: 180,
+				speedVar: 50
 			}
 		}]
 	};
