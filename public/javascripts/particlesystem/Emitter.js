@@ -2,9 +2,11 @@ define([
 	'particlesystem/Particle',
 	'particlesystem/TextureLoader', 
 	'particlesystem/PredefinedSystems',
-	'particlesystem/util'
+	'particlesystem/util',
+	'io/FileReader',
+	'io/PlistImporter'
 ], 
-function(Particle, TextureLoader, predefinedSystems, util) {
+function(Particle, TextureLoader, predefinedSystems, util, FileReader, PlistImporter) {
 	/*
 	 * Given a vector of any length, returns a vector
 	 * pointing in the same direction but with a magnitude of 1
@@ -379,6 +381,25 @@ function(Particle, TextureLoader, predefinedSystems, util) {
 				this._file = file;
 			} catch(e) {
 
+			}
+		}
+	});
+
+	Object.defineProperty(Emitter.prototype, 'plist', {
+		get: function() {
+			return this._plist || '';
+		},
+		set: function(plist) {
+			if (this._plist !== plist) {
+				this._plist = plist;
+
+				var me = this;
+				FileReader.readText(plist, function(plistString) {
+					var importer = new PlistImporter(plistString);
+					importer.toParticleSystem(function(system) {
+						me.reconfigure(system);
+					});
+				});
 			}
 		}
 	});

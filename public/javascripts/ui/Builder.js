@@ -137,6 +137,10 @@ function(predefinedSystems, fullConfig, propertyMap, Parser) {
 		_texture: function(gui) {
 			gui.addFile(this.particleSystem, 'textureFile');
 			gui.add(this.particleSystem, 'resetTexture');
+		},
+		
+		_plistfile: function(gui) {
+			gui.addFile(this.particleSystem, 'plist');
 		}
 	};
 

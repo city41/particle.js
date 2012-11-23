@@ -26,7 +26,8 @@ define(function() {
 		tangentialAccelVar: 'unsignednumber',
 		system: 'systempicker',
 		startScale: 'unsignednumber',
-		endScale: 'unsignednumber'
+		endScale: 'unsignednumber',
+		plist: 'plistfile'
 	};
 });
 

@@ -18,6 +18,10 @@ define(function() {
 	{
 		title: 'Physics',
 		items: ['speed', 'speedVar', 'angle', 'angleVar', 'gravity', 'radialAccel', 'radialAccelVar', 'tangentialAccel', 'tangentialAccelVar']
+	},
+	{
+		title: 'Import/Export',
+		items: ['plist']
 	}];
 });
 
