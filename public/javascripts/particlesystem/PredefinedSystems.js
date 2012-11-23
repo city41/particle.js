@@ -32,7 +32,7 @@ define(['particlesystem/util'], function(util) {
 		}
 	};
 
-	var PredefinedSystems = {
+	return {
 		getSystem: function(name) {
 			var system = this.systems[0];
 			for (var i = 0; i < this.systems.length; ++i) {
@@ -350,7 +350,5 @@ define(['particlesystem/util'], function(util) {
 			}
 		}]
 	};
-
-	return PredefinedSystems;
 });
 

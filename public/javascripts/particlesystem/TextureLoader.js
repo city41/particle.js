@@ -1,5 +1,5 @@
 define(function() {
-	var TextureLoader = {
+	return {
 		cache: {},
 
 		load: function(target, property, file) {
@@ -55,7 +55,5 @@ define(function() {
 			return ['png', 'jpg', 'jpeg', 'gif'].indexOf(extension.toLowerCase()) > -1;
 		}
 	};
-
-	return TextureLoader;
 });
 
