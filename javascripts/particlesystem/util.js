@@ -44,6 +44,7 @@ define(function() {
 		},
 
 		recursiveExtend: function(obj, config, exceptions) {
+			exceptions = exceptions || [];
 			for (var prop in config) {
 				if (config.hasOwnProperty(prop)) {
 					if (exceptions.indexOf(prop) > - 1) {
@@ -66,6 +67,7 @@ define(function() {
 		},
 
 		deepClone: function(obj, exceptions) {
+			exceptions = exceptions || [];
 			if (typeof obj !== 'object') {
 				return obj;
 			}
