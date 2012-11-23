@@ -11,7 +11,8 @@
 #   - dist/**/*.js
 #
 src_files:
-    - public/javascripts/**/*.js
+    - public/javascripts/third/require.js
+    - public/pjs-min.js
 
 # stylesheets
 #
@@ -37,6 +38,8 @@ stylesheets:
 #   - helpers/**/*.js
 #
 helpers:
+   - helpers/**/*.js
+
 
 # spec_files
 #
