@@ -1,20 +1,5 @@
-define(function() {
+define(['particlesystem/util'], function(util) {
 	var bufferCache = {};
-
-	/*
-	 * Given an array with four channels (r, g, b and a),
-	 * returns a css rgba string compatible with Canvas.
-	 * Optionally provide an override alpha value that will be used
-	 * in place of the actual alpha (useful for texture rendering)
-	 */
-	function colorArrayToString(array, overrideAlpha) {
-		var r = array[0] | 0;
-		var g = array[1] | 0;
-		var b = array[2] | 0;
-		var a = overrideAlpha || array[3];
-
-		return 'rgba(' + r + ', ' + g + ', ' +  b + ', ' + a + ')';
-	}
 
 	/*
 	 * Utility method to create a canvas the same size as the passed in texture (which is
@@ -36,14 +21,14 @@ define(function() {
 	}
 
 
-	var Renderer = {
+	return {
 		/*
 		 * renders a particle to the given context without using textures. Uses
 		 * the particle's color to draw a circle at the particle's location
 		 * and sized to the particle
 		 */
 		_renderParticle: function(context, particle) {
-			var color = colorArrayToString(particle.color);
+			var color = util.colorArrayToString(particle.color);
 
 			context.fillStyle = color;
 			context.beginPath();
@@ -78,7 +63,7 @@ define(function() {
 			// now use source-atop to "tint" the white texture, here we want the particle's pure color,
 			// not including alpha. As we already used the particle's alpha to render the texture above
 			bufferContext.globalCompositeOperation = "source-atop";
-			bufferContext.fillStyle = colorArrayToString(particle.color, 1);
+			bufferContext.fillStyle = util.colorArrayToString(particle.color, 1);
 			bufferContext.fillRect(0, 0, particle.buffer.width, particle.buffer.height);
 
 			// reset the buffer's context for the next time we draw the particle
@@ -110,8 +95,5 @@ define(function() {
 			context.globalCompositeOperation = 'source-over';
 		}
 	};
-
-	return Renderer;
-
 });
 
