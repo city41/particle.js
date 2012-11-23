@@ -76,6 +76,9 @@ function(gzip, TIFFParser) {
 				x: system.sourcePositionx,
 				y: system.sourcePositiony
 			};
+
+			// deleting these properties is unnecessary, but getting them out
+			// of the way makes debugging more pleasant
 			delete system.sourcePositionx;
 			delete system.sourcePositiony;
 
@@ -136,8 +139,8 @@ function(gzip, TIFFParser) {
 
 		_isTiff: function(imageData) {
 			// not perfect, but if we have the TIFF endian mark, probably a TIFF
-			return (imageData[0] === 0x49 && imageData[1] === 0x49)
-				||	 (imageData[0] === 0x4D && imageData[1] === 0x4D);
+			return (imageData[0] === 0x49 && imageData[1] === 0x49) 	// I I --- Intel: little endian	
+				||	 (imageData[0] === 0x4D && imageData[1] === 0x4D);	// M M --- Motorola: big endian
 		},
 
 		_isPng: function(imageData) {
@@ -159,6 +162,7 @@ function(gzip, TIFFParser) {
 		},
 
 		_parsePng: function(imageData, system, callback) {
+			// shove it all back into a base64 string, so we can take advantage of data URLs
 			var asString = this._arrayToBinaryString(imageData);
 			var encoded = btoa(asString);
 
