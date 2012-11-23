@@ -117,17 +117,14 @@ My fork primarily includes two additions:
 particle.js also uses stats.js to display framerate info. I hack it a smidge, and get rid of the realtime graphs after instantiating a `stats` object.
 The stats.js library is untouched by me.
 
-## Experimental, Import Cocos2D particle plist files
+## Import Cocos2D particle plist files
 
-As a first stab at Cocos2D support, I have an experimental branch where you can import plist files for Cocos2D particle systems.
+The `plist` branch is pretty successfully importing Cocos2D plist files and loading them in as the current particle system.
+
+It's not all the way there, but supports TIFF and PNG textures, and most of Cocos2D's particle attributes. Most notably missing is spinning particles.
 
 The experiment is running [here](http://city41.github.com/particle.js/exp/)
 
-You can find some sample plist files at the Cocos2D repo [here](https://github.com/cocos2d/cocos2d-iphone/tree/master-v2/Resources/Particles), known to work are `BoilingFoam.plist`, `LaveFlow.plist` and `Comet.plist`. Known to **not** work is `Meteor.plist`.
-  
-Textures will most likely load correctly as long as they are TIFFs. For many of Cocos2D plist files, the texture data is stored as base64 encoded, gzipped TIFFs. I am using [gzip-js](https://github.com/beatgammit/gzip-js) and [tiff.js](https://github.com/GPHemsley/tiff-js) to get at the texture data and load it, which is pretty freakin' sweet if you ask me (the JS community rocks!).  
-  
-But, sometimes the texture data is actually a PNG. I've not yet got the texture loader smart enough to differentiate between the two, so if you try a plist that actually contains a PNG, it will blow up.
+You can find some sample plist files at the Cocos2D repo [here](https://github.com/cocos2d/cocos2d-iphone/tree/master-v2/Resources/Particles), known to work are `BoilingFoam.plist`, `LaveFlow.plist`, `Comet.plist` and `Meteor.plist`.
 
-Also missing is the ability to spin the particles. But this little experiment is looking good and I should be able to solidify it and get particle.js fully loading Cocos2D plist files soon.
-
+Overall goal: ability to fully import all Cocos2D plists, and export the current system as a Cocos2D plist.
