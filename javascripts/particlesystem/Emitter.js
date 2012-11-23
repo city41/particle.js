@@ -63,6 +63,9 @@ function(Particle, TextureLoader, predefinedSystems, util) {
 			this.posVar.x = 0;
 			this.posVar.y = 0;
 
+			this.speed = 0;
+			this.speedVar = 0;
+
 			this.angle = 0;
 			this.angleVar = 0;
 
@@ -307,6 +310,9 @@ function(Particle, TextureLoader, predefinedSystems, util) {
 		},
 
 		update: function(delta) {
+			this._elapsed += delta;
+			this.active = this._elapsed < this.duration;
+
 			if (!this.active) {
 				return;
 			}
@@ -321,9 +327,6 @@ function(Particle, TextureLoader, predefinedSystems, util) {
 					this._emitCounter -= rate;
 				}
 			}
-
-			this._elapsed += delta;
-			this.active = this._elapsed < this.duration;
 
 			this._particleIndex = 0;
 
