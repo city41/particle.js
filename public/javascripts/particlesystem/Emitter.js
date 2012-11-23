@@ -53,7 +53,7 @@ function(Particle, TextureLoader, predefinedSystems, util) {
 			this.emissionRate = 0;
 
 			this.active = false;
-			this.duration = Infinity;
+			this.duration = 0;
 
 			this.pos = this.pos || {};
 			this.pos.x = 0;
@@ -62,8 +62,6 @@ function(Particle, TextureLoader, predefinedSystems, util) {
 			this.posVar = this.posVar || {};
 			this.posVar.x = 0;
 			this.posVar.y = 0;
-
-			this.posVarTransformFn = null;
 
 			this.angle = 0;
 			this.angleVar = 0;
@@ -175,17 +173,8 @@ function(Particle, TextureLoader, predefinedSystems, util) {
 			particle.textureEnabled = this.textureEnabled;
 			particle.textureAdditive = this.textureAdditive;
 
-			var posVar = {
-				x: this.posVar.x * util.random11(),
-				y: this.posVar.y * util.random11()
-			};
-
-			if (this.posVarTransformFn) {
-				posVar = this.posVarTransformFn(posVar);
-			}
-
-			particle.pos.x = this.pos.x + posVar.x;
-			particle.pos.y = this.pos.y + posVar.y;
+			particle.pos.x = this.pos.x + this.posVar.x * util.random11();
+			particle.pos.y = this.pos.y + this.posVar.y * util.random11();
 
 			var angle = this.angle + this.angleVar * util.random11();
 			var speed = this.speed + this.speedVar * util.random11();
