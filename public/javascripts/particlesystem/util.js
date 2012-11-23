@@ -1,6 +1,5 @@
 define(function() {
-
-	var util = {
+	return {
 		isIE: navigator.userAgent.indexOf('MSIE') > -1,
 
 		toRad: function(deg) {
@@ -89,7 +88,5 @@ define(function() {
 			return clone;
 		}
 	};
-
-	return util;
 });
 
