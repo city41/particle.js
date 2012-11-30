@@ -1,16 +1,15 @@
 describe('Emitter', ['particlesystem/Emitter'], function(Emitter) {
 	describe('construction', function() {
-		it('should require a system', function() {
+		it('should not require any parameters', function() {
 			var fn = function() {
 				new Emitter();
 			};
 
-			expect(fn).toThrow();
+			expect(fn).not.toThrow();
 		});
 
 		it('should have defaulted all attributes', function() {
 			var e = new Emitter({
-				system: {}
 			});
 
 			expect(e._totalParticles).toBe(0);
@@ -63,11 +62,9 @@ describe('Emitter', ['particlesystem/Emitter'], function(Emitter) {
 			var yGravity = 4567;
 
 			var e = new Emitter({
-				system: {
-					gravity: {
-						x: xGravity,
-						y: yGravity
-					}
+				gravity: {
+					x: xGravity,
+					y: yGravity
 				}
 			});
 
@@ -77,23 +74,19 @@ describe('Emitter', ['particlesystem/Emitter'], function(Emitter) {
 
 		it('should apply arbitrary attributes', function() {
 			var e = new Emitter({
-				system: {
-					notReallyAParticleSystemAttribute: 'hello'
-				}
+				notReallyAParticleSystemAttribute: 'hello'
 			});
 
 			expect(e.notReallyAParticleSystemAttribute).toBe('hello');
 		});
 	});
 
-	describe('updating particles', function() {
+	describe('updating', function() {
 		var e;
 		beforeEach(function() {
 			e = new Emitter({
-				system: {
-					totalParticles: 1,
-					emissionRate: 1
-				}
+				totalParticles: 1,
+				emissionRate: 1
 			});
 		});
 
@@ -274,6 +267,53 @@ describe('Emitter', ['particlesystem/Emitter'], function(Emitter) {
 				expect(e.particles[0].vel.y).toBe(expectedVelY);
 				expect(e.particles[0].pos.x).toBe(expectedPosX);
 				expect(e.particles[0].pos.y).toBe(expectedPosY);
+			});
+		});
+
+		describe('resetting', function() {
+			it('should reset the texture', function() {
+				var texture = 'im a texture';
+				expect(e.texture).toBe(null);
+
+				e._defaultTexture = texture;
+
+				e.resetTexture();
+
+				expect(e.texture).toBe(texture);
+			});
+
+			it('should reset to its original system', function() {
+				var originalSystem = {
+					totalParticles: 20,
+					emissionRate: 729,
+					pos: {
+						x: 10,
+						y: 20
+					}
+				};
+
+				var e = new Emitter(originalSystem);
+
+				e.overlay({
+					totalParticles: 3,
+					emissionRate: 10,
+					pos: {
+						x: 4,
+						y: 4
+					}
+				});
+
+				expect(e.totalParticles).toBe(3);
+				expect(e.emissionRate).toBe(10);
+				expect(e.pos.x).toBe(4);
+				expect(e.pos.y).toBe(4);
+
+				e.reset();
+
+				expect(e.totalParticles).toBe(20);
+				expect(e.emissionRate).toBe(729);
+				expect(e.pos.x).toBe(10);
+				expect(e.pos.y).toBe(20);
 			});
 		});
 	});
