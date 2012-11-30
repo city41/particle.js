@@ -101,7 +101,7 @@ describe('Emitter', ['particlesystem/Emitter'], function(Emitter) {
 			expect(e.particles.length).toBe(1);
 		});
 
-		it('should not do anything if its not active', function() {
+		it("should not do anything if it's not active", function() {
 			e.overlay({
 				life: 1,
 				speed: 1,
@@ -185,6 +185,96 @@ describe('Emitter', ['particlesystem/Emitter'], function(Emitter) {
 
 			e.update(6);
 			expect(e.particles[0].life < 0).toBe(true);
+		});
+
+		describe("physics", function() {
+			it("should apply gravity", function() {
+				var gravX = 10;
+				var gravY = 10;
+				var posX = 2;
+				var posY = 2;
+				var delta = 10;
+
+				e.overlay({
+					gravity: {
+						x: gravX,
+						y: gravY
+					},
+					speed: 0,
+					angle: 0,
+					pos: {
+						x: posX,
+						y: posY
+					},
+					life: 100,
+					active: true,
+					duration: 100
+				});
+
+				e.update(delta);
+
+				// initial velocity is zero
+				var expectedVelX = 0 + gravX * delta;
+				var expectedPosX = posX + expectedVelX * delta;
+				var expectedVelY = 0 + gravY * delta;
+				var expectedPosY = posY + expectedVelY * delta;
+
+				expect(e.particles[0].vel.x).toBe(expectedVelX);
+				expect(e.particles[0].vel.y).toBe(expectedVelY);
+				expect(e.particles[0].pos.x).toBe(expectedPosX);
+				expect(e.particles[0].pos.y).toBe(expectedPosY);
+			});
+
+			it('should not apply radial accel until the particle is away from the emitter', function() {
+				var posX = 2;
+				var posY = 2;
+				var speed = 5;
+				var delta = 10;
+				var radialAccel = 100;
+
+				e.overlay({
+					pos: {
+						x: posX,
+						y: posY
+					},
+					speed: speed,
+					angle: 0,
+					radialAccel: radialAccel,
+					life: 100,
+					active: true,
+					duration: 100
+				});
+
+				e.update(delta);
+
+				var expectedPosX = posX + speed * delta;
+				// angle is zero, not headed in the y direction
+				var expectedPosY = posY;
+
+				expect(e.particles[0].pos.x).toBe(expectedPosX);
+				expect(e.particles[0].pos.y).toBe(expectedPosY);
+
+				var curVelX = e.particles[0].vel.x;
+				var curVelY = e.particles[0].vel.y;
+				var curPosX = e.particles[0].pos.x;
+				var curPosY = e.particles[0].pos.y;
+
+				// this time, radial accel should be applied
+				e.update(delta);
+
+				var radialX = 100;
+				var radialY = 0;
+
+				var expectedVelX = curVelX + radialX * delta;
+				var expectedPosX = curPosX + expectedVelX * delta;
+				var expectedVelY = curVelY + radialY * delta;
+				var expectedPosY = curPosY + expectedVelY * delta;
+
+				expect(e.particles[0].vel.x).toBe(expectedVelX);
+				expect(e.particles[0].vel.y).toBe(expectedVelY);
+				expect(e.particles[0].pos.x).toBe(expectedPosX);
+				expect(e.particles[0].pos.y).toBe(expectedPosY);
+			});
 		});
 	});
 });
