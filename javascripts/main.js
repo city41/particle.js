@@ -137,9 +137,7 @@ function(predefinedSystems, Emitter, Renderer, util, Builder) {
 			predefinedSystems.positionSystems(canvasSize);
 			predefinedSystems.setTexture(defaultTexture);
 
-			var system = predefinedSystems.getSystem(getUrlParam('system'));
-
-			emitter = new Emitter(system, defaultTexture);
+			emitter = new Emitter(getUrlParam('system'), defaultTexture);
 			controller.emitter = emitter;
 
 			context = canvas.getContext('2d');

@@ -17,13 +17,18 @@ function(Particle, TextureLoader, predefinedSystems, util) {
 	}
 
 	var Emitter = function(system, defaultTexture) {
-		if(!system) {
-			throw new Error("Must create an Emitter with a system");
+		this._defaultTexture = defaultTexture;
+
+		if(!system || typeof system === 'string') {
+			var predefinedSystem = predefinedSystems.getSystem(system);
+			this._predefinedSystemName = predefinedSystem.name;
+			system = predefinedSystem.system;
+		} else {
+			this._predefinedSystemName = '';
 		}
 
-		this._defaultTexture = defaultTexture;
-		this._currentSystem = system.name;
-		this.reconfigure(system.system);
+		this._baseSystem = util.clone(system, ['texture']);
+		this.reconfigure(system);
 	};
 
 	Emitter.prototype = {
@@ -141,8 +146,7 @@ function(Particle, TextureLoader, predefinedSystems, util) {
 		},
 
 		reset: function() {
-			var system = predefinedSystems.getSystem(this.currentSystem);
-			this.reconfigure(system.system);
+			this.reconfigure(this._baseSystem);
 		},
 
 		/*
@@ -356,15 +360,16 @@ function(Particle, TextureLoader, predefinedSystems, util) {
 		}
 	});
 
-	Object.defineProperty(Emitter.prototype, 'currentSystem', {
+	// TODO: this needs to die
+	Object.defineProperty(Emitter.prototype, 'predefinedSystem', {
 		get: function() {
-			return this._currentSystem;
+			return this._predefinedSystemName;
 		},
-		set: function(cs) {
-			if(this._currentSystem !== cs) {
-				this._currentSystem = cs;
-				var system = predefinedSystems.getSystem(cs);
-				this.reconfigure(system.system);
+		set: function(ps) {
+			if(this._predefinedSystemName !== ps) {
+				this._predefinedSystemName = ps;
+				this._baseSystem = predefinedSystems.getSystem(ps).system;
+				this.reset();
 			}
 		}
 	});

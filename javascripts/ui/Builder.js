@@ -127,7 +127,7 @@ function(predefinedSystems, fullConfig, propertyMap, Parser) {
 				systems.push(system.name);
 			}
 
-			var c = gui.add(this.particleSystem, 'currentSystem', systems);
+			var c = gui.add(this.particleSystem, 'predefinedSystem', systems);
 			var me = this;
 			c.onChange(function() {
 				me._updateDisplays(me.rootGui);
