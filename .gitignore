@@ -5,7 +5,6 @@
 ~*
 *~
 .DS_Store
-public/pjs-min.js
 dat-gui/build/
 README.html
 
