@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>A very primitive particle system</title>
+</head>
+<body>
+	<canvas style="float:left" id="canvas" width="300" height="300"></canvas>
+	<div style="float:left">
+		<div><button id="single">Launch Particle</button></div>
+		<div><button id="manyAtOnce">Launch 100 Particles At Once</button></div>
+		<div><button id="manyInSequence">Launch 100 Particles In Sequence</button></div>
+	</div>
+
+	<script type="text/javascript" src="Particle.js"></script>
+	<script type="text/javascript" src="sandbox.js"></script>
+	<script type="text/javascript">
+		ps.sandbox.init();
+		ps.sandbox.go();
+	</script>
+</body>
+</html>
+
+		
