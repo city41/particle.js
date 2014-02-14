@@ -138,7 +138,13 @@ function(predefinedSystems, Emitter, Renderer, util, Builder) {
 
 			context = canvas.getContext('2d');
 
-			new Builder('guiContainer', emitter, canvas, controller, getUrlParam('ui'));
+			var includeTransformFn = getUrlParam('transform') === 'true';
+
+			if (!includeTransformFn) {
+				predefinedSystems.deleteSystem('ringoffire');
+			}
+
+			new Builder('guiContainer', emitter, canvas, controller, getUrlParam('ui'), includeTransformFn);
 			document.getElementById('canvasContainer').appendChild(canvas);
 			initStats('canvasContainer');
 

@@ -58,6 +58,16 @@ define(['particlesystem/util'], function(util) {
 			}
 		},
 
+		deleteSystem: function(systemName) {
+			var index;
+			for (var i = 0; i < this.systems.length; ++i) {
+				if (this.systems[i].name === systemName) {
+					this.systems.splice(i, 1);
+					return;
+				}
+			}
+		},
+
 		systems: [{
 			name: 'meteor',
 			system: {
@@ -337,6 +347,44 @@ define(['particlesystem/util'], function(util) {
 				tangentialAccelVar: 0,
 				speed: 180,
 				speedVar: 50
+			}
+		},
+    {
+			name: 'ringoffire',
+			system: {
+				"totalParticles": 400,
+				"emissionRate": 180,
+				"active": true,
+				"duration": Infinity,
+				pos: 'center',
+				"posVar": {
+					"x": 180,
+					"y": 20
+				},
+				"angle": 90,
+				"angleVar": 10,
+				"life": 1,
+				"lifeVar": 1,
+				"radius": 10,
+				"radiusVar": 1,
+				"textureEnabled": true,
+				"textureAdditive": true,
+				"startScale": 1,
+				"startScaleVar": 0,
+				"endScale": 1,
+				"endScaleVar": 0,
+				startColor: [193.8, 63.75, 30.6, 1],
+				endColor: [0, 0, 0, 0],
+				"gravity": {
+					"x": 0,
+					"y": 0
+				},
+				"radialAccel": 0,
+				"radialAccelVar": 0,
+				"tangentialAccel": 0,
+				"tangentialAccelVar": 0,
+				"speed": 60,
+				"speedVar": 20
 			}
 		}]
 	};
