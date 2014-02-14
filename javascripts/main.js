@@ -107,14 +107,10 @@ function(predefinedSystems, Emitter, Renderer, util, Builder) {
 			if (!paused) {
 				lastTimestamp = 0;
 
-				// TODO: this is needed for IE10, otherwise it just doesn't
-				// draw anything. So far, no clue why (haven't really looked into it)
-				if(util.isIE) {
-					var me = this;
-					setTimeout(function() {
-						me.emitter.reset();
-					}, 10);
-				}
+        var me = this;
+        setTimeout(function() {
+          me.emitter.reset();
+        }, 10);
 				draw(new Date().getTime());
 			}
 		}
