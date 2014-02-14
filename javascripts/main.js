@@ -110,7 +110,7 @@ function(predefinedSystems, Emitter, Renderer, util, Builder) {
         var me = this;
         setTimeout(function() {
           me.emitter.reset();
-        }, 10);
+        }, 200);
 				draw(new Date().getTime());
 			}
 		}
