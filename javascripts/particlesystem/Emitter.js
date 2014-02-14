@@ -180,8 +180,16 @@ function(Particle, TextureLoader, predefinedSystems, util) {
 			particle.textureEnabled = this.textureEnabled;
 			particle.textureAdditive = this.textureAdditive;
 
-			particle.pos.x = this.pos.x + this.posVar.x * util.random11();
-			particle.pos.y = this.pos.y + this.posVar.y * util.random11();
+			var posVar = {
+				x: this.posVar.x * util.random11(),
+				y: this.posVar.y * util.random11()
+			};
+
+			if (this.posVarTransformFn) {
+				posVar = this.posVarTransformFn(posVar, util);
+			}
+			particle.pos.x = this.pos.x + posVar.x;
+			particle.pos.y = this.pos.y + posVar.y;
 
 			var angle = this.angle + this.angleVar * util.random11();
 			var speed = this.speed + this.speedVar * util.random11();
@@ -356,6 +364,20 @@ function(Particle, TextureLoader, predefinedSystems, util) {
 			if(tp !== this._totalParticles) {
 				this._totalParticles = tp;
 				this.restart();
+			}
+		}
+	});
+
+	Object.defineProperty(Emitter.prototype, 'transformFn', {
+		get: function() {
+			return this._transformFnSrc || '';
+		}, 
+		set: function(src) {
+			this._transformFnSrc = src;
+			try {
+				this.posVarTransformFn = new Function('value', 'util', src);
+			} catch(e) {
+				this.posVarTransformFn = null;
 			}
 		}
 	});
