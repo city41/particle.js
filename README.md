@@ -1,4 +1,3 @@
-<meta charset="utf-8" />
 # particle.js
 
 up and running [here](http://city41.github.com/particle.js/)
